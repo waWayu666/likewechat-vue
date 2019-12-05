@@ -71,8 +71,7 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
-        selectedRowKeys.length }}</a>项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -91,9 +90,9 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -114,166 +113,165 @@
 </template>
 
 <script>
-    import GoodsModal from './modules/GoodsModal'
-    import {JeecgListMixin} from '@/mixins/JeecgListMixin'
+  import GoodsModal from './modules/GoodsModal'
+  import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 
-    export default {
-        name: "GoodsList",
-        mixins: [JeecgListMixin],
-        components: {
-            GoodsModal
-        },
-        data() {
-            return {
-                description: '商品表管理页面',
-                // 表头
-                columns: [
-                    {
-                        title: '#',
-                        dataIndex: '',
-                        key: 'rowIndex',
-                        width: 60,
-                        align: "center",
-                        customRender: function (t, r, index) {
-                            return parseInt(index) + 1;
-                        }
-                    },
-                    {
-                        title: '竞价阶段',
-                        align: "center",
-                        dataIndex: 'finishFlag',
-                        customRender: function (t) {
-                            if (t == 0) {
-                                return "竞拍未开始";
-                            } else if (t == 1) {
-                                return "进行中";
-                            } else {
-                                return "竞拍已完成";
-                            }
-                        }
-                    },
-                    {
-                        title: '商品名称',
-                        align: "center",
-                        dataIndex: 'goodsName'
-                    },
-                    {
-                        title: '商品编号',
-                        align: "center",
-                        dataIndex: 'goodsNum'
-                    },
-                    {
-                        title: '起拍价',
-                        align: "center",
-                        dataIndex: 'startPrice'
-                    },
-                    {
-                        title: '预估价',
-                        align: "center",
-                        dataIndex: 'evaluatePrice'
-                    },
-                    {
-                        title: '最高价',
-                        align: "center",
-                        dataIndex: 'maxPrice'
-                    },
-                    {
-                        title: '顶一手价格',
-                        align: "center",
-                        dataIndex: 'addPrice'
-                    },
-                    {
-                        title: '佣金',
-                        align: "center",
-                        dataIndex: 'commissionPrice'
-                    },
-                    // {
-                    //     title: '积分商品市场价',
-                    //     align: "center",
-                    //     dataIndex: 'price'
-                    // },
-                    // {
-                    //     title: '现金比例',
-                    //     align: "center",
-                    //     dataIndex: 'moneyRatio'
-                    // },
-                    // {
-                    //     title: '积分商品所需积分',
-                    //     align: "center",
-                    //     dataIndex: 'score'
-                    // },
-                    {
-                        title: '分类id',
-                        align: "center",
-                        dataIndex: 'categoryId'
-                    },
-                    {
-                        title: '排序号',
-                        align: "center",
-                        dataIndex: 'sort'
-                    },
-                    {
-                        title: '商品主图',
-                        align: "center",
-                        dataIndex: 'mianImage'
-                    },
-                    {
-                        title: '商品状态',
-                        align: "center",
-                        dataIndex: 'status',
-                        customRender: function (t) {
-                            if (t == 0) {
-                                return "下架";
-                            } else {
-                                return "上架中";
-                            }
-                        }
-                    },
-                    {
-                        title: '商品类别',
-                        align: "center",
-                        dataIndex: 'goodsType',
-                        customRender: function (t) {
-                            if (t == 1) {
-                                return "普通商品";
-                            } else {
-                                return "积分商品";
-                            }
-                        }
-                    },
-                    {
-                        title: '开拍时间',
-                        align: "center",
-                        dataIndex: 'startTime'
-                    },
-                    {
-                        title: '结束时间',
-                        align: "center",
-                        dataIndex: 'endTime'
-                    },
-                    {
-                        title: '操作',
-                        dataIndex: 'action',
-                        align: "center",
-                        scopedSlots: {customRender: 'action'},
-                    }
-                ],
-                url: {
-                    list: "/goods/goods/list",
-                    delete: "/goods/goods/delete",
-                    deleteBatch: "/goods/goods/deleteBatch",
-                    exportXlsUrl: "goods/goods/exportXls",
-                    importExcelUrl: "goods/goods/importExcel",
-                },
+  export default {
+    name: "GoodsList",
+    mixins:[JeecgListMixin],
+    components: {
+      GoodsModal
+    },
+    data () {
+      return {
+        description: '商品表管理页面',
+        // 表头
+        columns: [
+          {
+            title: '#',
+            dataIndex: '',
+            key:'rowIndex',
+            width:60,
+            align:"center",
+            customRender:function (t,r,index) {
+              return parseInt(index)+1;
             }
-        },
-        computed: {
-            importExcelUrl: function () {
-                return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-            }
-        },
-        methods: {}
+           },
+		   {
+            title: '0竞拍未开始  1进行中  2竞拍已完成',
+            align:"center",
+            dataIndex: 'finishFlag'
+           },
+		   {
+            title: '商品名称',
+            align:"center",
+            dataIndex: 'goodsName'
+           },
+		   {
+            title: '商品编号',
+            align:"center",
+            dataIndex: 'goodsNum'
+           },
+		   {
+            title: '起拍价',
+            align:"center",
+            dataIndex: 'startPrice'
+           },
+		   {
+            title: '预估价',
+            align:"center",
+            dataIndex: 'evaluatePrice'
+           },
+		   {
+            title: '最高价',
+            align:"center",
+            dataIndex: 'maxPrice'
+           },
+		   {
+            title: '顶一手价格',
+            align:"center",
+            dataIndex: 'addPrice'
+           },
+		   {
+            title: '佣金',
+            align:"center",
+            dataIndex: 'commissionPrice'
+           },
+		   {
+            title: '积分商品市场价',
+            align:"center",
+            dataIndex: 'price'
+           },
+		   {
+            title: '现金比例',
+            align:"center",
+            dataIndex: 'moneyRatio'
+           },
+		   {
+            title: '积分商品所需积分',
+            align:"center",
+            dataIndex: 'score'
+           },
+		   {
+            title: '分类id',
+            align:"center",
+            dataIndex: 'categoryId'
+           },
+		   {
+            title: '描述',
+            align:"center",
+            dataIndex: 'desc'
+           },
+		   {
+            title: '排序号',
+            align:"center",
+            dataIndex: 'sort'
+           },
+		   {
+            title: '商品主图',
+            align:"center",
+            dataIndex: 'mianImage'
+           },
+		   {
+            title: '商品详情',
+            align:"center",
+            dataIndex: 'goodsDesc'
+           },
+		   {
+            title: '0：下架   1：上架中',
+            align:"center",
+            dataIndex: 'status'
+           },
+		   {
+            title: '商品类别  1：普通商品  2：积分商品',
+            align:"center",
+            dataIndex: 'goodsType'
+           },
+		   {
+            title: '成交价格',
+            align:"center",
+            dataIndex: 'dealPrice'
+           },
+		   {
+            title: '拍卖次数',
+            align:"center",
+            dataIndex: 'auctionCount'
+           },
+		   {
+            title: '开拍时间',
+            align:"center",
+            dataIndex: 'startTime'
+           },
+		   {
+            title: '结束时间',
+            align:"center",
+            dataIndex: 'endTime'
+           },
+          {
+            title: '操作',
+            dataIndex: 'action',
+            align:"center",
+            scopedSlots: { customRender: 'action' },
+          }
+        ],
+		url: {
+          list: "/goods/goods/list",
+          delete: "/goods/goods/delete",
+          deleteBatch: "/goods/goods/deleteBatch",
+          exportXlsUrl: "goods/goods/exportXls",
+          importExcelUrl: "goods/goods/importExcel",
+       },
     }
+  },
+  computed: {
+    importExcelUrl: function(){
+      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+    }
+  },
+    methods: {
+
+    }
+  }
 </script>
 <style scoped>
   @import '~@assets/less/common.less'

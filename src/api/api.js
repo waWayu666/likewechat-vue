@@ -58,11 +58,10 @@ const queryPermissionRule = (params)=>getAction("/sys/permission/queryPermission
 
 //商品管理
 const goodsSpecList = (params)=>getAction("/goods/goodsSpec/queryGoodsSpecList",params);
-const getValueBySpecId=(specId,params)=>getAction(`/goods/goodsSpecValue/queryBySpecId/${specId}`,params);
 const queryGoodsSkuByGoodsId=(params)=>getAction("/goods/goodsSku/queryByGoodsId",params);
 const queryByShopId =(params)=>getAction("/goods/goods/queryByShopId",params);
 const joinActivity =(params)=>getAction("/goods/goods/joinActivity",params);
-const querySkuListByGoodsId=(goodsId,params)=>getAction(`/goods/goodsSku/querylistByGoodsId/${goodsId}`,params);
+const selectCategoryList=(params)=>getAction("/category/category/selectCategoryList",params);
 
 
 // 部门管理
@@ -151,11 +150,10 @@ export {
   getPermissionRuleList,
   queryPermissionRule,
   goodsSpecList,
-  getValueBySpecId,
   queryGoodsSkuByGoodsId,
   queryByShopId,
   joinActivity,
-  querySkuListByGoodsId,
+  selectCategoryList,
   queryDepartTreeList,
   queryIdTree,
   queryParentName,
