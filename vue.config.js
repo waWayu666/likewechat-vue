@@ -66,8 +66,8 @@ module.exports = {
           '/jeecg-boot': ''  //默认所有请求都加了jeecg-boot前缀，需要去掉
         }
       },*/
-      '/qjs-boot': {
-        target: 'http://localhost:8081', //请求本地 需要jeecg-boot后台项目
+      '/auction-boot': {
+        target: 'http://localhost:8082', //请求本地 需要jeecg-boot后台项目
         ws: false,
         changeOrigin: true
       },
