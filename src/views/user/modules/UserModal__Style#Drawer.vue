@@ -14,112 +14,164 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          label="昵称">
+          <a-input placeholder="请输入昵称" v-decorator="['nickname', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
           label="真实姓名">
-          <a-input placeholder="请输入真实姓名" v-decorator="['realname', validatorRules.realname ]" />
+          <a-input placeholder="请输入真实姓名" v-decorator="['realname', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="用户昵称">
-          <a-input placeholder="请输入用户昵称" v-decorator="['nickname', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="邮箱">
-          <a-input placeholder="请输入邮箱" v-decorator="['email', {}]" />
+          label="年龄">
+          <a-input placeholder="请输入年龄" v-decorator="['age', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="密码">
-          <a-input placeholder="请输入密码" v-decorator="['password', validatorRules.password ]" />
+          <a-input placeholder="请输入密码" v-decorator="['password', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="密码盐">
+          <a-input placeholder="请输入密码盐" v-decorator="['salt', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="手机号">
-          <a-input placeholder="请输入手机号" v-decorator="['mobile', validatorRules.mobile ]" />
-        </a-form-item>
-
-        <a-form-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-upload
-            listType="picture-card"
-            class="avatar-uploader"
-            :showUploadList="false"
-            :action="uploadAction"
-            :data="{'isup':1}"
-            :headers="headers"
-            :beforeUpload="beforeUpload"
-            @change="handleChange"
-          >
-            <img v-if="model.avatar" :src="getAvatarView()" alt="头像" style="height:104px;max-width:300px"/>
-            <div v-else>
-              <a-icon :type="uploadLoading ? 'loading' : 'plus'" />
-              <div class="ant-upload-text">上传</div>
-            </div>
-          </a-upload>
-        </a-form-item>
-
-        <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="[ 'sex', validatorRules.sex]" placeholder="请选择性别" >
-            <a-select-option value="0">否</a-select-option>
-            <a-select-option value="1">是</a-select-option>
-          </a-select>
+          <a-input placeholder="请输入手机号" v-decorator="['mobile', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="生日">
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'birthday', {}]" />
-        </a-form-item>
-        <a-form-item label="角色" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="['roleId', validatorRules.roleId ]" placeholder="请选择角色" >
-            <a-select-option value="0">否</a-select-option>
-            <a-select-option value="1">是</a-select-option>
-          </a-select>
+          label="头像">
+          <a-input placeholder="请输入头像" v-decorator="['avatar', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="邀请人">
-          <a-input placeholder="请输入邀请人" v-decorator="['inviterId', {}]" />
-        </a-form-item>
-        <a-form-item label="市区" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="[ 'areap', {}]" placeholder="请选择省" >
-            <a-select-option value="0">否</a-select-option>
-            <a-select-option value="1">是</a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item label="市区" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="[ 'areac', {}]" placeholder="请选择市" >
-            <a-select-option value="0">否</a-select-option>
-            <a-select-option value="1">是</a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item label="市区" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="[ 'areax', {}]" placeholder="请选择区" >
-            <a-select-option value="0">否</a-select-option>
-            <a-select-option value="1">是</a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item label="分销商" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select v-decorator="[ 'isDistribut', validatorRules.isDistribut]" placeholder="请选择" >
-            <a-select-option value="0">否</a-select-option>
-            <a-select-option value="1">是</a-select-option>
-          </a-select>
+          label="性别  0/女,1/男">
+          <a-input placeholder="请输入性别  0/女,1/男" v-decorator="['sex', validatorRules.sex ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="上级经销商id">
-          <a-input placeholder="请输入上级经销商id" v-decorator="['distributId', {}]" />
+          label="余额">
+          <a-input-number v-decorator="[ 'money', validatorRules.money ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="机构名称">
-          <a-input placeholder="请输入机构名称" v-decorator="['organization', {}]" />
+          label="冻结金额">
+          <a-input-number v-decorator="[ 'freezeMoney', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="佣金">
+          <a-input-number v-decorator="[ 'commissionMoney', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="积分">
+          <a-input-number v-decorator="[ 'score', validatorRules.score ]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="身份证号">
+          <a-input placeholder="请输入身份证号" v-decorator="['idCard', validatorRules.idCard ]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="身份证正面">
+          <a-input placeholder="请输入身份证正面" v-decorator="['frontCard', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="身份证反面">
+          <a-input placeholder="请输入身份证反面" v-decorator="['backCard', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="状态(1：正常  2：冻结 ）">
+          <a-input placeholder="请输入状态(1：正常  2：冻结 ）" v-decorator="['status', validatorRules.status ]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="推广人id">
+          <a-input placeholder="请输入推广人id" v-decorator="['extendId', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="邀请码">
+          <a-input placeholder="请输入邀请码" v-decorator="['inviterNum', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="已经邀请人数">
+          <a-input-number v-decorator="[ 'inviterCount', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="unionId">
+          <a-input placeholder="请输入unionId" v-decorator="['unionId', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="注册时间">
+          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'registerTime', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="weiSkey">
+          <a-input placeholder="请输入weiSkey" v-decorator="['weiSkey', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——地区">
+          <a-input placeholder="请输入微信资料——地区" v-decorator="['weiAddress', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——头像">
+          <a-input placeholder="请输入微信资料——头像" v-decorator="['weiAvatar', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——性别">
+          <a-input placeholder="请输入微信资料——性别" v-decorator="['weiGender', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——名称">
+          <a-input placeholder="请输入微信资料——名称" v-decorator="['weiName', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="推广人昵称">
+          <a-input placeholder="请输入推广人昵称" v-decorator="['extendName', {}]" />
         </a-form-item>
 		
       </a-form>
@@ -141,7 +193,6 @@
         title:"操作",
         visible: false,
         model: {},
-        headers:{},
         labelCol: {
           xs: { span: 24 },
           sm: { span: 5 },
@@ -150,17 +201,15 @@
           xs: { span: 24 },
           sm: { span: 16 },
         },
-        uploadLoading:false,
+
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-        realname:{rules: [{ required: true, message: '请输入真实姓名!' }]},
-        password:{rules: [{ required: true, message: '请输入密码!' }]},
-        mobile:{rules: [{ required: true, message: '请输入手机号!' }]},
-        sex:{rules: [{ required: true, message: '请输入性别  0/男,1/女!' }]},
-        roleId:{rules: [{ required: true, message: '请输入角色ID!' }]},
-        isDistribut:{rules: [{ required: true, message: '请输入是否为分销商 0 否 1 是!' }]},
-
+        sex:{rules: [{ required: true, message: '请输入性别  0/女,1/男!' }]},
+        money:{rules: [{ required: true, message: '请输入余额!' }]},
+        score:{rules: [{ required: true, message: '请输入积分!' }]},
+        idCard:{rules: [{ required: true, message: '请输入身份证号!' }]},
+        status:{rules: [{ required: true, message: '请输入状态(1：正常  2：冻结 ）!' }]},
         },
         url: {
           add: "/user/user/add",
@@ -170,13 +219,6 @@
     },
     created () {
     },
-
-    computed:{
-      uploadAction:function () {
-        return this.url.fileUpload;
-      }
-    },
-
     methods: {
       add () {
         this.edit({});
@@ -186,9 +228,8 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'realname','nickname','email','password','salt','mobile','avatar','sex','roleId','roleName','isVip','loginfailure','inviterId','areap','areac','areax','isDistribut','distributId','organization'))
+          this.form.setFieldsValue(pick(this.model,'nickname','realname','age','password','salt','mobile','avatar','sex','money','freezeMoney','commissionMoney','score','idCard','frontCard','backCard','status','extendId','inviterNum','inviterCount','unionId','weiSkey','weiAddress','weiAvatar','weiGender','weiName','extendName'))
 		  //时间格式化
-          this.form.setFieldsValue({birthday:this.model.birthday?moment(this.model.birthday):null})
           this.form.setFieldsValue({registerTime:this.model.registerTime?moment(this.model.registerTime):null})
         });
 
@@ -214,7 +255,6 @@
             }
             let formData = Object.assign(this.model, values);
             //时间格式化
-            formData.birthday = formData.birthday?formData.birthday.format('YYYY-MM-DD HH:mm:ss'):null;
             formData.registerTime = formData.registerTime?formData.registerTime.format('YYYY-MM-DD HH:mm:ss'):null;
             
             console.log(formData)
@@ -238,35 +278,7 @@
       handleCancel () {
         this.close()
       },
-      beforeUpload: function(file){
-        var fileType = file.type;
-        if(fileType.indexOf('image')<0){
-          this.$message.warning('请上传图片');
-          return false;
-        }
-        //TODO 验证文件大小
-      },
-      handleChange (info) {
-        console.log(info);
-        if (info.file.status === 'uploading') {
-          this.uploadLoading = true
-          return
-        }
-        if (info.file.status === 'done') {
-          var response = info.file.response;
-          this.uploadLoading = false;
-          console.log(response);
-          if(response.success){
-            this.validatorRules.src = response.message;
-            this.model.avatar = response.message;
-          }else{
-            this.$message.warning(response.message);
-          }
-        }
-      },
-      getAvatarView(){
-        return this.url.imgerver +"/"+ this.model.avatar;
-      },
+
 
     }
   }

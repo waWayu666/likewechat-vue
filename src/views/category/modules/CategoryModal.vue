@@ -1,46 +1,50 @@
 <template>
-  <a-drawer
-      :title="title"
-      :width="800"
-      placement="right"
-      :closable="false"
-      @close="close"
-      :visible="visible"
-  >
-
+  <a-modal
+    :title="title"
+    :width="800"
+    :visible="visible"
+    :confirmLoading="confirmLoading"
+    @ok="handleOk"
+    @cancel="handleCancel"
+    cancelText="关闭">
+    
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
       
+        <!--<a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="父级id">
+          <a-input placeholder="请输入父级id" v-decorator="['parentId', {}]" />
+        </a-form-item>-->
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="阶段名称">
-          <a-input placeholder="请输入阶段名称" v-decorator="['name', validatorRules.name ]" />
+          label="类别名称">
+          <a-input placeholder="请输入类别名称" v-decorator="['categoryName', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="阶段秒单位">
-          <a-input-number v-decorator="[ 'durationSeconds', validatorRules.durationSeconds ]" />
+          label="图标">
+          <a-input placeholder="请输入图标" v-decorator="['icon', {}]" />
         </a-form-item>
+        <!--<a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="是否删除（0：删除 1：未删除）">
+          <a-input placeholder="请输入是否删除（0：删除 1：未删除）" v-decorator="['delFlag', {}]" />
+        </a-form-item>-->
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="阶段小时单位">
-          <a-input-number v-decorator="[ 'durationHours', validatorRules.durationHours ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="排序">
-          <a-input placeholder="请输入排序" v-decorator="['sort', validatorRules.sort ]" />
+          label="排序号">
+          <a-input-number v-decorator="[ 'sort', {}]" />
         </a-form-item>
 		
       </a-form>
     </a-spin>
-    <a-button type="primary" @click="handleOk">确定</a-button>
-    <a-button type="primary" @click="handleCancel">取消</a-button>
-  </a-drawer>
+  </a-modal>
 </template>
 
 <script>
@@ -49,7 +53,7 @@
   import moment from "moment"
 
   export default {
-    name: "GrowupPhaseModal",
+    name: "CategoryModal",
     data () {
       return {
         title:"操作",
@@ -67,14 +71,10 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-        name:{rules: [{ required: true, message: '请输入阶段名称!' }]},
-        durationSeconds:{rules: [{ required: true, message: '请输入阶段秒单位!' }]},
-        durationHours:{rules: [{ required: true, message: '请输入阶段小时单位!' }]},
-        sort:{rules: [{ required: true, message: '请输入排序!' }]},
         },
         url: {
-          add: "/curriculum/growupPhase/add",
-          edit: "/curriculum/growupPhase/edit",
+          add: "/category/category/add",
+          edit: "/category/category/edit",
         },
       }
     },
@@ -89,7 +89,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'name','durationSeconds','durationHours','sort'))
+          this.form.setFieldsValue(pick(this.model,'parentId','categoryName','icon','delFlag','sort'))
 		  //时间格式化
         });
 
@@ -144,10 +144,5 @@
 </script>
 
 <style lang="less" scoped>
-/** Button按钮间距 */
-  .ant-btn {
-    margin-left: 30px;
-    margin-bottom: 30px;
-    float: right;
-  }
+
 </style>

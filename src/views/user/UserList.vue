@@ -7,19 +7,40 @@
         <a-row :gutter="24">
 
           <a-col :md="6" :sm="8">
+            <a-form-item label="昵称">
+              <a-input placeholder="请输入昵称" v-model="queryParam.nickname"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
             <a-form-item label="真实姓名">
               <a-input placeholder="请输入真实姓名" v-model="queryParam.realname"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="用户昵称">
-              <a-input placeholder="请输入用户昵称" v-model="queryParam.nickname"></a-input>
-            </a-form-item>
-          </a-col>
+          <template v-if="toggleSearchStatus">
+            <a-col :md="6" :sm="8">
+              <a-form-item label="年龄">
+                <a-input placeholder="请输入年龄" v-model="queryParam.age"></a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="8">
+              <a-form-item label="密码">
+                <a-input placeholder="请输入密码" v-model="queryParam.password"></a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="8">
+              <a-form-item label="密码盐">
+                <a-input placeholder="请输入密码盐" v-model="queryParam.salt"></a-input>
+              </a-form-item>
+            </a-col>
+          </template>
           <a-col :md="6" :sm="8" >
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+              <a @click="handleToggleSearch" style="margin-left: 8px">
+                {{ toggleSearchStatus ? '收起' : '展开' }}
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+              </a>
             </span>
           </a-col>
 
@@ -30,10 +51,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-<!--      <a-button type="primary" icon="download" @click="handleExportXls('普通用户')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('用户')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>-->
+      </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -87,7 +108,7 @@
 </template>
 
 <script>
-  import UserModal from './modules/UserModal__Style#Drawer'
+  import UserModal from './modules/UserModal'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
 
   export default {
@@ -98,7 +119,7 @@
     },
     data () {
       return {
-        description: '普通用户管理页面',
+        description: '用户管理页面',
         // 表头
         columns: [
           {
@@ -110,102 +131,142 @@
             customRender:function (t,r,index) {
               return parseInt(index)+1;
             }
-           },
-		   {
+          },
+          {
+            title: '昵称',
+            align:"center",
+            dataIndex: 'nickname'
+          },
+          {
             title: '真实姓名',
             align:"center",
             dataIndex: 'realname'
-           },
-		   {
-            title: '用户昵称',
+          },
+          {
+            title: '年龄',
             align:"center",
-            dataIndex: 'nickname'
-           },
-		   {
-            title: '邮箱',
+            dataIndex: 'age'
+          },
+          {
+            title: '密码',
             align:"center",
-            dataIndex: 'email'
-           },
-		   {
+            dataIndex: 'password'
+          },
+          {
+            title: '密码盐',
+            align:"center",
+            dataIndex: 'salt'
+          },
+          {
             title: '手机号',
             align:"center",
             dataIndex: 'mobile'
-           },
-		   {
+          },
+          {
             title: '头像',
             align:"center",
             dataIndex: 'avatar'
-           },
-		   {
-            title: '性别',
+          },
+          {
+            title: '性别  0/女,1/男',
             align:"center",
-            dataIndex: 'sex',
-           customRender:function (text) {
-             if(text==0){
-               return "男";
-             }else if(text==1){
-               return "女";
-             }else {
-               return "未知";
-             }
-           }
-           },
-		   {
-            title: '生日',
+            dataIndex: 'sex'
+          },
+          {
+            title: '余额',
             align:"center",
-            dataIndex: 'birthday'
-           },
-		   {
+            dataIndex: 'money'
+          },
+          {
+            title: '冻结金额',
+            align:"center",
+            dataIndex: 'freezeMoney'
+          },
+          {
+            title: '佣金',
+            align:"center",
+            dataIndex: 'commissionMoney'
+          },
+          {
             title: '积分',
             align:"center",
             dataIndex: 'score'
-           },
-		   {
-            title: '角色名称',
+          },
+          {
+            title: '身份证号',
             align:"center",
-            dataIndex: 'roleName'
-           },
-		   {
-            title: 'VIP',
+            dataIndex: 'idCard'
+          },
+          {
+            title: '身份证正面',
             align:"center",
-            dataIndex: 'isVip',
-             customRender:function (text) {
-               if(text==0){
-                 return "否";
-               }else if(text==1){
-                 return "是";
-               }
-             }
-           },
-		   {
-            title: '分销商',
+            dataIndex: 'frontCard'
+          },
+          {
+            title: '身份证反面',
             align:"center",
-            dataIndex: 'isDistribut',
-             customRender:function (text) {
-               if(text==0){
-                 return "否";
-               }else if(text==1){
-                 return "是";
-               }
-             }
-           },
-		   {
-            title: '机构名称',
-            align:"center",
-            dataIndex: 'organization'
-           },
-/*
-		   {
+            dataIndex: 'backCard'
+          },
+          {
             title: '状态(1：正常  2：冻结 ）',
             align:"center",
             dataIndex: 'status'
-           },
-		   {
-            title: '删除状态  0/已删除1/正常',
+          },
+          {
+            title: '推广人id',
             align:"center",
-            dataIndex: 'delFlag'
-           },
-*/
+            dataIndex: 'extendId'
+          },
+          {
+            title: '邀请码',
+            align:"center",
+            dataIndex: 'inviterNum'
+          },
+          {
+            title: '已经邀请人数',
+            align:"center",
+            dataIndex: 'inviterCount'
+          },
+          {
+            title: 'unionId',
+            align:"center",
+            dataIndex: 'unionId'
+          },
+          {
+            title: '注册时间',
+            align:"center",
+            dataIndex: 'registerTime'
+          },
+          {
+            title: 'weiSkey',
+            align:"center",
+            dataIndex: 'weiSkey'
+          },
+          {
+            title: '微信资料——地区',
+            align:"center",
+            dataIndex: 'weiAddress'
+          },
+          {
+            title: '微信资料——头像',
+            align:"center",
+            dataIndex: 'weiAvatar'
+          },
+          {
+            title: '微信资料——性别',
+            align:"center",
+            dataIndex: 'weiGender'
+          },
+          {
+            title: '微信资料——名称',
+            align:"center",
+            dataIndex: 'weiName'
+          },
+          {
+            title: '推广人昵称',
+            align:"center",
+            dataIndex: 'extendName'
+          },
           {
             title: '操作',
             dataIndex: 'action',
@@ -213,22 +274,22 @@
             scopedSlots: { customRender: 'action' },
           }
         ],
-		url: {
+        url: {
           list: "/user/user/list",
           delete: "/user/user/delete",
           deleteBatch: "/user/user/deleteBatch",
           exportXlsUrl: "user/user/exportXls",
           importExcelUrl: "user/user/importExcel",
-       },
-    }
-  },
-  computed: {
-    importExcelUrl: function(){
-      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-    }
-  },
+        },
+      }
+    },
+    computed: {
+      importExcelUrl: function(){
+        return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+      }
+    },
     methods: {
-     
+
     }
   }
 </script>

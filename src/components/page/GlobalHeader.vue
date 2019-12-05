@@ -17,7 +17,7 @@
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click.native="toggle"/>
 
-      <span v-if="device === 'desktop'">欢迎进入 奇佳说商城  管理平台</span>
+      <span v-if="device === 'desktop'">欢迎进入 顶一手  管理平台</span>
       <span v-else>ZhongBen-Boot</span>
 
       <user-menu :theme="theme"/>

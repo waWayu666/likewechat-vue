@@ -4,7 +4,7 @@
       <div class="top">
         <div class="header">
           <a href="/">
-            <span class="title">奇佳说商城管理平台</span>
+            <span class="title">顶一手管理平台</span>
           </a>
         </div>
         <div class="desc">

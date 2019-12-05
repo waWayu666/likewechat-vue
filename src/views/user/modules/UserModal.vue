@@ -14,26 +14,26 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          label="昵称">
+          <a-input placeholder="请输入昵称" v-decorator="['nickname', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
           label="真实姓名">
-          <a-input placeholder="请输入真实姓名" v-decorator="['realname', validatorRules.realname ]" />
+          <a-input placeholder="请输入真实姓名" v-decorator="['realname', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="用户昵称">
-          <a-input placeholder="请输入用户昵称" v-decorator="['nickname', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="邮箱">
-          <a-input placeholder="请输入邮箱" v-decorator="['email', {}]" />
+          label="年龄">
+          <a-input placeholder="请输入年龄" v-decorator="['age', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="密码">
-          <a-input placeholder="请输入密码" v-decorator="['password', validatorRules.password ]" />
+          <a-input placeholder="请输入密码" v-decorator="['password', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -45,7 +45,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="手机号">
-          <a-input placeholder="请输入手机号" v-decorator="['mobile', validatorRules.mobile ]" />
+          <a-input placeholder="请输入手机号" v-decorator="['mobile', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -56,14 +56,26 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="性别  0/男,1/女">
-          <a-input placeholder="请输入性别  0/男,1/女" v-decorator="['sex', validatorRules.sex ]" />
+          label="性别  0/女,1/男">
+          <a-input placeholder="请输入性别  0/女,1/男" v-decorator="['sex', validatorRules.sex ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="生日">
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'birthday', {}]" />
+          label="余额">
+          <a-input-number v-decorator="[ 'money', validatorRules.money ]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="冻结金额">
+          <a-input-number v-decorator="[ 'freezeMoney', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="佣金">
+          <a-input-number v-decorator="[ 'commissionMoney', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -74,74 +86,20 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="角色ID">
-          <a-input placeholder="请输入角色ID" v-decorator="['roleId', validatorRules.roleId ]" />
+          label="身份证号">
+          <a-input placeholder="请输入身份证号" v-decorator="['idCard', validatorRules.idCard ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="角色名称">
-          <a-input placeholder="请输入角色名称" v-decorator="['roleName', {}]" />
+          label="身份证正面">
+          <a-input placeholder="请输入身份证正面" v-decorator="['frontCard', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="是否为VIP ：0不是，1是">
-          <a-input placeholder="请输入是否为VIP ：0不是，1是" v-decorator="['isVip', validatorRules.isVip ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="失败次数">
-          <a-input placeholder="请输入失败次数" v-decorator="['loginfailure', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="邀请人">
-          <a-input placeholder="请输入邀请人" v-decorator="['inviterId', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="省份">
-          <a-input-number v-decorator="[ 'areap', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="市区">
-          <a-input-number v-decorator="[ 'areac', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="县">
-          <a-input-number v-decorator="[ 'areax', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="是否为分销商 0 否 1 是">
-          <a-input placeholder="请输入是否为分销商 0 否 1 是" v-decorator="['isDistribut', validatorRules.isDistribut ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="上级经销商id">
-          <a-input placeholder="请输入上级经销商id" v-decorator="['distributId', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="机构名称">
-          <a-input placeholder="请输入机构名称" v-decorator="['organization', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="注册时间">
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'registerTime', validatorRules.registerTime ]" />
+          label="身份证反面">
+          <a-input placeholder="请输入身份证反面" v-decorator="['backCard', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -152,8 +110,68 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="删除状态  0/已删除1/正常">
-          <a-input placeholder="请输入删除状态  0/已删除1/正常" v-decorator="['delFlag', validatorRules.delFlag ]" />
+          label="推广人id">
+          <a-input placeholder="请输入推广人id" v-decorator="['extendId', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="邀请码">
+          <a-input placeholder="请输入邀请码" v-decorator="['inviterNum', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="已经邀请人数">
+          <a-input-number v-decorator="[ 'inviterCount', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="unionId">
+          <a-input placeholder="请输入unionId" v-decorator="['unionId', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="注册时间">
+          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'registerTime', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="weiSkey">
+          <a-input placeholder="请输入weiSkey" v-decorator="['weiSkey', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——地区">
+          <a-input placeholder="请输入微信资料——地区" v-decorator="['weiAddress', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——头像">
+          <a-input placeholder="请输入微信资料——头像" v-decorator="['weiAvatar', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——性别">
+          <a-input placeholder="请输入微信资料——性别" v-decorator="['weiGender', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="微信资料——名称">
+          <a-input placeholder="请输入微信资料——名称" v-decorator="['weiName', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="推广人昵称">
+          <a-input placeholder="请输入推广人昵称" v-decorator="['extendName', {}]" />
         </a-form-item>
 		
       </a-form>
@@ -185,17 +203,11 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-        realname:{rules: [{ required: true, message: '请输入真实姓名!' }]},
-        password:{rules: [{ required: true, message: '请输入密码!' }]},
-        mobile:{rules: [{ required: true, message: '请输入手机号!' }]},
-        sex:{rules: [{ required: true, message: '请输入性别  0/男,1/女!' }]},
+        sex:{rules: [{ required: true, message: '请输入性别  0/女,1/男!' }]},
+        money:{rules: [{ required: true, message: '请输入余额!' }]},
         score:{rules: [{ required: true, message: '请输入积分!' }]},
-        roleId:{rules: [{ required: true, message: '请输入角色ID!' }]},
-        isVip:{rules: [{ required: true, message: '请输入是否为VIP ：0不是，1是!' }]},
-        isDistribut:{rules: [{ required: true, message: '请输入是否为分销商 0 否 1 是!' }]},
-        registerTime:{rules: [{ required: true, message: '请输入注册时间!' }]},
+        idCard:{rules: [{ required: true, message: '请输入身份证号!' }]},
         status:{rules: [{ required: true, message: '请输入状态(1：正常  2：冻结 ）!' }]},
-        delFlag:{rules: [{ required: true, message: '请输入删除状态  0/已删除1/正常!' }]},
         },
         url: {
           add: "/user/user/add",
@@ -214,9 +226,8 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'realname','nickname','email','password','salt','mobile','avatar','sex','score','roleId','roleName','isVip','loginfailure','inviterId','areap','areac','areax','isDistribut','distributId','organization','status','delFlag'))
+          this.form.setFieldsValue(pick(this.model,'nickname','realname','age','password','salt','mobile','avatar','sex','money','freezeMoney','commissionMoney','score','idCard','frontCard','backCard','status','extendId','inviterNum','inviterCount','unionId','weiSkey','weiAddress','weiAvatar','weiGender','weiName','extendName'))
 		  //时间格式化
-          this.form.setFieldsValue({birthday:this.model.birthday?moment(this.model.birthday):null})
           this.form.setFieldsValue({registerTime:this.model.registerTime?moment(this.model.registerTime):null})
         });
 
@@ -242,7 +253,6 @@
             }
             let formData = Object.assign(this.model, values);
             //时间格式化
-            formData.birthday = formData.birthday?formData.birthday.format('YYYY-MM-DD HH:mm:ss'):null;
             formData.registerTime = formData.registerTime?formData.registerTime.format('YYYY-MM-DD HH:mm:ss'):null;
             
             console.log(formData)
