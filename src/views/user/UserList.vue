@@ -11,36 +11,10 @@
               <a-input placeholder="请输入昵称" v-model="queryParam.nickname"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="真实姓名">
-              <a-input placeholder="请输入真实姓名" v-model="queryParam.realname"></a-input>
-            </a-form-item>
-          </a-col>
-          <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="年龄">
-                <a-input placeholder="请输入年龄" v-model="queryParam.age"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="密码">
-                <a-input placeholder="请输入密码" v-model="queryParam.password"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="密码盐">
-                <a-input placeholder="请输入密码盐" v-model="queryParam.salt"></a-input>
-              </a-form-item>
-            </a-col>
-          </template>
           <a-col :md="6" :sm="8" >
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
             </span>
           </a-col>
 
@@ -51,10 +25,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('用户')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-        <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
+<!--      <a-button type="primary" icon="download" @click="handleExportXls('用户')">导出</a-button>-->
+<!--      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
+<!--        <a-button type="primary" icon="import">导入</a-button>-->
+<!--      </a-upload>-->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -148,16 +122,6 @@
             dataIndex: 'age'
           },
           {
-            title: '密码',
-            align:"center",
-            dataIndex: 'password'
-          },
-          {
-            title: '密码盐',
-            align:"center",
-            dataIndex: 'salt'
-          },
-          {
             title: '手机号',
             align:"center",
             dataIndex: 'mobile'
@@ -168,9 +132,9 @@
             dataIndex: 'avatar'
           },
           {
-            title: '性别  0/女,1/男',
+            title: '性别',
             align:"center",
-            dataIndex: 'sex'
+            dataIndex: 'sex_dictText'
           },
           {
             title: '余额',
@@ -193,29 +157,21 @@
             dataIndex: 'score'
           },
           {
-            title: '身份证号',
+            title: '状态',
             align:"center",
-            dataIndex: 'idCard'
+            dataIndex: 'status',
+            customRender: function (t) {
+                if (t == 1) {
+                    return "正常";
+                } else if (t == 2) {
+                    return "冻结";
+                }
+            }
           },
           {
-            title: '身份证正面',
+            title: '推广人',
             align:"center",
-            dataIndex: 'frontCard'
-          },
-          {
-            title: '身份证反面',
-            align:"center",
-            dataIndex: 'backCard'
-          },
-          {
-            title: '状态(1：正常  2：冻结 ）',
-            align:"center",
-            dataIndex: 'status'
-          },
-          {
-            title: '推广人id',
-            align:"center",
-            dataIndex: 'extendId'
+            dataIndex: 'extendId_dictText'
           },
           {
             title: '邀请码',
@@ -228,44 +184,9 @@
             dataIndex: 'inviterCount'
           },
           {
-            title: 'unionId',
-            align:"center",
-            dataIndex: 'unionId'
-          },
-          {
             title: '注册时间',
             align:"center",
             dataIndex: 'registerTime'
-          },
-          {
-            title: 'weiSkey',
-            align:"center",
-            dataIndex: 'weiSkey'
-          },
-          {
-            title: '微信资料——地区',
-            align:"center",
-            dataIndex: 'weiAddress'
-          },
-          {
-            title: '微信资料——头像',
-            align:"center",
-            dataIndex: 'weiAvatar'
-          },
-          {
-            title: '微信资料——性别',
-            align:"center",
-            dataIndex: 'weiGender'
-          },
-          {
-            title: '微信资料——名称',
-            align:"center",
-            dataIndex: 'weiName'
-          },
-          {
-            title: '推广人昵称',
-            align:"center",
-            dataIndex: 'extendName'
           },
           {
             title: '操作',
