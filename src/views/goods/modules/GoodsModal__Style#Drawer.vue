@@ -62,24 +62,6 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="积分商品市场价">
-          <a-input-number v-decorator="[ 'price', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="现金比例">
-          <a-input-number v-decorator="[ 'moneyRatio', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="积分商品所需积分">
-          <a-input-number v-decorator="[ 'score', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
           label="分类id">
           <a-input placeholder="请输入分类id" v-decorator="['categoryId', validatorRules.categoryId ]" />
         </a-form-item>
@@ -112,12 +94,6 @@
           :wrapperCol="wrapperCol"
           label="0：下架   1：上架中">
           <a-input placeholder="请输入0：下架   1：上架中" v-decorator="['status', validatorRules.status ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="商品类别  1：普通商品  2：积分商品">
-          <a-input placeholder="请输入商品类别  1：普通商品  2：积分商品" v-decorator="['goodsType', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -207,7 +183,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','price','moneyRatio','score','categoryId','desc','sort','mianImage','goodsDesc','status','goodsType','dealPrice','auctionCount'))
+          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','categoryId','desc','sort','mianImage','goodsDesc','status','dealPrice','auctionCount'))
 		  //时间格式化
           this.form.setFieldsValue({startTime:this.model.startTime?moment(this.model.startTime):null})
           this.form.setFieldsValue({endTime:this.model.endTime?moment(this.model.endTime):null})

@@ -53,25 +53,6 @@
           label="佣金">
           <a-input-number v-decorator="[ 'commissionPrice', validatorRules.commissionPrice ]" />
         </a-form-item>
-<!--        <a-form-item-->
-<!--          :labelCol="labelCol"-->
-<!--          :wrapperCol="wrapperCol"-->
-<!--          label="积分商品市场价">-->
-<!--          <a-input-number v-decorator="[ 'price', {}]" />-->
-<!--        </a-form-item>-->
-<!--        <a-form-item-->
-<!--          :labelCol="labelCol"-->
-<!--          :wrapperCol="wrapperCol"-->
-<!--          label="现金比例">-->
-<!--          <a-input-number v-decorator="[ 'moneyRatio', {}]" />-->
-<!--        </a-form-item>-->
-<!--        <a-form-item-->
-<!--          :labelCol="labelCol"-->
-<!--          :wrapperCol="wrapperCol"-->
-<!--          label="积分商品所需积分">-->
-<!--          <a-input-number v-decorator="[ 'score', {}]" />-->
-<!--        </a-form-item>-->
-
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -102,12 +83,36 @@
           label="排序号">
           <a-input-number v-decorator="[ 'sort', validatorRules.sort ]" />
         </a-form-item>
+
+<!--        <a-form-item-->
+<!--          :labelCol="labelCol"-->
+<!--          :wrapperCol="wrapperCol"-->
+<!--          label="商品主图">-->
+<!--          <a-input placeholder="请输入商品主图" v-decorator="['mianImage', validatorRules.mianImage ]" />-->
+<!--        </a-form-item>-->
+
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="商品主图">
-          <a-input placeholder="请输入商品主图" v-decorator="['mianImage', validatorRules.mianImage ]" />
+
+          <a-upload
+            listType="picture-card"
+            class="avatar-uploader"
+            :showUploadList="false"
+            :action="uploadAction"
+            :headers="headers"
+            :beforeUpload="beforeUpload"
+            @change="handleChange"
+          >
+            <img v-if="picUrlPic" :src="this.model.mianImage" alt="商品主图" style="height:104px;max-width:300px"/>
+            <div v-else>
+              <a-icon :type="uploadLoading ? 'loading' : 'plus'"/>
+              <div class="ant-upload-text">上传</div>
+            </div>
+          </a-upload>
         </a-form-item>
+
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -144,7 +149,7 @@
 <!--            <a-select-option :value="0">下架</a-select-option>-->
 <!--            <a-select-option :value="1">上架中</a-select-option>-->
 <!--          </a-select>-->
-            <a-switch v-decorator="['status', validatorRules.status]" />
+            <a-switch checkedChildren="上架" unCheckedChildren= "下架"  @change="handleSwitch"/>
         </a-form-item>
 
       </a-form>
@@ -156,8 +161,10 @@
   import { httpAction } from '@/api/manage'
   import pick from 'lodash.pick'
   import moment from "moment"
+  import Vue from 'vue'
   import {selectCategoryList} from '@/api/api'
   import JEditor from '@/components/jeecg/JEditor'
+  import {ACCESS_TOKEN} from "@/store/mutation-types"
 
   export default {
     name: "GoodsModal",
@@ -180,7 +187,10 @@
         jeditor: {
             goodsDesc:''
         },
+        picUrlPic: "",
+        headers: {},
         goodsCategoryList:[],
+        uploadLoading: false,
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
@@ -202,11 +212,20 @@
         url: {
           add: "/goods/goods/add",
           edit: "/goods/goods/edit",
+          fileUpload: window._CONFIG['domianURL'] + "/sys/common/uploadQiNiuYun",
+          imgerver: window._CONFIG['domianURL'] + "/sys/common/view",
         },
       }
     },
     created () {
+        const token = Vue.ls.get(ACCESS_TOKEN);
+        this.headers = {"TOKEN": token};
         this.getGoodsCategoryValue();//初始化商品分类
+    },
+    computed: {
+        uploadAction: function () {
+            return this.url.fileUpload;
+        }
     },
     methods: {
       add () {
@@ -284,8 +303,46 @@
                   console.log("23333");
               }
           })
+      },
+      beforeUpload: function (file) {
+          var fileType = file.type;
+          if (fileType.indexOf('image') < 0) {
+              this.$message.warning('请上传图片');
+              return false;
+          }
+          //TODO 验证文件大小
+      },
+      handleChange(info) { //上传主图(一张图)
+          console.log(info);
+          this.picUrlPic = "";
+          if (info.file.status === 'uploading') {
+              this.uploadLoading = true
+              return
+          }
+          if (info.file.status === 'done') {
+              let response = info.file.response;
+              this.uploadLoading = false;
+              console.log(response);
+              if (response.success) {
+                  this.model.mianImage = response.message;
+                  console.log(this.model.mianImage);
+                  this.picUrlPic = "Has no pic url yet";
+              } else {
+                  this.$message.warning(response.message);
+              }
+          }
+      },
+      getAvatarView() {
+          return this.url.imgerver + "/" + this.model.mianImage;
+      },
+      handleSwitch(info) {
+        console.log(info);
+        if (info) {
+            this.model.status == "1";
+        } else {
+            this.model.status == "0";
+        }
       }
-
     }
   }
 </script>
