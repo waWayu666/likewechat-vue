@@ -20,38 +20,50 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          label="昵称">
+          <a-input placeholder="请输入昵称" v-decorator="['nickname', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="银行名称">
+          <a-input placeholder="请输入银行名称" v-decorator="['bankName', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="银行卡号">
+          <a-input placeholder="请输入银行卡号" v-decorator="['bankNum', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="银行卡号姓名">
+          <a-input placeholder="请输入银行卡号姓名" v-decorator="['realname', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
           label="提现金额">
           <a-input-number v-decorator="[ 'money', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="0-未审核 1-审核未通过 2-审核已通过">
-          <a-input placeholder="请输入0-未审核 1-审核未通过 2-审核已通过" v-decorator="['status', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="账户姓名">
-          <a-input placeholder="请输入账户姓名" v-decorator="['withdrawName', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="提现二维码">
-          <a-input placeholder="请输入提现二维码" v-decorator="['withdrawQrcode', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="1：支付宝 2：微信">
-          <a-input placeholder="请输入1：支付宝 2：微信" v-decorator="['withdrawType', {}]" />
+          label="0：未到账 1：已到账">
+          <a-input placeholder="请输入0：未到账 1：已到账" v-decorator="['status', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="第三方订单号">
           <a-input placeholder="请输入第三方订单号" v-decorator="['orderNo', {}]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="到账时间">
+          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'completeTime', {}]" />
         </a-form-item>
 		
       </a-form>
@@ -103,8 +115,9 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'userId','money','status','withdrawName','withdrawQrcode','withdrawType','orderNo'))
+          this.form.setFieldsValue(pick(this.model,'userId','nickname','bankName','bankNum','realname','money','status','orderNo'))
 		  //时间格式化
+          this.form.setFieldsValue({completeTime:this.model.completeTime?moment(this.model.completeTime):null})
         });
 
       },
@@ -129,6 +142,7 @@
             }
             let formData = Object.assign(this.model, values);
             //时间格式化
+            formData.completeTime = formData.completeTime?formData.completeTime.format('YYYY-MM-DD HH:mm:ss'):null;
             
             console.log(formData)
             httpAction(httpurl,formData,method).then((res)=>{
