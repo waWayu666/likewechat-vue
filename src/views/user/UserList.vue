@@ -56,6 +56,12 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
         @change="handleTableChange">
 
+        <template slot="imgurllot" slot-scope="text, record, index">
+          <div class="anty-img-wrap">
+            <img :src="record.avatar"/>
+          </div>
+        </template>
+
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
@@ -129,7 +135,8 @@
           {
             title: '头像',
             align:"center",
-            dataIndex: 'avatar'
+            dataIndex: 'avatar',
+            scopedSlots: {customRender: 'imgurllot'}
           },
           {
             title: '性别',
@@ -201,6 +208,7 @@
           deleteBatch: "/user/user/deleteBatch",
           exportXlsUrl: "user/user/exportXls",
           importExcelUrl: "user/user/importExcel",
+          imgerver: window._CONFIG['imgDomainURL'],
         },
       }
     },
@@ -210,7 +218,9 @@
       }
     },
     methods: {
-
+        getAvatarView: function (imgUrl) {
+            return this.url.imgerver + "/" + avatar;
+        }
     }
   }
 </script>

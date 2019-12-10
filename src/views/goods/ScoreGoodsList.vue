@@ -5,15 +5,7 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
-            <a-form-item label="请选择竞价状态">
-              <a-select v-model="queryParam.finishFlag" placeholder="请选择竞价状态">
-                <a-select-option value="0">竞拍未开始</a-select-option>
-                <a-select-option value="1">进行中</a-select-option>
-                <a-select-option value="2">竞拍已完成</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
+
           <a-col :md="6" :sm="8">
             <a-form-item label="商品名称">
               <a-input placeholder="请输入商品名称" v-model="queryParam.goodsName"></a-input>
@@ -98,23 +90,23 @@
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
-    <goods-modal ref="modalForm" @ok="modalFormOk"></goods-modal>
+    <scoreGoods-modal ref="modalForm" @ok="modalFormOk"></scoreGoods-modal>
   </a-card>
 </template>
 
 <script>
-    import GoodsModal from './modules/GoodsModal'
+    import ScoreGoodsModal from './modules/ScoreGoodsModal'
     import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 
     export default {
-        name: "GoodsList",
+        name: "ScoreGoodsList",
         mixins: [JeecgListMixin],
         components: {
-            GoodsModal
+            ScoreGoodsModal
         },
         data() {
             return {
-                description: '商品表管理页面',
+                description: '积分商品管理页面',
                 // 表头
                 columns: [
                     {
@@ -128,20 +120,6 @@
                         }
                     },
                     {
-                        title: '竞价状态',
-                        align: "center",
-                        dataIndex: 'finishFlag',
-                        customRender: function (t) {
-                            if (t == 0) {
-                                return "竞拍未开始";
-                            } else if (t == 1) {
-                                return "进行中";
-                            } else {
-                                return "竞拍已完成";
-                            }
-                        }
-                    },
-                    {
                         title: '商品名称',
                         align: "center",
                         dataIndex: 'goodsName'
@@ -152,34 +130,19 @@
                         dataIndex: 'goodsNum'
                     },
                     {
-                        title: '起拍价',
+                        title: '积分商品市场价',
                         align: "center",
-                        dataIndex: 'startPrice'
+                        dataIndex: 'price'
                     },
                     {
-                        title: '预估价',
+                        title: '现金比例',
                         align: "center",
-                        dataIndex: 'evaluatePrice'
+                        dataIndex: 'moneyRatio'
                     },
                     {
-                        title: '最高价',
+                        title: '积分商品所需积分',
                         align: "center",
-                        dataIndex: 'maxPrice'
-                    },
-                    {
-                        title: '顶一手价格',
-                        align: "center",
-                        dataIndex: 'addPrice'
-                    },
-                    {
-                        title: '佣金',
-                        align: "center",
-                        dataIndex: 'commissionPrice'
-                    },
-                    {
-                        title: '分类',
-                        align: "center",
-                        dataIndex: 'categoryId_dictText',
+                        dataIndex: 'score'
                     },
                     {
                         title: '排序号',
@@ -205,26 +168,6 @@
                         }
                     },
                     {
-                        title: '成交价格',
-                        align: "center",
-                        dataIndex: 'dealPrice'
-                    },
-                    {
-                        title: '拍卖次数',
-                        align: "center",
-                        dataIndex: 'auctionCount'
-                    },
-                    {
-                        title: '开拍时间',
-                        align: "center",
-                        dataIndex: 'startTime'
-                    },
-                    {
-                        title: '结束时间',
-                        align: "center",
-                        dataIndex: 'endTime'
-                    },
-                    {
                         title: '操作',
                         dataIndex: 'action',
                         align: "center",
@@ -232,11 +175,11 @@
                     }
                 ],
                 url: {
-                    list: "/goods/goods/list",
-                    delete: "/goods/goods/delete",
-                    deleteBatch: "/goods/goods/deleteBatch",
-                    exportXlsUrl: "goods/goods/exportXls",
-                    importExcelUrl: "goods/goods/importExcel",
+                    list: "/goods/scoreGoods/list",
+                    delete: "/goods/scoreGoods/delete",
+                    deleteBatch: "/goods/scoreGoods/deleteBatch",
+                    exportXlsUrl: "goods/scoreGoods/exportXls",
+                    importExcelUrl: "goods/scoreGoods/importExcel",
                     imgerver: window._CONFIG['imgDomainURL'],
                 },
             }

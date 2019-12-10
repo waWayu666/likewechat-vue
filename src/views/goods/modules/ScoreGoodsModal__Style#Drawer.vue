@@ -14,74 +14,62 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单编号">
-          <a-input placeholder="请输入订单编号" v-decorator="['orderNum', {}]" />
+          label="商品名称">
+          <a-input placeholder="请输入商品名称" v-decorator="['goodsName', validatorRules.goodsName ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单来源">
-          <a-input placeholder="请输入订单来源" v-decorator="['orderFrom', validatorRules.orderFrom ]" />
+          label="商品编号">
+          <a-input placeholder="请输入商品编号" v-decorator="['goodsNum', validatorRules.goodsNum ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="买家id">
-          <a-input placeholder="请输入买家id" v-decorator="['userId', validatorRules.userId ]" />
+          label="积分商品市场价">
+          <a-input-number v-decorator="[ 'price', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="买家会员名称">
-          <a-input placeholder="请输入买家会员名称" v-decorator="['nickname', validatorRules.nickname ]" />
+          label="现金比例">
+          <a-input-number v-decorator="[ 'moneyRatio', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="1:竞拍商品  2：积分商品">
-          <a-input placeholder="请输入1:竞拍商品  2：积分商品" v-decorator="['orderType', validatorRules.orderType ]" />
+          label="积分商品所需积分">
+          <a-input-number v-decorator="[ 'score', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单总价">
-          <a-input-number v-decorator="[ 'orderMoney', {}]" />
+          label="描述介绍">
+          <a-input placeholder="请输入描述介绍" v-decorator="['introduction', validatorRules.introduction ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单消耗积分">
-          <a-input-number v-decorator="[ 'point', {}]" />
+          label="排序号">
+          <a-input-number v-decorator="[ 'sort', validatorRules.sort ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单余额支付金额">
-          <a-input-number v-decorator="[ 'userMoney', {}]" />
+          label="商品主图">
+          <a-input placeholder="请输入商品主图" v-decorator="['mianImage', validatorRules.mianImage ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单状态0流拍 1待付款 2待发货 3待签收 4已完成">
-          <a-input placeholder="请输入订单状态0流拍 1待付款 2待发货 3待签收 4已完成" v-decorator="['orderStatus', validatorRules.orderStatus ]" />
+          label="商品详情">
+          <a-input placeholder="请输入商品详情" v-decorator="['goodsDesc', validatorRules.goodsDesc ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单付款时间">
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'payTime', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单是否已删除">
-          <a-input placeholder="请输入订单是否已删除" v-decorator="['delFlag', validatorRules.delFlag ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="取消订单原因">
-          <a-input placeholder="请输入取消订单原因" v-decorator="['cancelReason', {}]" />
+          label="0：下架   1：上架中">
+          <a-input placeholder="请输入0：下架   1：上架中" v-decorator="['status', validatorRules.status ]" />
         </a-form-item>
 		
       </a-form>
@@ -97,7 +85,7 @@
   import moment from "moment"
 
   export default {
-    name: "OrderModal",
+    name: "ScoreGoodsModal",
     data () {
       return {
         title:"操作",
@@ -115,16 +103,17 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-        orderFrom:{rules: [{ required: true, message: '请输入订单来源!' }]},
-        userId:{rules: [{ required: true, message: '请输入买家id!' }]},
-        nickname:{rules: [{ required: true, message: '请输入买家会员名称!' }]},
-        orderType:{rules: [{ required: true, message: '请输入1:竞拍商品  2：积分商品!' }]},
-        orderStatus:{rules: [{ required: true, message: '请输入订单状态0流拍 1待付款 2待发货 3待签收 4已完成!' }]},
-        delFlag:{rules: [{ required: true, message: '请输入订单是否已删除!' }]},
+        goodsName:{rules: [{ required: true, message: '请输入商品名称!' }]},
+        goodsNum:{rules: [{ required: true, message: '请输入商品编号!' }]},
+        introduction:{rules: [{ required: true, message: '请输入描述介绍!' }]},
+        sort:{rules: [{ required: true, message: '请输入排序号!' }]},
+        mianImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
+        goodsDesc:{rules: [{ required: true, message: '请输入商品详情!' }]},
+        status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
         },
         url: {
-          add: "/order/order/add",
-          edit: "/order/order/edit",
+          add: "/goods/scoreGoods/add",
+          edit: "/goods/scoreGoods/edit",
         },
       }
     },
@@ -139,9 +128,8 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'orderNum','orderFrom','userId','nickname','orderType','orderMoney','point','userMoney','orderStatus','delFlag','cancelReason'))
+          this.form.setFieldsValue(pick(this.model,'goodsName','goodsNum','price','moneyRatio','score','introduction','sort','mianImage','goodsDesc','status'))
 		  //时间格式化
-          this.form.setFieldsValue({payTime:this.model.payTime?moment(this.model.payTime):null})
         });
 
       },
@@ -166,7 +154,6 @@
             }
             let formData = Object.assign(this.model, values);
             //时间格式化
-            formData.payTime = formData.payTime?formData.payTime.format('YYYY-MM-DD HH:mm:ss'):null;
             
             console.log(formData)
             httpAction(httpurl,formData,method).then((res)=>{

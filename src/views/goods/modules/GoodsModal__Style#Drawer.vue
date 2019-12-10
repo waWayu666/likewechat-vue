@@ -63,13 +63,13 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="分类id">
-          <a-input placeholder="请输入分类id" v-decorator="['categoryId', validatorRules.categoryId ]" />
+          <a-input placeholder="请输入分类id" v-decorator="['categoryId', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="描述">
-          <a-input placeholder="请输入描述" v-decorator="['desc', validatorRules.desc ]" />
+          label="描述介绍">
+          <a-input placeholder="请输入描述介绍" v-decorator="['introduction', validatorRules.introduction ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -87,7 +87,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="商品详情">
-          <a-input placeholder="请输入商品详情" v-decorator="['goodsDesc', validatorRules.goodsDesc ]" />
+          <a-input placeholder="请输入商品详情" v-decorator="['goodsDesc', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -157,11 +157,9 @@
         maxPrice:{rules: [{ required: true, message: '请输入最高价!' }]},
         addPrice:{rules: [{ required: true, message: '请输入顶一手价格!' }]},
         commissionPrice:{rules: [{ required: true, message: '请输入佣金!' }]},
-        categoryId:{rules: [{ required: true, message: '请输入分类id!' }]},
-        desc:{rules: [{ required: true, message: '请输入描述!' }]},
+        introduction:{rules: [{ required: true, message: '请输入描述介绍!' }]},
         sort:{rules: [{ required: true, message: '请输入排序号!' }]},
         mianImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
-        goodsDesc:{rules: [{ required: true, message: '请输入商品详情!' }]},
         status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
         startTime:{rules: [{ required: true, message: '请输入开拍时间!' }]},
         endTime:{rules: [{ required: true, message: '请输入结束时间!' }]},
@@ -183,7 +181,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','categoryId','desc','sort','mianImage','goodsDesc','status','dealPrice','auctionCount'))
+          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','categoryId','introduction','sort','mianImage','goodsDesc','status','dealPrice','auctionCount'))
 		  //时间格式化
           this.form.setFieldsValue({startTime:this.model.startTime?moment(this.model.startTime):null})
           this.form.setFieldsValue({endTime:this.model.endTime?moment(this.model.endTime):null})

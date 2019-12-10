@@ -82,12 +82,18 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
         @change="handleTableChange">
 
+        <template slot="imgurllot" slot-scope="text, record, index">
+          <div class="anty-img-wrap">
+            <img :src="record.icon"/>
+          </div>
+        </template>
+
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -108,80 +114,84 @@
 </template>
 
 <script>
-  import CategoryModal from './modules/CategoryModal'
-  import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+    import CategoryModal from './modules/CategoryModal'
+    import {JeecgListMixin} from '@/mixins/JeecgListMixin'
 
-  export default {
-    name: "CategoryList",
-    mixins:[JeecgListMixin],
-    components: {
-      CategoryModal
-    },
-    data () {
-      return {
-        description: '类别管理页面',
-        // 表头
-        columns: [
-          {
-            title: '#',
-            dataIndex: '',
-            key:'rowIndex',
-            width:60,
-            align:"center",
-            customRender:function (t,r,index) {
-              return parseInt(index)+1;
+    export default {
+        name: "CategoryList",
+        mixins: [JeecgListMixin],
+        components: {
+            CategoryModal
+        },
+        data() {
+            return {
+                description: '类别管理页面',
+                // 表头
+                columns: [
+                    {
+                        title: '#',
+                        dataIndex: '',
+                        key: 'rowIndex',
+                        width: 60,
+                        align: "center",
+                        customRender: function (t, r, index) {
+                            return parseInt(index) + 1;
+                        }
+                    },
+                    /*{
+                         title: '父级id',
+                         align:"center",
+                         dataIndex: 'parentId'
+                        },*/
+                    {
+                        title: '类别名称',
+                        align: "center",
+                        dataIndex: 'categoryName'
+                    },
+                    {
+                        title: '图标',
+                        align: "center",
+                        dataIndex: 'icon',
+                        scopedSlots: {customRender: 'imgurllot'}
+                    },
+                    /*{
+                         title: '是否删除（0：删除 1：未删除）',
+                         align:"center",
+                         dataIndex: 'delFlag'
+                        },*/
+                    {
+                        title: '排序号',
+                        align: "center",
+                        dataIndex: 'sort'
+                    },
+                    {
+                        title: '操作',
+                        dataIndex: 'action',
+                        align: "center",
+                        scopedSlots: {customRender: 'action'},
+                    }
+                ],
+                url: {
+                    list: "/category/category/list",
+                    delete: "/category/category/delete",
+                    deleteBatch: "/category/category/deleteBatch",
+                    exportXlsUrl: "category/category/exportXls",
+                    importExcelUrl: "category/category/importExcel",
+                    imgerver: window._CONFIG['imgDomainURL'],
+                },
             }
-           },
-		   /*{
-            title: '父级id',
-            align:"center",
-            dataIndex: 'parentId'
-           },*/
-		   {
-            title: '类别名称',
-            align:"center",
-            dataIndex: 'categoryName'
-           },
-		   {
-            title: '图标',
-            align:"center",
-            dataIndex: 'icon'
-           },
-		   /*{
-            title: '是否删除（0：删除 1：未删除）',
-            align:"center",
-            dataIndex: 'delFlag'
-           },*/
-		   {
-            title: '排序号',
-            align:"center",
-            dataIndex: 'sort'
-           },
-          {
-            title: '操作',
-            dataIndex: 'action',
-            align:"center",
-            scopedSlots: { customRender: 'action' },
-          }
-        ],
-		url: {
-          list: "/category/category/list",
-          delete: "/category/category/delete",
-          deleteBatch: "/category/category/deleteBatch",
-          exportXlsUrl: "category/category/exportXls",
-          importExcelUrl: "category/category/importExcel",
-       },
+        },
+        computed: {
+            importExcelUrl: function () {
+                return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+            }
+        },
+        methods: {
+            getAvatarView: function (icon) {
+                return this.url.imgerver + "/" + icon;
+            }
+        }
     }
-  },
-  computed: {
-    importExcelUrl: function(){
-      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
-    }
-  },
-    methods: {
-     
-    }
-  }
 </script>
 <style scoped>
   @import '~@assets/less/common.less'

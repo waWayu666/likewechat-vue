@@ -21,13 +21,13 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="类别名称">
-          <a-input placeholder="请输入类别名称" v-decorator="['categoryName', {}]" />
+          <a-input placeholder="请输入类别名称" v-decorator="['categoryName', validatorRules.categoryName ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="图标">
-          <a-input placeholder="请输入图标" v-decorator="['icon', {}]" />
+          <a-input placeholder="请输入图标" v-decorator="['icon', validatorRules.icon ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -39,7 +39,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="排序号">
-          <a-input-number v-decorator="[ 'sort', {}]" />
+          <a-input-number v-decorator="[ 'sort', validatorRules.sort ]" />
         </a-form-item>
 		
       </a-form>
@@ -73,6 +73,9 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
+        categoryName:{rules: [{ required: true, message: '请输入类别名称!' }]},
+        icon:{rules: [{ required: true, message: '请输入图标!' }]},
+        sort:{rules: [{ required: true, message: '请输入排序号!' }]},
         },
         url: {
           add: "/category/category/add",
