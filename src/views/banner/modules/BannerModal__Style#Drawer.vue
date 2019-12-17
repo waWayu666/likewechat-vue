@@ -20,12 +20,6 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="位置ID">
-          <a-input placeholder="请输入位置ID" v-decorator="['positionId', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
           label="图片地址">
           <a-input placeholder="请输入图片地址" v-decorator="['imgUrl', {}]" />
         </a-form-item>
@@ -38,8 +32,8 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="1内联2外链">
-          <a-input placeholder="请输入1内联2外链" v-decorator="['linkType', {}]" />
+          label="0无连接1规则 2商品详情">
+          <a-input placeholder="请输入0无连接1规则 2商品详情" v-decorator="['linkType', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -52,12 +46,6 @@
           :wrapperCol="wrapperCol"
           label="是否有用：0-不启用 1-启用">
           <a-input placeholder="请输入是否有用：0-不启用 1-启用" v-decorator="['useFlag', {}]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="是否删除：0-已删除  1-未删除">
-          <a-input placeholder="请输入是否删除：0-已删除  1-未删除" v-decorator="['delFlag', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -115,7 +103,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'title','positionId','imgUrl','description','linkType','link','useFlag','delFlag','sort'))
+          this.form.setFieldsValue(pick(this.model,'title','imgUrl','description','linkType','link','useFlag','sort'))
 		  //时间格式化
         });
 
