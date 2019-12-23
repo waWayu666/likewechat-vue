@@ -2,7 +2,7 @@
   <a-card :bordered="false">
 
     <!-- 查询区域 -->
-    <div class="table-page-search-wrapper">
+    <!--<div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="24">
 
@@ -25,7 +25,7 @@
 
         </a-row>
       </a-form>
-    </div>
+    </div>-->
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
@@ -108,30 +108,21 @@
             }
            },
 		   {
-            title: '变量名',
-            align:"center",
-            dataIndex: 'configName'
-           },
-		   {
-            title: '分组',
-            align:"center",
-            dataIndex: 'configGroup'
-           },
-		   {
-            title: '变量标题',
+            title: '标题',
             align:"center",
             dataIndex: 'title'
            },
-		   {
-            title: '描述',
+          {
+            title: '排序号',
             align:"center",
-            dataIndex: 'description'
-           },
-		   {
-            title: '值',
+            dataIndex: 'sort_id'
+          },
+		   /*{
+            title: '内容',
             align:"center",
-            dataIndex: 'configValue'
-           },
+            dataIndex: 'content'
+           },*/
+
           {
             title: '操作',
             dataIndex: 'action',
