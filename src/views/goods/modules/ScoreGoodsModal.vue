@@ -37,7 +37,7 @@
             :beforeUpload="beforeUpload"
             @change="handleChange"
           >
-            <img v-if="picUrlPic" :src="this.model.mianImage" alt="商品主图" style="height:104px;max-width:300px"/>
+            <img v-if="picUrlPic" :src="this.model.mainImage" alt="商品主图" style="height:104px;max-width:300px"/>
             <div v-else>
               <a-icon :type="uploadLoading ? 'loading' : 'plus'"/>
               <div class="ant-upload-text">上传</div>
@@ -90,6 +90,17 @@
           </a-select>
           <!--            <a-switch checkedChildren="上架" unCheckedChildren= "下架"  @change="handleSwitch"/>-->
         </a-form-item>
+
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="商品状态">
+          <a-select v-decorator="[ 'goodsType', validatorRules.goodsType]" placeholder="请选择商品属性">
+            <a-select-option :value="0">邮寄</a-select-option>
+            <a-select-option :value="1">寄拍</a-select-option>
+          </a-select>
+          <!--            <a-switch checkedChildren="上架" unCheckedChildren= "下架"  @change="handleSwitch"/>-->
+        </a-form-item>
 		
       </a-form>
     </a-spin>
@@ -135,7 +146,7 @@
         goodsNum:{rules: [{ required: true, message: '请输入商品编号!' }]},
         introduction:{rules: [{ required: true, message: '请输入描述介绍!' }]},
         sort:{rules: [{ required: true, message: '请输入排序号!' }]},
-        mianImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
+        mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
         goodsDesc:{rules: [{ required: true, message: '请输入商品详情!' }]},
         status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
         },
@@ -167,7 +178,7 @@
         this.visible = true;
         this.jeditor.goodsDesc = decodeURIComponent(this.model.goodsDesc);
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'goodsName','goodsNum','price','moneyRatio','score','introduction','sort','mianImage','goodsDesc','status'))
+          this.form.setFieldsValue(pick(this.model,'goodsName','goodsNum','price','moneyRatio','score','introduction','sort','mainImage','goodsDesc','status'))
 		  //时间格式化
         });
 
@@ -237,8 +248,8 @@
               this.uploadLoading = false;
               console.log(response);
               if (response.success) {
-                  this.model.mianImage = response.message;
-                  console.log(this.model.mianImage);
+                  this.model.mainImage = response.message;
+                  console.log(this.model.mainImage);
                   this.picUrlPic = "Has no pic url yet";
               } else {
                   this.$message.warning(response.message);
@@ -246,7 +257,7 @@
           }
       },
       getAvatarView() {
-          return this.url.imgerver + "/" + this.model.mianImage;
+          return this.url.imgerver + "/" + this.model.mainImage;
       },
 
     }

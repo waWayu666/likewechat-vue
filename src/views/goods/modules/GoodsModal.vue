@@ -92,7 +92,7 @@
             :beforeUpload="beforeUpload"
             @change="handleChange"
           >
-            <img v-if="picUrlPic" :src="this.model.mianImage" alt="商品主图" style="height:104px;max-width:300px"/>
+            <img v-if="picUrlPic" :src="this.model.mainImage" alt="商品主图" style="height:104px;max-width:300px"/>
             <div v-else>
               <a-icon :type="uploadLoading ? 'loading' : 'plus'"/>
               <div class="ant-upload-text">上传</div>
@@ -183,7 +183,7 @@
         categoryId:{rules: [{ required: true, message: '请输入分类id!' }]},
         introduction:{rules: [{ required: true, message: '请输入描述介绍!' }]},
         sort:{rules: [{ required: true, message: '请输入排序号!' }]},
-        mianImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
+        mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
         goodsDesc:{rules: [{ required: true, message: '请输入商品详情!' }]},
         status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
         startTime:{rules: [{ required: true, message: '请输入开拍时间!' }]},
@@ -221,7 +221,7 @@
             this.picUrlPic = "Has no pic url yet";
         }
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','price','moneyRatio','score','categoryId','introduction','sort','mianImage','goodsDesc','status','goodsType','dealPrice','auctionCount'))
+          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','price','moneyRatio','score','categoryId','introduction','sort','mainImage','goodsDesc','status','goodsType','dealPrice','auctionCount'))
 		  //时间格式化
           this.form.setFieldsValue({startTime:this.model.startTime?moment(this.model.startTime):null})
           this.form.setFieldsValue({endTime:this.model.endTime?moment(this.model.endTime):null})
@@ -308,8 +308,8 @@
               this.uploadLoading = false;
               console.log(response);
               if (response.success) {
-                  this.model.mianImage = response.message;
-                  console.log(this.model.mianImage);
+                  this.model.mainImage = response.message;
+                  console.log(this.model.mainImage);
                   this.picUrlPic = "Has no pic url yet";
               } else {
                   this.$message.warning(response.message);
@@ -317,7 +317,7 @@
           }
       },
       getAvatarView() {
-          return this.url.imgerver + "/" + this.model.mianImage;
+          return this.url.imgerver + "/" + this.model.mainImage;
       },
       handleSwitch(info) {
         console.log(info);

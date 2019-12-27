@@ -81,7 +81,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="商品主图">
-          <a-input placeholder="请输入商品主图" v-decorator="['mianImage', validatorRules.mianImage ]" />
+          <a-input placeholder="请输入商品主图" v-decorator="['mainImage', validatorRules.mainImage ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -159,7 +159,7 @@
         commissionPrice:{rules: [{ required: true, message: '请输入佣金!' }]},
         introduction:{rules: [{ required: true, message: '请输入描述介绍!' }]},
         sort:{rules: [{ required: true, message: '请输入排序号!' }]},
-        mianImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
+        mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
         status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
         startTime:{rules: [{ required: true, message: '请输入开拍时间!' }]},
         endTime:{rules: [{ required: true, message: '请输入结束时间!' }]},
@@ -181,7 +181,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','categoryId','introduction','sort','mianImage','goodsDesc','status','dealPrice','auctionCount'))
+          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','categoryId','introduction','sort','mainImage','goodsDesc','status','dealPrice','auctionCount'))
 		  //时间格式化
           this.form.setFieldsValue({startTime:this.model.startTime?moment(this.model.startTime):null})
           this.form.setFieldsValue({endTime:this.model.endTime?moment(this.model.endTime):null})

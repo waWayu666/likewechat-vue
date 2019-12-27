@@ -57,7 +57,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="商品主图">
-          <a-input placeholder="请输入商品主图" v-decorator="['mianImage', validatorRules.mianImage ]" />
+          <a-input placeholder="请输入商品主图" v-decorator="['mainImage', validatorRules.mainImage ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -107,7 +107,7 @@
         goodsNum:{rules: [{ required: true, message: '请输入商品编号!' }]},
         introduction:{rules: [{ required: true, message: '请输入描述介绍!' }]},
         sort:{rules: [{ required: true, message: '请输入排序号!' }]},
-        mianImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
+        mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
         goodsDesc:{rules: [{ required: true, message: '请输入商品详情!' }]},
         status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
         },
@@ -128,7 +128,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'goodsName','goodsNum','price','moneyRatio','score','introduction','sort','mianImage','goodsDesc','status'))
+          this.form.setFieldsValue(pick(this.model,'goodsName','goodsNum','price','moneyRatio','score','introduction','sort','mainImage','goodsDesc','status'))
 		  //时间格式化
         });
 

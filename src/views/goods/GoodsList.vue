@@ -73,7 +73,7 @@
 
         <template slot="imgurllot" slot-scope="text, record, index">
           <div class="anty-img-wrap">
-            <img :src="record.mianImage"/>
+            <img :src="record.mainImage"/>
           </div>
         </template>
 
@@ -189,7 +189,7 @@
                     {
                         title: '商品主图',
                         align: "center",
-                        dataIndex: 'mianImage',
+                        dataIndex: 'mainImage',
                         scopedSlots: {customRender: 'imgurllot'}
                     },
                     {
@@ -247,8 +247,8 @@
             }
         },
         methods: {
-            getAvatarView: function (mianImage) {
-                return this.url.imgerver + "/" + mianImage;
+            getAvatarView: function (mainImage) {
+                return this.url.imgerver + "/" + mainImage;
             }
         }
     }

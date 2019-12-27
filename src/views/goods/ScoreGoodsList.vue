@@ -65,7 +65,7 @@
 
         <template slot="imgurllot" slot-scope="text, record, index">
           <div class="anty-img-wrap">
-            <img :src="record.mianImage"/>
+            <img :src="record.mainImage"/>
           </div>
         </template>
 
@@ -152,7 +152,7 @@
                     {
                         title: '商品主图',
                         align: "center",
-                        dataIndex: 'mianImage',
+                        dataIndex: 'mainImage',
                         scopedSlots: {customRender: 'imgurllot'}
                     },
                     {
@@ -167,6 +167,19 @@
                             }
                         }
                     },
+
+                  {
+                    title: '状态',
+                    align: "center",
+                    dataIndex: 'goodsType',
+                    customRender: function (t) {
+                      if (t == 0) {
+                        return "邮寄";
+                      } else {
+                        return "寄拍";
+                      }
+                    }
+                  },
                     {
                         title: '操作',
                         dataIndex: 'action',
@@ -190,8 +203,8 @@
             }
         },
         methods: {
-            getAvatarView: function (mianImage) {
-                return this.url.imgerver + "/" + mianImage;
+            getAvatarView: function (mainImage) {
+                return this.url.imgerver + "/" + mainImage;
             }
         }
     }
