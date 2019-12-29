@@ -118,7 +118,10 @@ const getCouponList = (params) => getAction("/coupon/couponType/queryCouponBySho
 const getCouponNumber = (params) => getAction("/coupon/couponType/getCouponNumber", params);
 // 获取用户list id,mobile
 const getUList = (params) => getAction("/user/user/getUList", params);
-
+// 小程序用户管理
+const frost=(id,params)=> postAction(`/user/user/frost/${id}`,params);
+// 商品管理
+const upOrDown=(id,params)=> postAction(`/goods/goods/upOrDown/${id}`,params);
 export {
   // imgView,
   // doMian,
@@ -179,7 +182,9 @@ export {
   getCourseList,
   getCouponList,
   getCouponNumber,
-  getUList
+  getUList,
+  frost,
+  upOrDown
 }
 
 

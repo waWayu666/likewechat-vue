@@ -63,19 +63,22 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a-popconfirm title="确定冻结吗?" @confirm="() => frostUser(record.id)">
+            <a>冻结</a>
+          </a-popconfirm>
+<!--          <a @click="handleEdit(record)">编辑</a>-->
 
-          <a-divider type="vertical" />
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+<!--          <a-divider type="vertical" />-->
+<!--          <a-dropdown>-->
+<!--            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>-->
+<!--            <a-menu slot="overlay">-->
+<!--              <a-menu-item>-->
+<!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+<!--                  <a>删除</a>-->
+<!--                </a-popconfirm>-->
+<!--              </a-menu-item>-->
+<!--            </a-menu>-->
+<!--          </a-dropdown>-->
         </span>
 
       </a-table>
@@ -90,6 +93,7 @@
 <script>
   import UserModal from './modules/UserModal'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import { frost } from '@/api/api'
 
   export default {
     name: "UserList",
@@ -116,11 +120,6 @@
             title: '昵称',
             align:"center",
             dataIndex: 'nickname'
-          },
-          {
-            title: '真实姓名',
-            align:"center",
-            dataIndex: 'realname'
           },
           {
             title: '年龄',
@@ -193,7 +192,7 @@
           {
             title: '注册时间',
             align:"center",
-            dataIndex: 'registerTime'
+            dataIndex: 'createTime'
           },
           {
             title: '操作',
@@ -220,7 +219,19 @@
     methods: {
         getAvatarView: function (imgUrl) {
             return this.url.imgerver + "/" + avatar;
-        }
+        },
+        //冻结用户
+        frostUser(id){
+            console.log(id)
+            frost(id,null).then((res)=>{
+                console.log(res.result);
+                if(res.success){
+                    this.$message.success(res.message);
+                }else {
+                    this.$message.warning(res.message);
+                }
+            });
+        },
     }
   }
 </script>

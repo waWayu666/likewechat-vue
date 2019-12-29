@@ -10,33 +10,20 @@
     
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-
+      
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="变量名">
-          <a-input placeholder="请输入变量名" v-decorator="['configName', validatorRules.configName ]" />
+          label="标题">
+          <a-input placeholder="请输入标题" v-decorator="['title', validatorRules.title ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="分组">
-          <a-input placeholder="请输入分组" v-decorator="['configGroup', {}]" />
+          label="请输入内容"
+          style="min-height: 300px">
+          <j-editor placeholder="请输入内容" v-model="jeditor.content"/>
         </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="变量标题">
-          <a-input placeholder="请输入变量标题" v-decorator="['title', validatorRules.title ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="描述">
-          <a-input placeholder="请输入描述" v-decorator="['description', {}]" />
-        </a-form-item>
-
-
       </a-form>
     </a-spin>
   </a-modal>
@@ -45,10 +32,14 @@
 <script>
   import { httpAction } from '@/api/manage'
   import pick from 'lodash.pick'
+  import JEditor from '@/components/jeecg/JEditor'
   import moment from "moment"
 
   export default {
-    name: "SystemConfigModal",
+    name: "ConfigModal",
+    components: {
+        JEditor
+    },
     data () {
       return {
         title:"操作",
@@ -66,13 +57,15 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-        configName:{rules: [{ required: true, message: '请输入变量名!' }]},
-        title:{rules: [{ required: true, message: '请输入变量标题!' }]},
-        configValue:{rules: [{ required: true, message: '请输入值!' }]},
+        title:{rules: [{ required: true, message: '请输入标题!' }]},
+        content:{rules: [{ required: true, message: '请输入内容!' }]},
         },
         url: {
-          add: "/systemconfig/systemConfig/add",
-          edit: "/systemconfig/systemConfig/edit",
+          add: "/config/config/add",
+          edit: "/config/config/edit",
+        },
+        jeditor: {
+            content: '',
         },
       }
     },
@@ -81,13 +74,15 @@
     methods: {
       add () {
         this.edit({});
+        this.jeditor.content = '';
       },
       edit (record) {
         this.form.resetFields();
         this.model = Object.assign({}, record);
+        this.jeditor.content = decodeURIComponent(this.model.content);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'configName','configGroup','title','description','configValue'))
+          this.form.setFieldsValue(pick(this.model,'title','content','sortId','groupId'))
 		  //时间格式化
         });
 

@@ -81,16 +81,21 @@
           <a @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+
+          <a-popconfirm title="确定上下架吗?" @confirm="() => upOrDownGoods(record.id)">
+            <a v-if="record.status == 0">上架</a>
+            <a v-else-if="record.status == 1">下架</a>
+          </a-popconfirm>
+<!--          <a-dropdown>-->
+<!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
+<!--            <a-menu slot="overlay">-->
+<!--              <a-menu-item>-->
+<!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+<!--                  <a>删除</a>-->
+<!--                </a-popconfirm>-->
+<!--              </a-menu-item>-->
+<!--            </a-menu>-->
+<!--          </a-dropdown>-->
         </span>
 
       </a-table>
@@ -105,6 +110,7 @@
 <script>
     import GoodsModal from './modules/GoodsModal'
     import {JeecgListMixin} from '@/mixins/JeecgListMixin'
+    import { upOrDown } from '@/api/api'
 
     export default {
         name: "GoodsList",
@@ -249,7 +255,19 @@
         methods: {
             getAvatarView: function (mainImage) {
                 return this.url.imgerver + "/" + mainImage;
-            }
+            },
+            //冻结用户
+            upOrDownGoods(id){
+                console.log(id)
+                upOrDown(id,null).then((res)=>{
+                    console.log(res.result);
+                    if(res.success){
+                        this.$message.success(res.message);
+                    }else {
+                        this.$message.warning(res.message);
+                    }
+                });
+            },
         }
     }
 </script>

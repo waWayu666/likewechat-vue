@@ -48,7 +48,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+<!--      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>-->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
@@ -84,23 +84,41 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
-          <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <span v-if="record.orderStatus ==2">
+            <a-divider type="vertical" />
+            <a v-if="record.orderStatus==1 || record.orderStatus==2" @click="getExpressNo(record)">发货</a>
+                      <!--<a v-else-if="record.orderStatus===3 || record.orderStatus===4 || record.orderStatus===5" @click="showLogistics(record.id)">已发货</a>-->
+            <a v-else-if="record.orderStatus==3 || record.orderStatus==4 || record.orderStatus==5"><b>已发货</b></a>
+            <a v-else-if="record.orderStatus==6 ">已关闭</a>
+          </span>
         </span>
 
       </a-table>
     </div>
     <!-- table区域-end -->
+
+    <div style="width: 500px">
+      <a-modal
+        title="物流公司"
+        :visible="visible"
+        @ok="deliverGoods"
+        :confirmLoading="confirmLoading"
+        @cancel="handleCancel"
+      >
+        <a-spin :spinning="confirmLoading">
+          <a-form :form="form">
+            <a-form-item
+              label="请输入物流公司">
+              <a-input placeholder="请输入快递单号" v-decorator="[ 'expressName', validatorRules.expressName ]" ></a-input>
+            </a-form-item>
+            <a-form-item
+              label="快递单号">
+              <a-input placeholder="请输入快递单号" v-decorator="[ 'expressNum', validatorRules.expressNum ]" ></a-input>
+            </a-form-item>
+          </a-form>
+        </a-spin>
+      </a-modal>
+    </div>
 
     <!-- 表单区域 -->
     <order-modal ref="modalForm" @ok="modalFormOk"></order-modal>
@@ -110,6 +128,7 @@
 <script>
     import OrderModal from './modules/OrderModal'
     import {JeecgListMixin} from '@/mixins/JeecgListMixin'
+    import {deliverGoods} from '@/api/api'
 
     export default {
         name: "OrderList",
@@ -120,6 +139,12 @@
         data() {
             return {
                 description: '订单管理页面',
+                visible:false,
+                validatorRules: {
+                    expressName: {rules: [{required: true, message: '请输入物流公司名称!'}]},
+                    expressNum: {rules: [{required: true, message: '请输入快递单号!'}]},
+                },
+
                 // 表头
                 columns: [
                     {
@@ -138,14 +163,9 @@
                         dataIndex: 'orderNum'
                     },
                     {
-                        title: '订单来源',
-                        align: "center",
-                        dataIndex: 'orderFrom'
-                    },
-                    {
-                        title: '买家id',
-                        align: "center",
-                        dataIndex: 'userId'
+                        title: '商品名称',
+                        align:"center",
+                        dataIndex: 'goodsId_dictText'
                     },
                     {
                         title: '买家会员名称',
@@ -153,9 +173,16 @@
                         dataIndex: 'nickname'
                     },
                     {
-                        title: '1:竞拍商品  2：积分商品',
+                        title: '商品类型',
                         align: "center",
-                        dataIndex: 'orderType'
+                        dataIndex: 'orderType',
+                        customRender:function (value) {
+                            if(value == 1){
+                                return "竞拍商品";
+                            }else {
+                                return "积分商品";
+                            }
+                        }
                     },
                     {
                         title: '订单总价',
@@ -165,7 +192,14 @@
                     {
                         title: '订单消耗积分',
                         align: "center",
-                        dataIndex: 'point'
+                        dataIndex: 'point',
+                        customRender:function (value) {
+                            if(value == 0 || value == '' || value == null){
+                                return "未使用";
+                            }else {
+                                return value;
+                            }
+                        }
                     },
                     {
                         title: '订单余额支付金额',
@@ -190,21 +224,6 @@
                             }
                         }
                     },
-                    // {
-                    //     title: '订单付款时间',
-                    //     align: "center",
-                    //     dataIndex: 'payTime'
-                    // },
-                    // {
-                    //     title: '订单是否已删除',
-                    //     align: "center",
-                    //     dataIndex: 'delFlag'
-                    // },
-                    // {
-                    //     title: '取消订单原因',
-                    //     align: "center",
-                    //     dataIndex: 'cancelReason'
-                    // },
                     {
                         title: '操作',
                         dataIndex: 'action',
@@ -226,7 +245,46 @@
                 return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
             }
         },
-        methods: {}
+        methods: {
+            handleCancel(){
+                this.visible=false;
+            },
+
+            //选择物流公司并填写物流单号后点击确定，修改订单状态，将物流公司和物流单号分别填写到对应表中
+
+            deliverGoods(){
+                // alert(this.expressNumber)
+                // alert(this.doc.id)
+                // if(this.doc.companyName==""||this.doc.companyName==null){
+                //     this.$warning({
+                //         title:'提示',
+                //         content:'请选择物流公司'
+                //     })
+                //     return;
+                // }
+                // if(this.expressNumber==""||this.expressNumber==null){
+                //     this.$warning({
+                //         title:'提示',
+                //         content:'请输入快递单号'
+                //     })
+                //     return;
+                // }
+                console.log(this.doc);
+                console.log(this.orderId);
+                let arr = [this.orderId,this.validatorRules.expressName,this.validatorRules.expressNum];
+                deliverGoods(arr.toString(), null).then((res) => {
+                    console.log(res);
+                    if (res.code === 1) {
+                        this.$message.success(res.msg);
+
+                    } else {
+                        this.$message.warning(res.msg);
+                    }
+                });
+                this.visible = false;
+                this.reload();
+            }
+        }
     }
 </script>
 <style scoped>

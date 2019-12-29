@@ -1,45 +1,46 @@
 <template>
-  <a-modal
-    :title="title"
-    :width="800"
-    :visible="visible"
-    :confirmLoading="confirmLoading"
-    @ok="handleOk"
-    @cancel="handleCancel"
-    cancelText="关闭">
-    
+  <a-drawer
+      :title="title"
+      :width="800"
+      placement="right"
+      :closable="false"
+      @close="close"
+      :visible="visible"
+  >
+
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-
+      
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="变量名">
-          <a-input placeholder="请输入变量名" v-decorator="['configName', validatorRules.configName ]" />
+          label="标题">
+          <a-input placeholder="请输入标题" v-decorator="['title', validatorRules.title ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="分组">
-          <a-input placeholder="请输入分组" v-decorator="['configGroup', {}]" />
+          label="内容">
+          <a-input placeholder="请输入内容" v-decorator="['content', validatorRules.content ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="变量标题">
-          <a-input placeholder="请输入变量标题" v-decorator="['title', validatorRules.title ]" />
+          label="排序号">
+          <a-input-number v-decorator="[ 'sortId', {}]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="描述">
-          <a-input placeholder="请输入描述" v-decorator="['description', {}]" />
+          label="分组标识">
+          <a-input placeholder="请输入分组标识" v-decorator="['groupId', {}]" />
         </a-form-item>
-
-
+		
       </a-form>
     </a-spin>
-  </a-modal>
+    <a-button type="primary" @click="handleOk">确定</a-button>
+    <a-button type="primary" @click="handleCancel">取消</a-button>
+  </a-drawer>
 </template>
 
 <script>
@@ -48,7 +49,7 @@
   import moment from "moment"
 
   export default {
-    name: "SystemConfigModal",
+    name: "ConfigModal",
     data () {
       return {
         title:"操作",
@@ -66,13 +67,12 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-        configName:{rules: [{ required: true, message: '请输入变量名!' }]},
-        title:{rules: [{ required: true, message: '请输入变量标题!' }]},
-        configValue:{rules: [{ required: true, message: '请输入值!' }]},
+        title:{rules: [{ required: true, message: '请输入标题!' }]},
+        content:{rules: [{ required: true, message: '请输入内容!' }]},
         },
         url: {
-          add: "/systemconfig/systemConfig/add",
-          edit: "/systemconfig/systemConfig/edit",
+          add: "/config/config/add",
+          edit: "/config/config/edit",
         },
       }
     },
@@ -87,7 +87,7 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'configName','configGroup','title','description','configValue'))
+          this.form.setFieldsValue(pick(this.model,'title','content','sortId','groupId'))
 		  //时间格式化
         });
 
@@ -142,5 +142,10 @@
 </script>
 
 <style lang="less" scoped>
-
+/** Button按钮间距 */
+  .ant-btn {
+    margin-left: 30px;
+    margin-bottom: 30px;
+    float: right;
+  }
 </style>
