@@ -100,6 +100,29 @@
           </a-upload>
         </a-form-item>
 
+        <!-- 轮播图mainImages -->
+        <a-form-item label="轮播图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-upload
+            listType="picture-card"
+            class="avatar-uploader"
+            :action="uploadAction"
+            :fileList="fileListLb"
+            :multiple="true"
+            :headers="headers"
+            :beforeUpload="beforeUpload"
+            @preview="handlePreview"
+            @change="handleChangeLb"
+          >
+            <div v-if="fileListLb.length < 6">
+              <a-icon type="plus"/>
+              <div class="ant-upload-text">上传</div>
+            </div>
+          </a-upload>
+          <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancelImg">
+            <img alt="example" style="width: 100%" :src="previewImage"/>
+          </a-modal>
+        </a-form-item>
+
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -155,6 +178,10 @@
       return {
         title:"操作",
         visible: false,
+        previewVisible: false,
+        previewImage: '',
+        fileListLb: [],
+        fileTempLb: [],
         model: {},
         labelCol: {
           xs: { span: 24 },
@@ -220,8 +247,24 @@
         if (record.hasOwnProperty("id")) { //编辑的时候回显主图
             this.picUrlPic = "Has no pic url yet";
         }
+
+        // 轮播图回显
+        this.fileListLb = [];
+        this.fileTempLb = [];
+        let ss = [];
+        if (record.mainImages != undefined && record.mainImages != "") {
+            this.fileTempLb = record.mainImages.split(",");
+            this.fileTempLb.map((item, num) => {
+                ss.push({
+                    uid: num,
+                    url: item
+                });
+            })
+        }
+        this.fileListLb = ss;
+
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','price','moneyRatio','score','categoryId','introduction','sort','mainImage','goodsDesc','status','goodsType','dealPrice','auctionCount'))
+          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','price','moneyRatio','score','categoryId','introduction','sort','mainImage','goodsDesc','status','goodsType','dealPrice','auctionCount','mainImages'))
 		  //时间格式化
           this.form.setFieldsValue({startTime:this.model.startTime?moment(this.model.startTime):null})
           this.form.setFieldsValue({endTime:this.model.endTime?moment(this.model.endTime):null})
@@ -236,6 +279,10 @@
         const that = this;
         let goodsDesc = encodeURIComponent(this.jeditor.goodsDesc);
         this.model.goodsDesc = goodsDesc;
+
+        // 轮播图片地址
+        this.model.mainImages = this.fileTempLb.toString();
+
         console.log(goodsDesc)
         // 触发表单验证
         this.form.validateFields((err, values) => {
@@ -326,7 +373,42 @@
         } else {
             this.model.status == "0";
         }
-      }
+      },
+      handleCancelImg() {
+          this.previewVisible = false
+      },
+      handlePreview(file) {
+          this.mainImages = file.url || file.thumbUrl;
+          this.previewVisible = true
+      },
+      handleChangeLb({file, fileList}) {
+          /*debugger;*/
+          if (file.status == "removed") {
+              this.fileListLb.map((item, index) => {
+                  if (item.uid == file.uid) {
+                      this.fileListLb.splice(index, 1);
+                      this.fileTempLb.splice(index, 1);
+                  }
+              });
+              if (file.name) {
+                  this.fileTempLb.map((item, index) => {
+                      if (item == file.response.message) {
+                          this.fileTempLb.splice(index, 1);
+                      }
+                  })
+              } else {
+                  let removeFileImgUrl = file.url.split('view/')[1];
+                  this.fileTempLb.map((item, index) => {
+                      if (item == removeFileImgUrl) {
+                          this.fileTempLb.splice(index, 1);
+                      }
+                  })
+              }
+          } else {
+              this.fileListLb = fileList;
+              this.fileTempLb.push(file.response.message);
+          }
+      },
     }
   }
 </script>

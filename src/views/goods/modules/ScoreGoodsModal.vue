@@ -44,6 +44,30 @@
             </div>
           </a-upload>
         </a-form-item>
+
+        <!-- 轮播图mainImages -->
+        <a-form-item label="轮播图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-upload
+            listType="picture-card"
+            class="avatar-uploader"
+            :action="uploadAction"
+            :fileList="fileListLb"
+            :multiple="true"
+            :headers="headers"
+            :beforeUpload="beforeUpload"
+            @preview="handlePreview"
+            @change="handleChangeLb"
+          >
+            <div v-if="fileListLb.length < 6">
+              <a-icon type="plus"/>
+              <div class="ant-upload-text">上传</div>
+            </div>
+          </a-upload>
+          <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancelImg">
+            <img alt="example" style="width: 100%" :src="previewImage"/>
+          </a-modal>
+        </a-form-item>
+
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -66,7 +90,7 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="描述介绍">
-          <a-input placeholder="请输入描述介绍" v-decorator="['introduction', validatorRules.introduction ]" />
+          <a-textarea placeholder="请输入描述介绍" v-decorator="['introduction', validatorRules.introduction ]" :rows="4"/>
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -124,6 +148,10 @@
       return {
         title:"操作",
         visible: false,
+        previewVisible: false,
+        previewImage: '',
+        fileListLb: [],
+        fileTempLb: [],
         model: {},
         labelCol: {
           xs: { span: 24 },
@@ -148,7 +176,8 @@
         sort:{rules: [{ required: true, message: '请输入排序号!' }]},
         mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
         goodsDesc:{rules: [{ required: true, message: '请输入商品详情!' }]},
-        status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
+        status:{rules: [{ required: true, message: '请选择商品上下架!' }]},
+        goodsType:{rules: [{ required: true, message: '请选择商品状态!' }]},
         },
         url: {
           add: "/goods/scoreGoods/add",
@@ -177,8 +206,26 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.jeditor.goodsDesc = decodeURIComponent(this.model.goodsDesc);
+        if (record.hasOwnProperty("id")) { //编辑的时候回显主图
+            this.picUrlPic = "Has no pic url yet";
+        }
+        // 轮播图回显
+        this.fileListLb = [];
+        this.fileTempLb = [];
+        let ss = [];
+        if (record.mainImages != undefined && record.mainImages != "") {
+            this.fileTempLb = record.mainImages.split(",");
+            this.fileTempLb.map((item, num) => {
+                ss.push({
+                    uid: num,
+                    url: item
+                });
+            })
+        }
+        this.fileListLb = ss;
+
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'goodsName','goodsNum','price','moneyRatio','score','introduction','sort','mainImage','goodsDesc','status'))
+          this.form.setFieldsValue(pick(this.model,'goodsName','goodsNum','price','moneyRatio','score','introduction','sort','mainImage','goodsDesc','status','goodsType'))
 		  //时间格式化
         });
 
@@ -191,6 +238,10 @@
         const that = this;
         let goodsDesc = encodeURIComponent(this.jeditor.goodsDesc);
         this.model.goodsDesc = goodsDesc;
+
+        // 轮播图片地址
+        this.model.mainImages = this.fileTempLb.toString();
+
         // 触发表单验证
         this.form.validateFields((err, values) => {
           if (!err) {
@@ -259,7 +310,41 @@
       getAvatarView() {
           return this.url.imgerver + "/" + this.model.mainImage;
       },
-
+      handleCancelImg() {
+          this.previewVisible = false
+      },
+      handlePreview(file) {
+          this.mainImages = file.url || file.thumbUrl;
+          this.previewVisible = true
+      },
+      handleChangeLb({file, fileList}) {
+          /*debugger;*/
+          if (file.status == "removed") {
+              this.fileListLb.map((item, index) => {
+                  if (item.uid == file.uid) {
+                      this.fileListLb.splice(index, 1);
+                      this.fileTempLb.splice(index, 1);
+                  }
+              });
+              if (file.name) {
+                  this.fileTempLb.map((item, index) => {
+                      if (item == file.response.message) {
+                          this.fileTempLb.splice(index, 1);
+                      }
+                  })
+              } else {
+                  let removeFileImgUrl = file.url.split('view/')[1];
+                  this.fileTempLb.map((item, index) => {
+                      if (item == removeFileImgUrl) {
+                          this.fileTempLb.splice(index, 1);
+                      }
+                  })
+              }
+          } else {
+              this.fileListLb = fileList;
+              this.fileTempLb.push(file.response.message);
+          }
+      },
     }
   }
 </script>

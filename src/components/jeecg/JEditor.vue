@@ -74,7 +74,7 @@
 
             xhr = new XMLHttpRequest();
             xhr.withCredentials = false;
-            xhr.open('POST', window._CONFIG['domianURL']+"/sys/common/uploadAli");
+            xhr.open('POST', window._CONFIG['domianURL']+"/sys/common/uploadQiNiuYun");
 
             xhr.onload = function () {
               var json;
