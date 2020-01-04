@@ -144,6 +144,22 @@
           <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'endTime', validatorRules.endTime ]" />
         </a-form-item>
 
+
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="测试时间">
+          <a-range-picker
+            :disabledDate="disabledDate"
+            :disabledTime="disabledRangeTime"
+            :showTime="{
+        hideDisabledOptions: true,
+        defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')]
+      }"
+            format="YYYY-MM-DD HH:mm:ss"
+          />
+        </a-form-item>
+
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -235,6 +251,46 @@
         }
     },
     methods: {
+      moment,
+      range(start, end) {
+        const result = [];
+        for (let i = start; i < end; i++) {
+          result.push(i);
+        }
+        return result;
+      },
+
+      disabledDate(current) {
+        // Can not select days before today and today
+        return current && current < moment().endOf('day');
+      },
+
+      disabledDateTime() {
+        return {
+          disabledHours: () => this.range(0, 24).splice(4, 20),
+          disabledMinutes: () => this.range(30, 60),
+          disabledSeconds: () => [55, 56],
+        };
+      },
+
+      disabledRangeTime(_, type) {
+        if (type === 'start') {
+          return {
+            disabledHours: () => this.range(0, 60).splice(4, 20),
+            disabledMinutes: () => this.range(30, 60),
+            disabledSeconds: () => [55, 56],
+          };
+        }
+        return {
+          disabledHours: () => this.range(0, 60).splice(20, 4),
+          disabledMinutes: () => this.range(0, 31),
+          disabledSeconds: () => [55, 56],
+        };
+      },
+
+
+
+
       add () {
         this.edit({});
         this.jeditor.goodsDesc = '';
@@ -245,7 +301,7 @@
         this.visible = true;
         this.jeditor.goodsDesc = decodeURIComponent(this.model.goodsDesc);
         if (record.hasOwnProperty("id")) { //编辑的时候回显主图
-            this.picUrlPic = "Has no pic url yet";
+          this.picUrlPic = "Has no pic url yet";
         }
 
         // 轮播图回显
@@ -253,24 +309,26 @@
         this.fileTempLb = [];
         let ss = [];
         if (record.mainImages != undefined && record.mainImages != "") {
-            this.fileTempLb = record.mainImages.split(",");
-            this.fileTempLb.map((item, num) => {
-                ss.push({
-                    uid: num,
-                    url: item
-                });
-            })
+          this.fileTempLb = record.mainImages.split(",");
+          this.fileTempLb.map((item, num) => {
+            ss.push({
+              uid: num,
+              url: item
+            });
+          })
         }
         this.fileListLb = ss;
 
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'finishFlag','goodsName','goodsNum','startPrice','evaluatePrice','maxPrice','addPrice','commissionPrice','price','moneyRatio','score','categoryId','introduction','sort','mainImage','goodsDesc','status','goodsType','dealPrice','auctionCount','mainImages'))
-		  //时间格式化
-          this.form.setFieldsValue({startTime:this.model.startTime?moment(this.model.startTime):null})
-          this.form.setFieldsValue({endTime:this.model.endTime?moment(this.model.endTime):null})
+          this.form.setFieldsValue(pick(this.model, 'finishFlag', 'goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
+          //时间格式化
+          this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null})
+          this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
         });
 
       },
+
+
       close () {
         this.$emit('close');
         this.visible = false;
