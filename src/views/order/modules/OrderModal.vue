@@ -1,10 +1,10 @@
 <template>
   <a-modal
-    :title="title"
+    title="详情"
     :width="800"
     :visible="visible"
     :confirmLoading="confirmLoading"
-    @ok="handleOk"
+    @ok="handleCancel"
     @cancel="handleCancel"
     cancelText="关闭">
     
@@ -15,74 +15,67 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="订单编号">
-          <a-input placeholder="请输入订单编号" v-decorator="['orderNum', {}]" />
+          {{this.model.orderNum}}
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="订单来源">
-          <a-input placeholder="请输入订单来源" v-decorator="['orderFrom', validatorRules.orderFrom ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="买家id">
-          <a-input placeholder="请输入买家id" v-decorator="['userId', validatorRules.userId ]" />
+          {{this.model.orderFrom}}
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="买家会员名称">
-          <a-input placeholder="请输入买家会员名称" v-decorator="['nickname', validatorRules.nickname ]" />
+          {{this.model.nickname}}
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="1:竞拍商品  2：积分商品">
-          <a-input placeholder="请输入1:竞拍商品  2：积分商品" v-decorator="['orderType', validatorRules.orderType ]" />
+          label="商品类型">
+          <span v-if="this.model.orderStatus == 1">竞拍商品</span>
+          <span v-if="this.model.orderStatus == 2">积分商品</span>
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="订单总价">
-          <a-input-number v-decorator="[ 'orderMoney', {}]" />
+          {{this.model.orderMoney}}
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="订单消耗积分">
-          <a-input-number v-decorator="[ 'point', {}]" />
+          {{this.model.point}}
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="订单余额支付金额">
-          <a-input-number v-decorator="[ 'userMoney', {}]" />
+          {{this.model.userMoney}}
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="订单状态0流拍 1待付款 2待发货 3待签收 4已完成">
-          <a-input placeholder="请输入订单状态0流拍 1待付款 2待发货 3待签收 4已完成" v-decorator="['orderStatus', validatorRules.orderStatus ]" />
+          label="订单状态">
+          <span v-if="this.model.orderStatus == 0">流拍</span>
+          <span v-if="this.model.orderStatus == 1">待付款</span>
+          <span v-if="this.model.orderStatus == 2">待发货</span>
+          <span v-if="this.model.orderStatus == 3">待签收</span>
+          <span v-if="this.model.orderStatus == 4">已完成</span>
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="订单付款时间">
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'payTime', {}]" />
+          {{this.model.payTime}}
         </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单是否已删除">
-          <a-input placeholder="请输入订单是否已删除" v-decorator="['delFlag', validatorRules.delFlag ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="取消订单原因">
-          <a-input placeholder="请输入取消订单原因" v-decorator="['cancelReason', {}]" />
-        </a-form-item>
+<!--        <a-form-item-->
+<!--          :labelCol="labelCol"-->
+<!--          :wrapperCol="wrapperCol"-->
+<!--          label="取消订单原因">-->
+<!--          {{this.model.cancelReason}}-->
+<!--        </a-form-item>-->
 		
       </a-form>
     </a-spin>

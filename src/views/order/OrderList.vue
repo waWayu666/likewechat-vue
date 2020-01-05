@@ -83,6 +83,7 @@
         @change="handleTableChange">
 
         <span slot="action" slot-scope="text, record">
+            <a @click="handleEdit(record)">详情</a>
           <span v-if="record.orderStatus ==2">
             <a-divider type="vertical" />
             <a v-if="record.orderStatus==1 || record.orderStatus==2" @click="getExpressNo(record)">发货</a>
