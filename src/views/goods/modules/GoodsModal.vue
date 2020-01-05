@@ -36,6 +36,7 @@
           :wrapperCol="wrapperCol"
           label="底价">
           <a-input-number v-decorator="[ 'minPrice', {}]" />
+        </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
