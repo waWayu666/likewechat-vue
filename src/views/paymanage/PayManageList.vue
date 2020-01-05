@@ -12,27 +12,13 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="商品id">
-              <a-input placeholder="请输入商品id" v-model="queryParam.goodsId"></a-input>
+            <a-form-item label="商品类型">
+              <a-select v-model="queryParam.orderType" placeholder="请选择商品状态">
+                <a-select-option value="1">竞拍商品</a-select-option>
+                <a-select-option value="2">积分商品</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
-          <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="买家id">
-                <a-input placeholder="请输入买家id" v-model="queryParam.userId"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="买家会员名称">
-                <a-input placeholder="请输入买家会员名称" v-model="queryParam.nickname"></a-input>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="1:竞拍商品  2：积分商品">
-                <a-input placeholder="请输入1:竞拍商品  2：积分商品" v-model="queryParam.orderType"></a-input>
-              </a-form-item>
-            </a-col>
-          </template>
           <a-col :md="6" :sm="8">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
@@ -90,19 +76,20 @@
         @change="handleTableChange">
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+<!--          <a @click="handleEdit(record)">编辑</a>-->
+          <a @click="handleEdit(record)">退款</a>
 
-          <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+<!--          <a-divider type="vertical"/>-->
+<!--          <a-dropdown>-->
+<!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
+<!--            <a-menu slot="overlay">-->
+<!--              <a-menu-item>-->
+<!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+<!--                  <a>删除</a>-->
+<!--                </a-popconfirm>-->
+<!--              </a-menu-item>-->
+<!--            </a-menu>-->
+<!--          </a-dropdown>-->
         </span>
 
       </a-table>

@@ -15,19 +15,19 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="标题">
-          <a-input placeholder="请输入标题" v-decorator="['title', {}]" />
+          <a-input placeholder="请输入标题" v-decorator="['title', validatorRules.title ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="图片地址">
-          <a-input placeholder="请输入图片地址" v-decorator="['imgUrl', {}]" />
+          <a-input placeholder="请输入图片地址" v-decorator="['imgUrl', validatorRules.imgUrl ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="描述">
-          <a-input placeholder="请输入描述" v-decorator="['description', {}]" />
+          <a-input placeholder="请输入描述" v-decorator="['description', validatorRules.description ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -45,13 +45,13 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="是否有用：0-不启用 1-启用">
-          <a-input placeholder="请输入是否有用：0-不启用 1-启用" v-decorator="['useFlag', {}]" />
+          <a-input placeholder="请输入是否有用：0-不启用 1-启用" v-decorator="['useFlag', validatorRules.useFlag ]" />
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="排序">
-          <a-input-number v-decorator="[ 'sort', {}]" />
+          <a-input-number v-decorator="[ 'sort', validatorRules.sort ]" />
         </a-form-item>
 		
       </a-form>
@@ -85,6 +85,11 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
+        title:{rules: [{ required: true, message: '请输入标题!' }]},
+        imgUrl:{rules: [{ required: true, message: '请输入图片地址!' }]},
+        description:{rules: [{ required: true, message: '请输入描述!' }]},
+        useFlag:{rules: [{ required: true, message: '请输入是否有用：0-不启用 1-启用!' }]},
+        sort:{rules: [{ required: true, message: '请输入排序!' }]},
         },
         url: {
           add: "/banner/banner/add",

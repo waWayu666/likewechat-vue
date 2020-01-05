@@ -83,7 +83,6 @@
         @change="handleTableChange">
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
           <span v-if="record.orderStatus ==2">
             <a-divider type="vertical" />
             <a v-if="record.orderStatus==1 || record.orderStatus==2" @click="getExpressNo(record)">发货</a>
@@ -101,19 +100,20 @@
       <a-modal
         title="物流公司"
         :visible="visible"
-        @ok="deliverGoods"
+        @ok="SubmitDeliverGoods"
         :confirmLoading="confirmLoading"
         @cancel="handleCancel"
       >
+
         <a-spin :spinning="confirmLoading">
           <a-form :form="form">
             <a-form-item
               label="请输入物流公司">
-              <a-input placeholder="请输入快递单号" v-decorator="[ 'expressName', validatorRules.expressName ]" ></a-input>
+              <a-input placeholder="请输入快递单号" v-decorator="[ 'expressName', validatorRules.expressName ]" v-model="expressName"></a-input>
             </a-form-item>
             <a-form-item
               label="快递单号">
-              <a-input placeholder="请输入快递单号" v-decorator="[ 'expressNum', validatorRules.expressNum ]" ></a-input>
+              <a-input placeholder="请输入快递单号" v-decorator="[ 'expressNum', validatorRules.expressNum ]" v-model="expressNum"></a-input>
             </a-form-item>
           </a-form>
         </a-spin>
@@ -132,6 +132,7 @@
 
     export default {
         name: "OrderList",
+        inject:['reload'],
         mixins: [JeecgListMixin],
         components: {
             OrderModal
@@ -140,9 +141,14 @@
             return {
                 description: '订单管理页面',
                 visible:false,
+                confirmLoading: false,
+                form: this.$form.createForm(this),
+                expressName: '',
+                expressNum: '',
                 validatorRules: {
                     expressName: {rules: [{required: true, message: '请输入物流公司名称!'}]},
                     expressNum: {rules: [{required: true, message: '请输入快递单号!'}]},
+                    isNewuserExclusive: {rules: [{required: true, message: '请输入快递单号!'}]},
                 },
 
                 // 表头
@@ -249,11 +255,16 @@
             handleCancel(){
                 this.visible=false;
             },
+            //点击发货按钮
+            getExpressNo(record){
+                this.visible = true;
+                this.orderId = record.id;
+                console.log("订单id："+this.orderId);
 
+            },
             //选择物流公司并填写物流单号后点击确定，修改订单状态，将物流公司和物流单号分别填写到对应表中
 
-            deliverGoods(){
-                // alert(this.expressNumber)
+            SubmitDeliverGoods(){
                 // alert(this.doc.id)
                 // if(this.doc.companyName==""||this.doc.companyName==null){
                 //     this.$warning({
@@ -269,9 +280,12 @@
                 //     })
                 //     return;
                 // }
-                console.log(this.doc);
+                // console.log(this.doc);
+                console.log(this.expressName);
+                console.log(this.expressNum);
                 console.log(this.orderId);
-                let arr = [this.orderId,this.validatorRules.expressName,this.validatorRules.expressNum];
+                let arr = [this.orderId,this.expressName,this.expressNum];
+                console.log(arr);
                 deliverGoods(arr.toString(), null).then((res) => {
                     console.log(res);
                     if (res.code === 1) {

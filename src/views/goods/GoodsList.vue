@@ -261,7 +261,7 @@
             getAvatarView: function (mainImage) {
                 return this.url.imgerver + "/" + mainImage;
             },
-            //冻结用户
+            //上下架商品
             upOrDownGoods(id){
                 console.log(id)
                 upOrDown(id,null).then((res)=>{
@@ -271,6 +271,7 @@
                     }else {
                         this.$message.warning(res.message);
                     }
+                    this.loadData();
                 });
             },
         }

@@ -230,6 +230,7 @@
                 }else {
                     this.$message.warning(res.message);
                 }
+                this.loadData()
             });
         },
     }

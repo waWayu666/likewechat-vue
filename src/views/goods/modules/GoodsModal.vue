@@ -171,8 +171,8 @@
           :wrapperCol="wrapperCol"
           label="商品状态">
           <a-select v-decorator="[ 'status', validatorRules.status]" placeholder="请选择商品状态">
-            <a-select-option :value="1">上架</a-select-option>
-            <a-select-option :value="0">下架</a-select-option>
+            <a-select-option value="1">上架</a-select-option>
+            <a-select-option value="0">下架</a-select-option>
           </a-select>
 <!--            <a-switch checkedChildren="上架" unCheckedChildren= "下架"  @change="handleSwitch"/>-->
         </a-form-item>

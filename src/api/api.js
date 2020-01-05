@@ -9,13 +9,12 @@ import { getAction,deleteAction,putAction,postAction} from '@/api/manage'
 const getGoodspace=(space,params)=>getAction(`/goods/goodsSpec/getGoodspeace/${space}`,params);
 
 //订单管理
-const deliverGoods=(orderId,params)=>putAction(`/order/order/deliverGoods/${orderId}`,params);
+const deliverGoods=(orderId,params)=>postAction(`/order/order/deliverGoods/${orderId}`,params);
 const getExpressCompanyList = (params)=>getAction("/express/expressCompany/expressCompanylist",params);
 
-//合作园
-const checkPreschoolById=(checkStr,params)=>postAction(`/preschool/preschool/checkPreschoolById/${checkStr}`,params);
-const checkPreschoolMemberById=(checkStr,params)=>postAction(`/preschool/preschoolMember/checkPreschoolMemberById/${checkStr}`,params);
-const checkPreschoolApply=(preschoolId,params)=>getAction(`/preschool/preschool/checkPreschoolApply/${preschoolId}`,params)
+//提现
+const remittance=(params)=>postAction("/withdraw/withdraw/remittance",params);
+const refund=(params)=>postAction("/order/order/refund",params);
 
 //角色管理
 const addRole = (params)=>postAction("/sys/role/add",params);
@@ -126,10 +125,8 @@ export {
   // imgView,
   // doMian,
   deliverGoods,
-  checkPreschoolById,
-  checkPreschoolMemberById,
-  checkPreschoolApply,
   getExpressCompanyList,
+  remittance,
   addRole,
   editRole,
   checkRoleCode,
