@@ -109,8 +109,8 @@
           :wrapperCol="wrapperCol"
           label="上下架状态">
           <a-select v-decorator="[ 'status', validatorRules.status]" placeholder="请选择商品状态">
-            <a-select-option :value="1">上架</a-select-option>
-            <a-select-option :value="0">下架</a-select-option>
+            <a-select-option value="1">上架</a-select-option>
+            <a-select-option value="0">下架</a-select-option>
           </a-select>
         </a-form-item>
 
@@ -119,8 +119,8 @@
           :wrapperCol="wrapperCol"
           label="商品属性">
           <a-select v-decorator="[ 'goodsType', validatorRules.goodsType]" placeholder="请选择商品属性">
-            <a-select-option :value="0">邮寄</a-select-option>
-            <a-select-option :value="1">寄拍</a-select-option>
+            <a-select-option value="0">邮寄</a-select-option>
+            <a-select-option value="1">寄拍</a-select-option>
           </a-select>
         </a-form-item>
 		

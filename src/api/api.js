@@ -121,6 +121,8 @@ const getUList = (params) => getAction("/user/user/getUList", params);
 const frost=(id,params)=> postAction(`/user/user/frost/${id}`,params);
 // 商品管理
 const upOrDown=(id,params)=> postAction(`/goods/goods/upOrDown/${id}`,params);
+// 积分商品管理
+const upOrDownScoreGoods=(id,params)=> postAction(`/goods/scoreGoods/upOrDownScoreGoods/${id}`,params);
 export {
   // imgView,
   // doMian,
@@ -181,7 +183,8 @@ export {
   getCouponNumber,
   getUList,
   frost,
-  upOrDown
+  upOrDown,
+  upOrDownScoreGoods
 }
 
 
