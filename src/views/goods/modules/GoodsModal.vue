@@ -23,6 +23,7 @@
           :wrapperCol="wrapperCol"
           label="起拍价">
           <a-input-number v-decorator="[ 'startPrice', {}]" />
+
         </a-form-item>
         <a-form-item
           :labelCol="labelCol"
@@ -30,6 +31,11 @@
           label="预估价">
           <a-input-number v-decorator="[ 'evaluatePrice', {}]" />
         </a-form-item>
+        <a-form-item
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="底价">
+          <a-input-number v-decorator="[ 'minPrice', {}]" />
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"

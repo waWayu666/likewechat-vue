@@ -167,6 +167,11 @@
                         align: "center",
                         dataIndex: 'evaluatePrice'
                     },
+                  {
+                    title: '限价',
+                    align: "center",
+                    dataIndex: 'minPrice'
+                  },
                     {
                         title: '最高价',
                         align: "center",
