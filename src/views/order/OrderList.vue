@@ -11,11 +11,11 @@
               <a-input placeholder="请输入订单编号" v-model="queryParam.orderNum"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <!--<a-col :md="6" :sm="8">
             <a-form-item label="订单来源">
               <a-input placeholder="请输入订单来源" v-model="queryParam.orderFrom"></a-input>
             </a-form-item>
-          </a-col>
+          </a-col>-->
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="买家会员名称">

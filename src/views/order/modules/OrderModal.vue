@@ -17,12 +17,12 @@
           label="订单编号">
           {{this.model.orderNum}}
         </a-form-item>
-        <a-form-item
+        <!--<a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="订单来源">
           {{this.model.orderFrom}}
-        </a-form-item>
+        </a-form-item>-->
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"

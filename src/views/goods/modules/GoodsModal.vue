@@ -37,12 +37,12 @@
           label="底价">
           <a-input-number v-decorator="[ 'minPrice', {}]" />
         </a-form-item>
-        <a-form-item
+        <!--<a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="最高价">
           <a-input-number v-decorator="[ 'maxPrice', validatorRules.maxPrice ]" />
-        </a-form-item>
+        </a-form-item>-->
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -72,17 +72,17 @@
           </a-select>
         </a-form-item>
 
+        <!--<a-form-item-->
+          <!--:labelCol="labelCol"-->
+          <!--:wrapperCol="wrapperCol"-->
+          <!--label="描述介绍">-->
+          <!--<a-input placeholder="请输入描述介绍" v-decorator="['introduction', validatorRules.introduction ]" />-->
+        <!--</a-form-item>-->
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="描述介绍">
-          <a-input placeholder="请输入描述介绍" v-decorator="['introduction', validatorRules.introduction ]" />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="排序号">
-          <a-input-number v-decorator="[ 'sort', validatorRules.sort ]" />
+          label="返还积分">
+          <a-input-number v-decorator="[ 'returnScore', validatorRules.returnScore ]"  />
         </a-form-item>
 
         <a-form-item
@@ -152,7 +152,7 @@
         </a-form-item>
 
 
-        <a-form-item
+        <!--<a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="测试时间">
@@ -165,9 +165,9 @@
       }"
             format="YYYY-MM-DD HH:mm:ss"
           />
-        </a-form-item>
+        </a-form-item>-->
 
-        <a-form-item
+       <!-- <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="商品状态">
@@ -175,8 +175,7 @@
             <a-select-option value="1">上架</a-select-option>
             <a-select-option value="0">下架</a-select-option>
           </a-select>
-<!--            <a-switch checkedChildren="上架" unCheckedChildren= "下架"  @change="handleSwitch"/>-->
-        </a-form-item>
+        </a-form-item>-->
 
       </a-form>
     </a-spin>
@@ -230,9 +229,7 @@
         maxPrice:{rules: [{ required: true, message: '请输入最高价!' }]},
         addPrice:{rules: [{ required: true, message: '请输入顶一手价格!' }]},
         commissionPrice:{rules: [{ required: true, message: '请输入佣金!' }]},
-        categoryId:{rules: [{ required: true, message: '请输入分类id!' }]},
-        introduction:{rules: [{ required: true, message: '请输入描述介绍!' }]},
-        sort:{rules: [{ required: true, message: '请输入排序号!' }]},
+        returnScore:{rules: [{ required: true, message: '请输入返还积分!' }]},
         mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
         goodsDesc:{rules: [{ required: true, message: '请输入商品详情!' }]},
         status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},

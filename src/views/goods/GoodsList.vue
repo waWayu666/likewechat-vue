@@ -173,10 +173,15 @@
                     dataIndex: 'minPrice'
                   },
                     {
-                        title: '最高价',
+                        title: '返还积分',
                         align: "center",
-                        dataIndex: 'maxPrice'
+                        dataIndex: 'returnScore'
                     },
+                 /* {
+                       title: '寄拍返还余额',
+                       align: "center",
+                       dataIndex: 'returnMoney'
+                   },*/
                     {
                         title: '顶一手价格',
                         align: "center",
@@ -214,11 +219,6 @@
                                 return "上架";
                             }
                         }
-                    },
-                    {
-                        title: '成交价格',
-                        align: "center",
-                        dataIndex: 'dealPrice'
                     },
                     {
                         title: '拍卖次数',
