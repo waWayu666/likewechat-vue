@@ -157,6 +157,7 @@
           :wrapperCol="wrapperCol"
           label="测试时间">
           <a-range-picker
+            @change="getDateTime"
             :disabledDate="disabledDate"
             :disabledTime="disabledRangeTime"
             :showTime="{
@@ -324,7 +325,7 @@
         this.fileListLb = ss;
 
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'finishFlag', 'goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
+          this.form.setFieldsValue(pick(this.model, 'finishFlag', 'goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'minPrice','maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'returnScore','introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
           //时间格式化
           this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null})
           this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
@@ -349,7 +350,7 @@
         // 触发表单验证
         this.form.validateFields((err, values) => {
           if (!err) {
-            that.confirmLoading = true;
+            // that.confirmLoading = true;
             let httpurl = '';
             let method = '';
             if(!this.model.id){
@@ -369,12 +370,14 @@
               if(res.success){
                 that.$message.success(res.message);
                 that.$emit('ok');
+                that.confirmLoading = false;
+                that.close();
               }else{
                 that.$message.warning(res.message);
               }
             }).finally(() => {
-              that.confirmLoading = false;
-              that.close();
+                // that.confirmLoading = false;
+                // that.close();
             })
 
 
@@ -471,6 +474,35 @@
               this.fileTempLb.push(file.response.message);
           }
       },
+      //
+      // disabledDate(current) {
+      //     // Can not select days before today and today
+      //     return current && current < moment().endOf('day');
+      // },
+      //
+      // disabledRangeTime(_, type) {
+      //     if (type === 'start') {
+      //         return {
+      //             disabledHours: () => this.range(0, 60).splice(4, 20),
+      //             disabledMinutes: () => this.range(30, 60),
+      //             disabledSeconds: () => [55, 56],
+      //         };
+      //     }
+      //     return {
+      //         disabledHours: () => this.range(0, 60).splice(20, 4),
+      //         disabledMinutes: () => this.range(0, 31),
+      //         disabledSeconds: () => [55, 56],
+      //     };
+      // },
+      // getDateTime(date) {
+      //     console.log(date)
+      //     if(date) {
+      //         this.model.startTime = date[0].format('YYYY-MM-DD HH:mm:ss');
+      //         console.log(this.model.startTime)
+      //         this.model.endTime = date[0].format('YYYY-MM-DD HH:mm:ss');
+      //         console.log(this.model.endTime)
+      //     }
+      // }
     }
   }
 </script>

@@ -243,7 +243,7 @@
         // 触发表单验证
         this.form.validateFields((err, values) => {
           if (!err) {
-            that.confirmLoading = true;
+            // that.confirmLoading = true;
             let httpurl = '';
             let method = '';
             if(!this.model.id){
@@ -261,12 +261,13 @@
               if(res.success){
                 that.$message.success(res.message);
                 that.$emit('ok');
+                that.close();
               }else{
                 that.$message.warning(res.message);
               }
             }).finally(() => {
-              that.confirmLoading = false;
-              that.close();
+              // that.confirmLoading = false;
+              // that.close();
             })
 
 
