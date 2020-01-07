@@ -136,15 +136,15 @@
                         dataIndex: 'goodsNum'
                     },
                     {
-                        title: '积分商品市场价',
+                        title: '所需现金',
                         align: "center",
                         dataIndex: 'price'
                     },
-                    {
+                    /*{
                         title: '现金比例',
                         align: "center",
                         dataIndex: 'moneyRatio'
-                    },
+                    },*/
                     {
                         title: '积分商品所需积分',
                         align: "center",

@@ -10,25 +10,11 @@
     
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-      
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="标题">
-          <a-input placeholder="请输入标题" v-decorator="['title', validatorRules.title ]" />
-        </a-form-item>
-
-<!--        <a-form-item-->
-<!--          :labelCol="labelCol"-->
-<!--          :wrapperCol="wrapperCol"-->
-<!--          label="图片地址">-->
-<!--          <a-input placeholder="请输入图片地址" v-decorator="['imgUrl', validatorRules.imgUrl ]" />-->
-<!--        </a-form-item>-->
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="图片地址">
+          label="预览图">
 
           <a-upload
             listType="picture-card"
@@ -47,39 +33,15 @@
           </a-upload>
         </a-form-item>
 
+
+
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="描述">
-          <j-editor v-model="jeditor.description"/>
+          label="链接id">
+          <a-input placeholder="请输入链接id" v-decorator="['linkId', {}]" />
         </a-form-item>
 
-<!--        <a-form-item-->
-<!--          :labelCol="labelCol"-->
-<!--          :wrapperCol="wrapperCol"-->
-<!--          label="链接类型：">-->
-<!--          <a-select v-decorator="[ 'linkType', validatorRules.linkType]" placeholder="请选择链接类型">-->
-<!--            <a-select-option :value="0">无连接</a-select-option>-->
-<!--            <a-select-option :value="1">规则</a-select-option>-->
-<!--            <a-select-option :value="2">商品详情</a-select-option>-->
-<!--          </a-select>-->
-<!--        </a-form-item>-->
-
-<!--        <a-form-item-->
-<!--          :labelCol="labelCol"-->
-<!--          :wrapperCol="wrapperCol"-->
-<!--          label="链接地址">-->
-<!--          <a-input placeholder="请输入链接地址" v-decorator="['link', {}]" />-->
-<!--        </a-form-item>-->
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="是否启用：">
-          <a-select v-decorator="[ 'useFlag', validatorRules.useFlag]" placeholder="请选择是否有用">
-            <a-select-option value="1">启用</a-select-option>
-            <a-select-option value="0">不启用</a-select-option>
-          </a-select>
-        </a-form-item>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"

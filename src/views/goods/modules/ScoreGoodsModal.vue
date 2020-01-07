@@ -71,15 +71,15 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="市场价">
+          label="所需现金">
           <a-input-number v-decorator="[ 'price', {}]" />
         </a-form-item>
-        <a-form-item
+        <!--<a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="现金比例">
           <a-input-number v-decorator="[ 'moneyRatio', {}]" />
-        </a-form-item>
+        </a-form-item>-->
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
