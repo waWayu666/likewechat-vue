@@ -2,11 +2,11 @@
   <div class="footer">
     <div class="links">
     </div>
-    <div class="copyright">
+    <!--<div class="copyright">
       Copyright
       <a-icon type="copyright"/>
       2019 <span>北京中犇科技公司 出品</span>
-    </div>
+    </div>-->
   </div>
 </template>
 
