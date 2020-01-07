@@ -162,15 +162,20 @@
                         align: "center",
                         dataIndex: 'startPrice'
                     },
-                    {
-                        title: '预估价',
-                        align: "center",
-                        dataIndex: 'evaluatePrice'
-                    },
                   {
-                    title: '限价',
+                    title: '限低价',
                     align: "center",
                     dataIndex: 'minPrice'
+                  },
+                  {
+                    title: '限高价',
+                    align: "center",
+                    dataIndex: 'evaluatePrice'
+                  },
+                  {
+                    title: '预估价',
+                    align: "center",
+                    dataIndex: 'budgetPrice'
                   },
                     {
                         title: '返还积分',

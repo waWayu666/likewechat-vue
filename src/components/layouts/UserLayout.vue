@@ -13,11 +13,11 @@
 
       <route-view></route-view>
 
-      <div class="footer">
+      <!--<div class="footer">
         <div class="copyright">
           Copyright &copy; 2019 <a href="http://www.zhongbenkeji.com" target="_blank">北京中犇科技有限公司</a> 出品
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
