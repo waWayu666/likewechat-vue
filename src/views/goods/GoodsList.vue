@@ -13,10 +13,22 @@
                 <a-select-option value="2">竞拍已完成</a-select-option>
               </a-select>
             </a-form-item>
+
+            <a-form-item label="请选择商品属性">
+              <a-select v-model="queryParam.abc" placeholder="请选择商品属性">
+                <a-select-option value="0">普通商品</a-select-option>
+                <a-select-option value="1">寄拍商品</a-select-option>
+              </a-select>
+            </a-form-item>
+
+
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="商品名称">
               <a-input placeholder="请输入商品名称" v-model="queryParam.goodsName"></a-input>
+            </a-form-item>
+            <a-form-item label="昵称">
+              <a-input placeholder="请输入昵称" v-model="queryParam.nickname"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -157,6 +169,13 @@
                         align: "center",
                         dataIndex: 'goodsNum'
                     },
+
+                  {
+                    title: '昵称',
+                    align: "center",
+                    dataIndex: 'nickname'
+                  },
+
                     {
                         title: '起拍价',
                         align: "center",
