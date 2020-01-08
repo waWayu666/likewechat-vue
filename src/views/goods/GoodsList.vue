@@ -27,8 +27,8 @@
             <a-form-item label="商品名称">
               <a-input placeholder="请输入商品名称" v-model="queryParam.goodsName"></a-input>
             </a-form-item>
-            <a-form-item label="昵称">
-              <a-input placeholder="请输入昵称" v-model="queryParam.nickname"></a-input>
+            <a-form-item label="寄拍人">
+              <a-input placeholder="请输入寄拍人名称" v-model="queryParam.nickname"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -37,14 +37,12 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="10">
-            <a-form-item label="开拍时间">
+            <a-form-item label="注册时间">
               <a-range-picker
                 style="width: 210px"
-                v-model="this.timeInterval"
                 format="YYYY-MM-DD"
                 :placeholder="['开始时间', '结束时间']"
                 @change="onDateChange"
-                @ok="onDateOk"
               />
             </a-form-item>
           </a-col>
@@ -183,7 +181,7 @@
                     },
 
                   {
-                    title: '昵称',
+                    title: '寄拍人',
                     align: "center",
                     dataIndex: 'nickname'
                   },
@@ -315,6 +313,10 @@
                     }
                     this.loadData();
                 });
+            },
+            onDateChange: function (dateString) {
+                this.queryParam.startAuctionTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
+                this.queryParam.endAuctionTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
             },
         }
     }

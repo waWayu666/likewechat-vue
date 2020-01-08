@@ -5,10 +5,32 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline">
         <a-row :gutter="24">
-
+          <a-col :md="6" :sm="8">
+            <a-form-item label="订单号">
+              <a-input placeholder="请输入订单号" v-model="queryParam.orderNo"></a-input>
+            </a-form-item>
+          </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="昵称">
               <a-input placeholder="请输入昵称" v-model="queryParam.nickname"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="支付状态">
+              <a-select v-model="queryParam.status" placeholder="请选择订单状态">
+                <a-select-option value="0">未到账</a-select-option>
+                <a-select-option value="1">已到账</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="10">
+            <a-form-item label="注册时间">
+              <a-range-picker
+                style="width: 210px"
+                format="YYYY-MM-DD"
+                :placeholder="['开始时间', '结束时间']"
+                @change="onDateChange"
+              />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -180,7 +202,12 @@
                 return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
             }
         },
-        methods: {}
+        methods: {
+            onDateChange: function (dateString) {
+                this.queryParam.startTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
+                this.queryParam.endTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
+            },
+        }
     }
 </script>
 <style scoped>

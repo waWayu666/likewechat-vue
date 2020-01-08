@@ -157,7 +157,7 @@
         </a-form-item>
 
 
-        <!--<a-form-item
+        <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="测试时间">
@@ -171,7 +171,7 @@
       }"
             format="YYYY-MM-DD HH:mm:ss"
           />
-        </a-form-item>-->
+        </a-form-item>
 
        <!-- <a-form-item
           :labelCol="labelCol"
@@ -479,35 +479,35 @@
               this.fileTempLb.push(file.response.message);
           }
       },
-      //
-      // disabledDate(current) {
-      //     // Can not select days before today and today
-      //     return current && current < moment().endOf('day');
-      // },
-      //
-      // disabledRangeTime(_, type) {
-      //     if (type === 'start') {
-      //         return {
-      //             disabledHours: () => this.range(0, 60).splice(4, 20),
-      //             disabledMinutes: () => this.range(30, 60),
-      //             disabledSeconds: () => [55, 56],
-      //         };
-      //     }
-      //     return {
-      //         disabledHours: () => this.range(0, 60).splice(20, 4),
-      //         disabledMinutes: () => this.range(0, 31),
-      //         disabledSeconds: () => [55, 56],
-      //     };
-      // },
-      // getDateTime(date) {
-      //     console.log(date)
-      //     if(date) {
-      //         this.model.startTime = date[0].format('YYYY-MM-DD HH:mm:ss');
-      //         console.log(this.model.startTime)
-      //         this.model.endTime = date[0].format('YYYY-MM-DD HH:mm:ss');
-      //         console.log(this.model.endTime)
-      //     }
-      // }
+
+      disabledDate(current) {
+          // Can not select days before today and today
+          return current && current < moment().endOf('day');
+      },
+
+      disabledRangeTime(_, type) {
+          if (type === 'start') {
+              return {
+                  disabledHours: () => this.range(0, 60).splice(4, 20),
+                  disabledMinutes: () => this.range(30, 60),
+                  disabledSeconds: () => [55, 56],
+              };
+          }
+          return {
+              disabledHours: () => this.range(0, 60).splice(20, 4),
+              disabledMinutes: () => this.range(0, 31),
+              disabledSeconds: () => [55, 56],
+          };
+      },
+      getDateTime(date) {
+          console.log(date)
+          if(date) {
+              this.model.startTime = date[0].format('YYYY-MM-DD HH:mm:ss');
+              console.log(this.model.startTime)
+              this.model.endTime = date[0].format('YYYY-MM-DD HH:mm:ss');
+              console.log(this.model.endTime)
+          }
+      }
     }
   }
 </script>

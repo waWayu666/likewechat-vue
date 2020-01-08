@@ -7,10 +7,39 @@
         <a-row :gutter="24">
 
           <a-col :md="6" :sm="8">
-            <a-form-item label="昵称">
-              <a-input placeholder="请输入昵称" v-model="queryParam.nickname"></a-input>
+            <a-form-item label="寄拍人">
+              <a-input placeholder="请输入" v-model="queryParam.nickname"></a-input>
             </a-form-item>
           </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="是否冻结">
+              <a-select placeholder="请选择用户状态" v-model="queryParam.status">
+                <a-select-option value="1">正常</a-select-option>
+                <a-select-option value="2">冻结</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="推广人ID">
+              <a-input placeholder="推广人ID" v-model="queryParam.extendId"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="手机号">
+              <a-input placeholder="手机号" v-model="queryParam.mobile"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="10">
+            <a-form-item label="注册时间">
+              <a-range-picker
+                style="width: 210px"
+                format="YYYY-MM-DD"
+                :placeholder="['开始时间', '结束时间']"
+                @change="onDateChange"
+              />
+            </a-form-item>
+          </a-col>
+
           <a-col :md="6" :sm="8" >
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
@@ -53,8 +82,8 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
-        @change="handleTableChange">
+        @change="handleTableChange"
+      >
 
         <template slot="imgurllot" slot-scope="text, record, index">
           <div class="anty-img-wrap">
@@ -92,6 +121,7 @@
 
 <script>
   import UserModal from './modules/UserModal'
+  import moment from "moment"
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import { frost } from '@/api/api'
 
@@ -105,6 +135,7 @@
       return {
         description: '用户管理页面',
         // 表头
+        queryParam:{},
         columns: [
           {
             title: '#',
@@ -117,7 +148,7 @@
             }
           },
           {
-            title: '昵称',
+            title: '寄拍人',
             align:"center",
             dataIndex: 'nickname'
           },
@@ -217,6 +248,7 @@
       }
     },
     methods: {
+        moment,
         getAvatarView: function (imgUrl) {
             return this.url.imgerver + "/" + avatar;
         },
@@ -232,6 +264,10 @@
                 }
                 this.loadData()
             });
+        },
+        onDateChange: function (dateString) {
+            this.queryParam.startTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
+            this.queryParam.endTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
         },
     }
   }

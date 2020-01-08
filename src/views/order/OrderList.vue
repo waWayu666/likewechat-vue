@@ -11,12 +11,24 @@
               <a-input placeholder="请输入订单编号" v-model="queryParam.orderNum"></a-input>
             </a-form-item>
           </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="订单状态">
+              <a-select placeholder="请选择订单状态" v-model="queryParam.orderStatus">
+                <a-select-option value="">全部</a-select-option>
+                <a-select-option value="0">流拍</a-select-option>
+                <a-select-option value="1">待付款</a-select-option>
+                <a-select-option value="2">待发货</a-select-option>
+                <a-select-option value="3">待签收</a-select-option>
+                <a-select-option value="4">已完成</a-select-option>
+                <a-select-option value="5">寄拍已支付</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
           <!--<a-col :md="6" :sm="8">
             <a-form-item label="订单来源">
               <a-input placeholder="请输入订单来源" v-model="queryParam.orderFrom"></a-input>
             </a-form-item>
           </a-col>-->
-          <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="买家会员名称">
                 <a-input placeholder="请输入买家会员名称" v-model="queryParam.nickname"></a-input>
@@ -30,15 +42,24 @@
                 </a-select>
               </a-form-item>
             </a-col>
-          </template>
+            <a-col :md="6" :sm="10">
+              <a-form-item label="注册时间">
+                <a-range-picker
+                  style="width: 210px"
+                  format="YYYY-MM-DD"
+                  :placeholder="['开始时间', '结束时间']"
+                  @change="onDateChange"
+                />
+              </a-form-item>
+            </a-col>
           <a-col :md="6" :sm="8">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
+<!--              <a @click="handleToggleSearch" style="margin-left: 8px">-->
+<!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
+<!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
+<!--              </a>-->
             </span>
           </a-col>
 
@@ -298,7 +319,11 @@
                 });
                 this.visible = false;
                 this.reload();
-            }
+            },
+            onDateChange: function (dateString) {
+                this.queryParam.startTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
+                this.queryParam.endTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
+            },
         }
     }
 </script>
