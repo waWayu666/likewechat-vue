@@ -36,6 +36,18 @@
               <a-input placeholder="请输入商品编号" v-model="queryParam.goodsNum"></a-input>
             </a-form-item>
           </a-col>
+          <a-col :md="6" :sm="10">
+            <a-form-item label="开拍时间">
+              <a-range-picker
+                style="width: 210px"
+                v-model="this.timeInterval"
+                format="YYYY-MM-DD"
+                :placeholder="['开始时间', '结束时间']"
+                @change="onDateChange"
+                @ok="onDateOk"
+              />
+            </a-form-item>
+          </a-col>
           <a-col :md="6" :sm="8">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
@@ -48,20 +60,20 @@
     </div>
 
     <!-- 操作按钮区域 -->
-   <!-- <div class="table-operator">
+    <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
-            删除
-          </a-menu-item>
-        </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作
-          <a-icon type="down"/>
-        </a-button>
-      </a-dropdown>
-    </div>-->
+<!--      <a-dropdown v-if="selectedRowKeys.length > 0">-->
+<!--        <a-menu slot="overlay">-->
+<!--          <a-menu-item key="1" @click="batchDel">-->
+<!--            <a-icon type="delete"/>-->
+<!--            删除-->
+<!--          </a-menu-item>-->
+<!--        </a-menu>-->
+<!--        <a-button style="margin-left: 8px"> 批量操作-->
+<!--          <a-icon type="down"/>-->
+<!--        </a-button>-->
+<!--      </a-dropdown>-->
+    </div>
 
     <!-- table区域-begin -->
     <div>
@@ -90,7 +102,7 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <!--<a @click="handleEdit(record)">编辑</a>-->
+          <a @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical"/>
 
