@@ -206,13 +206,23 @@
                     align: "center",
                     dataIndex: 'budgetPrice'
                   },
-                    {
+                  {
+                    title: '成交价',
+                    align: "center",
+                    dataIndex: 'maxPrice'
+                  },
+                   /* {
                     title: '返还积分',
                     align: "center",
                     dataIndex: 'returnScore'
+                  },*/
+                  {
+                    title: '返还积分比例',
+                    align: "center",
+                    dataIndex: 'scoreRatio'
                   },
                   {
-                    title: '返还比例',
+                    title: '寄拍返还比例',
                     align: "center",
                     dataIndex: 'returnRatio'
                   },
