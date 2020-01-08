@@ -227,11 +227,11 @@
                         align: "center",
                         dataIndex: 'categoryId_dictText',
                     },
-                    {
+                    /*{
                         title: '排序号',
                         align: "center",
                         dataIndex: 'sort'
-                    },
+                    },*/
                     {
                         title: '商品主图',
                         align: "center",
