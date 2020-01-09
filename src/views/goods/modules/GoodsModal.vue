@@ -80,13 +80,7 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
-          label="返还积分比例">
-          <a-input-number v-decorator="[ 'scoreRatio', validatorRules.scoreRatio ]"  />
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="寄拍返还比例">
+          label="积分返还比例">
           <a-input-number v-decorator="[ 'returnRatio', validatorRules.returnRatio ]"  />
         </a-form-item>
 
@@ -157,7 +151,7 @@
         </a-form-item>
 
 
-        <a-form-item
+       <!-- <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="测试时间">
@@ -171,7 +165,7 @@
       }"
             format="YYYY-MM-DD HH:mm:ss"
           />
-        </a-form-item>
+        </a-form-item>-->
 
        <!-- <a-form-item
           :labelCol="labelCol"
@@ -235,9 +229,8 @@
         maxPrice:{rules: [{ required: true, message: '请输入最高价!' }]},
         addPrice:{rules: [{ required: true, message: '请输入顶一手价格!' }]},
         commissionPrice:{rules: [{ required: true, message: '请输入佣金!' }]},
-          returnRatio:{rules: [{ required: true, message: '请输入寄拍返还比例!' }]},
         mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
-          scoreRatio:{rules: [{ required: true, message: '请输入返还积分比例!' }]},
+          returnRatio:{rules: [{ required: true, message: '请输入返还积分比例!' }]},
         status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
         startTime:{rules: [{ required: true, message: '请输入开拍时间!' }]},
         endTime:{rules: [{ required: true, message: '请输入结束时间!' }]},

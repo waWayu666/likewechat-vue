@@ -211,27 +211,12 @@
                     align: "center",
                     dataIndex: 'maxPrice'
                   },
-                   /* {
-                    title: '返还积分',
-                    align: "center",
-                    dataIndex: 'returnScore'
-                  },*/
                   {
                     title: '返还积分比例',
-                    align: "center",
-                    dataIndex: 'scoreRatio'
-                  },
-                  {
-                    title: '寄拍返还比例',
                     align: "center",
                     dataIndex: 'returnRatio'
                   },
 
-                 /* {
-                       title: '寄拍返还余额',
-                       align: "center",
-                       dataIndex: 'returnMoney'
-                   },*/
                     {
                         title: '顶一手价格',
                         align: "center",
