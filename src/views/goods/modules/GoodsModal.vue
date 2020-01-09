@@ -323,7 +323,7 @@
         this.fileListLb = ss;
 
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'finishFlag', 'goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'minPrice','maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'returnScore','introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
+          this.form.setFieldsValue(pick(this.model, 'finishFlag', 'goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'budgetPrice','returnRatio','minPrice','maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'returnScore','introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
           //时间格式化
           this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null})
           this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
