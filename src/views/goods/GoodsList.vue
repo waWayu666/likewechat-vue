@@ -108,16 +108,10 @@
             <a v-if="record.status == 0">上架</a>
             <a v-else-if="record.status == 1">下架</a>
           </a-popconfirm>
-<!--          <a-dropdown>-->
-<!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
-<!--            <a-menu slot="overlay">-->
-<!--              <a-menu-item>-->
-<!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
-<!--                  <a>删除</a>-->
-<!--                </a-popconfirm>-->
-<!--              </a-menu-item>-->
-<!--            </a-menu>-->
-<!--          </a-dropdown>-->
+
+          <a-divider type="vertical"/>
+<!--           <a-button type="primary" @click="showDrawer">竞拍记</a-button>-->
+           <a @click="showDrawer(record)">竞拍记录</a>
         </span>
 
       </a-table>
@@ -126,13 +120,30 @@
 
     <!-- 表单区域 -->
     <goods-modal ref="modalForm" @ok="modalFormOk"></goods-modal>
+<!--    抽屉-->
+    <a-drawer
+      title="竞拍记录"
+      placement="right"
+      :maskClosable="true"
+      @close="onClose"
+      width="960"
+      :visible="visible"
+    >
+      <div>
+        <a-table :columns="dateColumns" :dataSource="jingpaiList" bordered>
+          <template slot="title" slot-scope="currentPageData">
+            竞拍记录
+          </template>
+        </a-table>
+      </div>
+    </a-drawer>
   </a-card>
 </template>
 
 <script>
     import GoodsModal from './modules/GoodsModal'
     import {JeecgListMixin} from '@/mixins/JeecgListMixin'
-    import { upOrDown } from '@/api/api'
+    import { upOrDown,getAuctionrecod } from '@/api/api'
 
     export default {
         name: "GoodsList",
@@ -143,6 +154,7 @@
         data() {
             return {
                 description: '商品表管理页面',
+                visible:false, // 是否打开抽屉
                 // 表头
                 columns: [
                     {
@@ -285,6 +297,30 @@
                     importExcelUrl: "goods/goods/importExcel",
                     imgerver: window._CONFIG['imgDomainURL'],
                 },
+            //    抽屉
+                dateColumns:[{
+                    title: 'id',
+                    dataIndex: 'id',
+                    width: 150,
+                    key: 'id'
+                },{
+                    title: '竞拍人',
+                    dataIndex: 'nickname',
+                    width: 150,
+                    key: 'nickname'
+                },{
+                    title: '出价',
+                    dataIndex: 'auctionPrice',
+                    width: 150,
+                    key: 'auctionPrice'
+                },{
+                    title: '创建时间',
+                    dataIndex: 'createTime',
+                    width: 150,
+                    key: 'createTime'
+                }
+                ],
+                jingpaiList:[]
             }
         },
         computed: {
@@ -313,6 +349,21 @@
                 this.queryParam.startAuctionTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
                 this.queryParam.endAuctionTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
             },
+        //    打开抽屉
+            showDrawer(info){
+                console.log(info)
+              this.visible = true;
+                var params = this.getQueryParams();//查询条件
+                params.goodsId = info.id;
+                getAuctionrecod(params).then((res)=>{
+                  this.jingpaiList = res.result.records;
+
+              });
+
+            },
+            onClose(){
+                this.visible = false
+            }
         }
     }
 </script>

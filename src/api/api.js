@@ -14,6 +14,7 @@ const getExpressCompanyList = (params)=>getAction("/express/expressCompany/expre
 
 //提现
 const remittance=(params)=>postAction("/withdraw/withdraw/remittance",params);
+const refuse=(params)=>postAction("/withdraw/withdraw/refuse",params);
 const refund=(params)=>postAction("/order/order/refund",params);
 
 //角色管理
@@ -119,16 +120,30 @@ const getCouponNumber = (params) => getAction("/coupon/couponType/getCouponNumbe
 const getUList = (params) => getAction("/user/user/getUList", params);
 // 小程序用户管理
 const frost=(id,params)=> postAction(`/user/user/frost/${id}`,params);
+//获取用户信息
+const queryUserDetail=(id,params)=> getAction(`/user/user/queryUserDetail/${id}`,params);
 // 商品管理
 const upOrDown=(id,params)=> postAction(`/goods/goods/upOrDown/${id}`,params);
 // 积分商品管理
 const upOrDownScoreGoods=(id,params)=> postAction(`/goods/scoreGoods/upOrDownScoreGoods/${id}`,params);
+// 余额
+const getBill = (params) => getAction("/bill/bill/queryPageList", params);
+// 佣金
+const getBrokeragePage = (params) => getAction("/usercommission/userCommission/brokeragePageList", params);
+// 积分
+const getScore = (params) => getAction("/userscore/userScore/scorePageList", params);
+// 粉丝
+const getFans = (params) => getAction("/fnas/fans/fansPageList", params);
+// 竞拍记录
+const getAuctionrecod = (params) => getAction("/auctionrecod/auctionRecod/auctionRecodPageList", params);
+
 export {
   // imgView,
   // doMian,
   deliverGoods,
   getExpressCompanyList,
   remittance,
+  refuse,
   addRole,
   editRole,
   checkRoleCode,
@@ -183,8 +198,14 @@ export {
   getCouponNumber,
   getUList,
   frost,
+  queryUserDetail,
   upOrDown,
-  upOrDownScoreGoods
+  upOrDownScoreGoods,
+  getBill,
+  getBrokeragePage,
+  getScore,
+  getFans,
+  getAuctionrecod
 }
 
 

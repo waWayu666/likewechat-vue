@@ -144,11 +144,6 @@
                         dataIndex: 'orderNo'
                     },
                     {
-                        title: '用户id',
-                        align: "center",
-                        dataIndex: 'userId'
-                    },
-                    {
                         title: '用户昵称',
                         align: "center",
                         dataIndex: 'nickname'
@@ -176,8 +171,10 @@
                         customRender: function (value) {
                             if (value == 0) {
                                 return "未到账";
-                            } else {
+                            } else if (value == 1){
                                 return "已到账";
+                            } else {
+                                return "已拒绝";
                             }
                         }
                     },

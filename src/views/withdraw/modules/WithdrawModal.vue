@@ -7,8 +7,13 @@
     @ok="handleOk"
     okText="打款完成"
     @cancel="handleCancel"
-    cancelText="关闭">
-    
+    cancelText="关闭"
+  >
+    <template slot="footer">
+      <a-button @click="handleCancel">取消</a-button>
+      <a-button type="danger" @click="handleRefuse">拒绝打款</a-button>
+      <a-button type="primary" @click="handleOk">打款完成</a-button>
+    </template>
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
 
@@ -66,6 +71,7 @@
         },
         url: {
             remittance: "/withdraw/withdraw/remittance",
+            refuse: "/withdraw/withdraw/refuse",
         },
       }
     },
@@ -87,6 +93,7 @@
         this.$emit('close');
         this.visible = false;
       },
+      //确认打款
       handleOk () {
         const that = this;
         // 触发表单验证
@@ -114,6 +121,33 @@
 
           }
         })
+      },
+      //拒绝打款
+      handleRefuse () {
+          const that = this;
+          // 触发表单验证
+          this.form.validateFields((err, values) => {
+              if (!err) {
+                  that.confirmLoading = true;
+                  let formData = Object.assign(this.model, values);
+                  //时间格式化
+                  formData.completeTime = formData.completeTime?formData.completeTime.format('YYYY-MM-DD HH:mm:ss'):null;
+
+                  console.log(formData)
+                  httpAction(this.url.refuse,formData,'post').then((res)=>{
+                      if(res.success){
+                          that.$message.success(res.message);
+                          that.$emit('ok');
+                      }else{
+                          that.$message.warning(res.message);
+                      }
+                  }).finally(() => {
+                      that.confirmLoading = false;
+                      that.close();
+                  })
+
+              }
+          })
       },
       handleCancel () {
         this.close()

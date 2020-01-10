@@ -7,7 +7,7 @@
         <a-row :gutter="24">
 
           <a-col :md="6" :sm="8">
-            <a-form-item label="寄拍人">
+            <a-form-item label="昵称">
               <a-input placeholder="请输入" v-model="queryParam.nickname"></a-input>
             </a-form-item>
           </a-col>
@@ -85,6 +85,10 @@
         @change="handleTableChange"
       >
 
+        <template slot="nickname" slot-scope="text, record, index">
+          <router-link :to="'/user/modules/UserDetail?userId=' + record.id "> {{record.nickname}}</router-link>
+        </template>
+
         <template slot="imgurllot" slot-scope="text, record, index">
           <div class="anty-img-wrap">
             <img :src="record.avatar"/>
@@ -148,9 +152,10 @@
             }
           },
           {
-            title: '寄拍人',
+            title: '昵称',
             align:"center",
-            dataIndex: 'nickname'
+            dataIndex: 'nickname',
+            scopedSlots: {customRender: 'nickname'}
           },
           {
             title: '年龄',
