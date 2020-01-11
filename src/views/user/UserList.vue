@@ -157,16 +157,11 @@
             dataIndex: 'nickname',
             scopedSlots: {customRender: 'nickname'}
           },
-          {
+         /* {
             title: '年龄',
             align:"center",
             dataIndex: 'age'
-          },
-          {
-            title: '手机号',
-            align:"center",
-            dataIndex: 'mobile'
-          },
+          },*/
           {
             title: '头像',
             align:"center",
@@ -174,24 +169,34 @@
             scopedSlots: {customRender: 'imgurllot'}
           },
           {
-            title: '性别',
+            title: '手机号',
             align:"center",
-            dataIndex: 'sex_dictText'
+            dataIndex: 'mobile'
           },
           {
-            title: '余额',
+            title: '注册时间',
             align:"center",
-            dataIndex: 'money'
+            dataIndex: 'createTime'
+          },
+          {
+            title: '推广人',
+            align:"center",
+            dataIndex: 'extendName'
           },
           {
             title: '冻结金额',
             align:"center",
             dataIndex: 'freezeMoney'
           },
-          {
-            title: '佣金',
+         /* {
+            title: '性别',
             align:"center",
-            dataIndex: 'commissionMoney'
+            dataIndex: 'sex_dictText'
+          },*/
+          {
+            title: '余额',
+            align:"center",
+            dataIndex: 'money'
           },
           {
             title: '积分',
@@ -199,6 +204,12 @@
             dataIndex: 'score'
           },
           {
+            title: '佣金',
+            align:"center",
+            dataIndex: 'commissionMoney'
+          },
+
+          /*{
             title: '状态',
             align:"center",
             dataIndex: 'status',
@@ -209,27 +220,19 @@
                     return "冻结";
                 }
             }
-          },
-          {
-            title: '推广人',
-            align:"center",
-            dataIndex: 'extendId_dictText'
-          },
-          {
+          },*/
+
+         /* {
             title: '邀请码',
             align:"center",
             dataIndex: 'inviterNum'
-          },
-          {
+          },*/
+          /*{
             title: '已经邀请人数',
             align:"center",
             dataIndex: 'inviterCount'
-          },
-          {
-            title: '注册时间',
-            align:"center",
-            dataIndex: 'createTime'
-          },
+          },*/
+
           {
             title: '操作',
             dataIndex: 'action',

@@ -150,12 +150,6 @@
           <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'endTime', validatorRules.endTime ]" />
         </a-form-item>
 
-        <a-form-item label="反馈时间" :labelCol="{span: 5}" :wrapperCol="{span: 14, offset: 0}">
-          <j-date v-decorator="[ 'startTime', validatorRules.startTime ]" :showTime="true" date-format="YYYY-MM-DD HH:mm:ss" style="width:45%" placeholder="请选择开始时间" ></j-date>
-          <span style="width: 10px;">~</span>
-          <j-date v-decorator="[ 'endTime', validatorRules.endTime ]" :showTime="true" date-format="YYYY-MM-DD HH:mm:ss" style="width:45%" placeholder="请选择结束时间"></j-date>
-        </a-form-item>
-
        <!-- <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -179,13 +173,11 @@
   import {selectCategoryList} from '@/api/api'
   import JEditor from '@/components/jeecg/JEditor'
   import {ACCESS_TOKEN} from "@/store/mutation-types"
-  import JDate from '@/components/jeecg/JDate'
 
   export default {
     name: "GoodsModal",
     components: {
-        JEditor,
-        JDate
+        JEditor
     },
     data () {
       return {

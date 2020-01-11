@@ -81,10 +81,31 @@
           {
             title: '类型',
             dataIndex: 'billType',
-            key: 'billType'
+            key: 'billType',
+            customRender:function (value) {
+              if(value == 0){
+                return "佣金增加";
+              }else if(value == 1){
+                return "充值余额";
+              }else if(value == 2){
+                return "保证金解冻";
+              } else if(value == 3){
+                return "支付";
+              }else if(value == 4){
+                return "提现";
+              }else if(value == 5){
+                return "保证金冻结";
+              }else if(value == 6){
+                return "保证金扣除";
+              }else if(value == 7){
+                return "订单过期扣除保证金";
+              }else if(value == 8){
+                return "寄卖所得";
+              }
+            }
           },
           {
-            title: '单价',
+            title: '金额',
             dataIndex: 'changeMoney',
             key: 'changeMoney',
             align: 'right'
@@ -113,7 +134,17 @@
               {
                   title: '类型',
                   dataIndex: 'type',
-                  key: 'type'
+                customRender:function (value) {
+                  if(value == 0){
+                    return "上级返佣";
+                  }else if(value == 1){
+                    return "竞拍佣金";
+                  }else if(value == 2){
+                    return "佣金提现";
+                  } else if(value == 8){
+                    return "寄拍佣金";
+                  }
+                }
               },
               {
                   title: '佣金',
@@ -145,7 +176,13 @@
               {
                   title: '类型',
                   dataIndex: 'type',
-                  key: 'type'
+                customRender:function (value) {
+                  if(value == 1){
+                    return "支出";
+                  }else{
+                    return "返还";
+                  }
+                }
               },
               {
                   title: '积分',
