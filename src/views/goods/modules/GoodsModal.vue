@@ -140,14 +140,14 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="开拍时间">
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'startTime', validatorRules.startTime ]" />
+          <a-date-picker :showTime="{ format: 'HH:mm:00' }" format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'startTime', validatorRules.startTime ]" />
         </a-form-item>
 
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="结束时间">
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'endTime', validatorRules.endTime ]" />
+          <a-date-picker :showTime="{ format: 'HH:mm:00' }"  format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'endTime', validatorRules.endTime ]" />
         </a-form-item>
 
        <!-- <a-form-item
