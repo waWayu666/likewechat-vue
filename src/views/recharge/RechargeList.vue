@@ -76,11 +76,11 @@
 
     <!-- table区域-begin -->
     <div>
-      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{
-        selectedRowKeys.length }}</a>项
-        <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-      </div>
+<!--      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">-->
+<!--        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{-->
+<!--        selectedRowKeys.length }}</a>项-->
+<!--        <a style="margin-left: 24px" @click="onClearSelected">清空</a>-->
+<!--      </div>-->
 
       <a-table
         ref="table"
@@ -93,21 +93,21 @@
         :loading="loading"
         @change="handleTableChange">
 
-        <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+<!--        <span slot="action" slot-scope="text, record">-->
+<!--          <a @click="handleEdit(record)">编辑</a>-->
 
-          <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
-        </span>
+<!--          <a-divider type="vertical"/>-->
+<!--          <a-dropdown>-->
+<!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
+<!--            <a-menu slot="overlay">-->
+<!--              <a-menu-item>-->
+<!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+<!--                  <a>删除</a>-->
+<!--                </a-popconfirm>-->
+<!--              </a-menu-item>-->
+<!--            </a-menu>-->
+<!--          </a-dropdown>-->
+<!--        </span>-->
 
       </a-table>
     </div>
@@ -182,12 +182,12 @@
                         align: "center",
                         dataIndex: 'orderNo'
                     },
-                    {
-                        title: '操作',
-                        dataIndex: 'action',
-                        align: "center",
-                        scopedSlots: {customRender: 'action'},
-                    }
+                    // {
+                    //     title: '操作',
+                    //     dataIndex: 'action',
+                    //     align: "center",
+                    //     scopedSlots: {customRender: 'action'},
+                    // }
                 ],
                 url: {
                     list: "/recharge/recharge/list",

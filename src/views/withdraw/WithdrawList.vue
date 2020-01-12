@@ -90,8 +90,8 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)" v-if="record.status==0" >提现</a>
-          <span v-if="record.status==1">已提现</span>
-          <span v-if="record.status==2">已拒绝</span>
+<!--          <span v-if="record.status==1">已提现</span>-->
+<!--          <span v-if="record.status==2">已拒绝</span>-->
           <!--          <a-divider type="vertical" />-->
           <!--          <a-dropdown>-->
           <!--            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>-->
