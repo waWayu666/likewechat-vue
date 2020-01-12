@@ -193,7 +193,7 @@
                     {
                         title: '商品名称',
                         align:"center",
-                        dataIndex: 'goodsId_dictText'
+                        dataIndex: 'goodsId'
                     },
                     {
                         title: '买家会员名称',
