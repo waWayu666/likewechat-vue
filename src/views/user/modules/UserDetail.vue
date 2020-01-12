@@ -161,7 +161,7 @@
               {
                   title: '对应拍品',
                   dataIndex: 'goodsId',
-                  key: 'goodsId',
+                  key: 'goodsId_dictText',
                   align: 'right'
               }
           ],

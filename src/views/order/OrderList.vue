@@ -234,7 +234,7 @@
                         dataIndex: 'orderStatus',
                         customRender: function (t) {
                             if (t == 0) {
-                                return "流拍";
+                                return "已取消";
                             } else if (t == 1) {
                                 return "待付款";
                             } else if (t == 2) {
@@ -244,7 +244,7 @@
                             } else if (t == 4) {
                                 return "已完成"
                             } else if (t == 5) {
-                              return "寄拍"
+                              return "待寄拍"
                             }
                         }
                     },
