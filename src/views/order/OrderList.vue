@@ -217,30 +217,24 @@
                         align: "center",
                         dataIndex: 'orderMoney'
                     },
+                  {
+                    title: '微信',
+                    align: "center",
+                    dataIndex: 'userMoney'
+                  },
                     {
                         title: '订单消耗积分',
                         align: "center",
-                        dataIndex: 'point',
-                        customRender:function (value) {
-                            if(value == 0 || value == '' || value == null){
-                                return "未使用";
-                            }else {
-                                return value;
-                            }
-                        }
+                        dataIndex: 'pointCount'
                     },
-                    {
-                        title: '订单余额支付金额',
-                        align: "center",
-                        dataIndex: 'userMoney'
-                    },
+
                     {
                         title: '订单状态',
                         align: "center",
                         dataIndex: 'orderStatus',
                         customRender: function (t) {
                             if (t == 0) {
-                                return "流拍";
+                                return "已取消";
                             } else if (t == 1) {
                                 return "待付款";
                             } else if (t == 2) {
@@ -249,6 +243,8 @@
                                 return "待签收"
                             } else if (t == 4) {
                                 return "已完成"
+                            } else if (t == 5) {
+                              return "待寄拍"
                             }
                         }
                     },
