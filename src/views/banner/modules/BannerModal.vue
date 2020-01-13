@@ -120,8 +120,11 @@
         this.model = Object.assign({}, record);
         this.visible = true;
         this.jeditor.description = decodeURIComponent(this.model.description);
+        if (record.hasOwnProperty("id")) { //编辑的时候回显主图
+            this.picUrlPic = "Has no pic url yet";
+        }
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model,'title','imgUrl','description','linkType','link','useFlag','sort'))
+          this.form.setFieldsValue(pick(this.model,'title','imgUrl','description','linkType','link','linkId','useFlag','sort'))
 		  //时间格式化
         });
 
