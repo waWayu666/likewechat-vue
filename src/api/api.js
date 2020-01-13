@@ -127,13 +127,13 @@ const upOrDown=(id,params)=> postAction(`/goods/goods/upOrDown/${id}`,params);
 // 积分商品管理
 const upOrDownScoreGoods=(id,params)=> postAction(`/goods/scoreGoods/upOrDownScoreGoods/${id}`,params);
 // 余额
-const getBill = (params) => getAction("/bill/bill/queryPageList", params);
+const getBill = (str,params) => getAction(`/bill/bill/queryPageList/${str}`, params);
 // 佣金
-const getBrokeragePage = (params) => getAction("/usercommission/userCommission/brokeragePageList", params);
+const getBrokeragePage = (str,params) => getAction(`/usercommission/userCommission/brokeragePageList/${str}`, params);
 // 积分
-const getScore = (params) => getAction("/userscore/userScore/scorePageList", params);
+const getScore = (str,params) => getAction(`/userscore/userScore/scorePageList/${str}`, params);
 // 粉丝
-const getFans = (params) => getAction("/fnas/fans/fansPageList", params);
+const getFans = (str,params) => getAction(`/fnas/fans/fansPageList/${str}`, params);
 // 竞拍记录
 const getAuctionrecod = (params) => getAction("/auctionrecod/auctionRecod/auctionRecodPageList", params);
 

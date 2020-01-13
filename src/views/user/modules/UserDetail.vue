@@ -13,7 +13,10 @@
           <a href="javascript:;">发发发</a>
         </template>
         <template slot="title" slot-scope="currentPageData">
-          余额明细
+          <div style="display: flex;justify-content: space-between;align-items: center;">
+            <div>余额明细</div>
+            <div>剩余余额：{{userInfoDetail.money}}</div>
+          </div>
         </template>
       </a-table>
 
@@ -22,7 +25,10 @@
           <a href="javascript:;">发发发</a>
         </template>
         <template slot="title" slot-scope="currentPageData">
-          佣金明细
+          <div style="display: flex;justify-content: space-between;align-items: center;">
+            <div>佣金明细</div>
+            <div>佣金余额：{{userInfoDetail.commissionMoney}}</div>
+          </div>
         </template>
       </a-table>
 
@@ -31,7 +37,10 @@
           <a href="javascript:;">发发发</a>
         </template>
         <template slot="title" slot-scope="currentPageData">
-          积分明细
+          <div style="display: flex;justify-content: space-between;align-items: center;">
+            <div>积分明细</div>
+            <div>积分余额：{{userInfoDetail.score}}</div>
+          </div>
         </template>
       </a-table>
 
@@ -40,7 +49,15 @@
           <a href="javascript:;">发发发</a>
         </template>
         <template slot="title" slot-scope="currentPageData">
-          团队列表
+          <div style="display: flex;justify-content: space-between;align-items: center;">
+            <div>团队列表</div>
+            <div>团队个数：{{userInfoDetail.fansNumber}}</div>
+          </div>
+        </template>
+        <template slot="imgurllot" slot-scope="text, record, index">
+          <div class="anty-img-wrap">
+            <img :src="record.fansAvatar"/>
+          </div>
         </template>
       </a-table>
 
@@ -70,6 +87,9 @@
         scoreData:[],
         fansData:[],
         auctionrecodData:[],
+        url: {
+            imgerver: window._CONFIG['imgDomainURL'],
+        },
         //  余额数据
         balanceColumns: [
           {
@@ -118,8 +138,8 @@
           },
           {
             title: '对应拍品',
-            dataIndex: 'amount',
-            key: 'amount',
+            dataIndex: 'goodsId',
+            key: 'goodsId',
             align: 'right'
           }
         ],
@@ -160,8 +180,8 @@
               },
               {
                   title: '对应拍品',
-                  dataIndex: 'goodsId',
-                  key: 'goodsId_dictText',
+                  dataIndex: 'goodsId_dictText',
+                  key: 'goodsId',
                   align: 'right'
               }
           ],
@@ -207,25 +227,26 @@
           fansColumns: [
               {
                   title: 'id',
-                  dataIndex: 'fansId',
+                  dataIndex: 'fansName',
                   width: 150,
-                  key: 'fansId'
+                  key: 'fansName'
               },
               {
                   title: '头像',
-                  dataIndex: 'billType',
-                  key: 'billType'
+                  dataIndex: 'fansAvatar',
+                  key: 'fansAvatar',
+                  scopedSlots: {customRender: 'imgurllot'}
               },
               {
                   title: '手机号',
-                  dataIndex: 'fansId',
-                  key: 'fansId',
+                  dataIndex: 'fansMobile',
+                  key: 'fansMobile',
                   align: 'right'
               },
               {
                   title: '时间',
-                  dataIndex: 'createTime',
-                  key: 'createTime',
+                  dataIndex: 'time',
+                  key: 'time',
                   align: 'right'
               }
           ]
@@ -244,9 +265,15 @@
     computed: {
       title () {
         return this.$route.meta.title
+      },
+      importExcelUrl: function(){
+          return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
       }
     },
     methods: {
+        getAvatarView: function (imgUrl) {
+            return this.url.imgerver + "/" + avatar;
+        },
         //用户信息
         queryUserInfo(id){
             queryUserDetail(id,null).then((res)=>{
@@ -255,10 +282,8 @@
         },
         //余额明细
         queryBill(id){
-            // var params = this.getQueryParams();//查询条件
-            // params.userId = this.$route.query.userId;
-            // console.log(id)
-            getBill().then((res)=>{
+            let str=[id,1,10];
+            getBill(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.billData = res.result.records
@@ -266,10 +291,8 @@
         },
         //佣金明细
         queryBrokerage(id){
-            // var params = this.getQueryParams();//查询条件
-            // params.userId = this.$route.query.userId;
-            // console.log(id)
-            getBrokeragePage().then((res)=>{
+            let str=[id,1,10];
+            getBrokeragePage(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.brokerageData = res.result.records
@@ -277,10 +300,8 @@
         },
         //积分明细
         queryScore(id){
-            // var params = this.getQueryParams();//查询条件
-            // params.userId = this.$route.query.userId;
-            // console.log(id)
-            getScore().then((res)=>{
+            let str=[id,1,10];
+            getScore(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.scoreData = res.result.records
@@ -288,10 +309,8 @@
         },
         //粉丝明细
         queryFans(id){
-            // var params = this.getQueryParams();//查询条件
-            // params.userId = this.$route.query.userId;
-            // console.log(id)
-            getFans().then((res)=>{
+            let str=[id,1,10];
+            getFans(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.fansData = res.result.records
