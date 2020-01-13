@@ -261,6 +261,7 @@
               if(res.success){
                 that.$message.success(res.message);
                 that.$emit('ok');
+                that.confirmLoading = false;
                 that.close();
               }else{
                 that.$message.warning(res.message);

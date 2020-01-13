@@ -344,7 +344,7 @@
             }
             let formData = Object.assign(this.model, values);
             //时间格式化
-            formData.startTime = formData.startTime?formData.startTime.format('YYYY-MM-DD HH:mm:ss'):null;
+            formData.startTime = formData.startTime?formData.startTime.format('YYYY-MM-DD HH:mm:00'):null;
             formData.endTime = formData.endTime?formData.endTime.format('YYYY-MM-DD HH:mm:ss'):null;
             
             console.log(formData)
@@ -483,7 +483,7 @@
         onChange1(value, dateString) {
             this.model.endTime = moment(
                 moment(dateString).add(5, "minutes"),
-                "YYYY-MM-DD HH:mm"
+                "YYYY-MM-DD HH:mm:00"
             );
             this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
 
