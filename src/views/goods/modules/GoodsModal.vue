@@ -139,8 +139,9 @@
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          @ok="getDateTime"
           label="开拍时间">
-          <a-date-picker :showTime="{ format: 'HH:mm:00' }" format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'startTime', validatorRules.startTime ]" />
+          <a-date-picker :showTime="{ format: 'HH:mm:00' }" format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'startTime', validatorRules.startTime ]" @change="onChange1"/>
         </a-form-item>
 
         <a-form-item
@@ -477,13 +478,16 @@
       },
       getDateTime(date) {
           console.log(date)
-          if(date) {
-              this.model.startTime = date[0].format('YYYY-MM-DD HH:mm:ss');
-              console.log(this.model.startTime)
-              this.model.endTime = date[0].format('YYYY-MM-DD HH:mm:ss');
-              console.log(this.model.endTime)
-          }
-      }
+
+      },
+        onChange1(value, dateString) {
+            this.model.endTime = moment(
+                moment(dateString).add(5, "minutes"),
+                "YYYY-MM-DD HH:mm"
+            );
+            this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
+
+        },
     }
   }
 </script>
