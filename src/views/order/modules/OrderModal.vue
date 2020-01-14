@@ -11,72 +11,47 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
       
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单编号">
-          {{this.model.orderNum}}
-        </a-form-item>
-        <!--<a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单来源">
-          {{this.model.orderFrom}}
-        </a-form-item>-->
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="买家会员名称">
-          {{this.model.nickname}}
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="商品类型">
-          <span v-if="this.model.orderStatus == 1">竞拍商品</span>
-          <span v-if="this.model.orderStatus == 2">积分商品</span>
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单总价">
-          {{this.model.orderMoney}}
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单消耗积分">
-          {{this.model.point}}
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单余额支付金额">
-          {{this.model.userMoney}}
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单状态">
-          <span v-if="this.model.orderStatus == 0">流拍</span>
-          <span v-if="this.model.orderStatus == 1">待付款</span>
-          <span v-if="this.model.orderStatus == 2">待发货</span>
-          <span v-if="this.model.orderStatus == 3">待签收</span>
-          <span v-if="this.model.orderStatus == 4">已完成</span>
-        </a-form-item>
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="订单付款时间">
-          {{this.model.payTime}}
-        </a-form-item>
-<!--        <a-form-item-->
-<!--          :labelCol="labelCol"-->
-<!--          :wrapperCol="wrapperCol"-->
-<!--          label="取消订单原因">-->
-<!--          {{this.model.cancelReason}}-->
-<!--        </a-form-item>-->
-		
+        <div v-if="this.model.address!=null && this.model.address !=''">
+          <a-form-item
+            :labelCol="labelCol"
+            :wrapperCol="wrapperCol"
+            label="收货人">
+            {{this.model.address.userId}}
+          </a-form-item>
+
+          <a-form-item
+            :labelCol="labelCol"
+            :wrapperCol="wrapperCol"
+            label="联系方式">
+            {{this.model.address.reciverTelephone}}
+          </a-form-item>
+
+
+          <a-form-item
+            :labelCol="labelCol"
+            :wrapperCol="wrapperCol"
+            label="地址">
+            {{this.model.address.detailAddress}}
+          </a-form-item>
+        </div>
+
+        <div v-if="this.model.expressName!=''">
+          <a-form-item
+            :labelCol="labelCol"
+            :wrapperCol="wrapperCol"
+            label="快递">
+            {{this.model.expressName}}
+          </a-form-item>
+
+          <a-form-item
+            :labelCol="labelCol"
+            :wrapperCol="wrapperCol"
+            label="单号">
+            {{this.model.expressNum}}
+          </a-form-item>
+        </div>
+
+
       </a-form>
     </a-spin>
   </a-modal>
@@ -132,7 +107,7 @@
         this.$nextTick(() => {
           this.form.setFieldsValue(pick(this.model,'orderNum','orderFrom','userId','nickname','orderType','orderMoney','point','userMoney','orderStatus','delFlag','cancelReason'))
 		  //时间格式化
-          this.form.setFieldsValue({payTime:this.model.payTime?moment(this.model.payTime):null})
+      //     this.form.setFieldsValue({payTime:this.model.payTime?moment(this.model.payTime):null})
         });
 
       },
