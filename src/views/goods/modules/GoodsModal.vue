@@ -9,34 +9,44 @@
     cancelText="关闭">
     
     <a-spin :spinning="confirmLoading">
-      <a-form :form="form">
+      <a-form :form="form" layout="horizontal">
 
         <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
+          :labelCol="{
+          xs: { span: 24 },
+          sm: { span: 2 },
+        }"
+          :wrapperCol="{
+          xs: { span: 24 },
+          sm: { span: 21 },
+        }"
           label="商品名称">
           <a-input placeholder="请输入商品名称" v-decorator="['goodsName', validatorRules.goodsName ]" />
         </a-form-item>
 
         <a-form-item
+          style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="起拍价">
           <a-input-number v-decorator="[ 'startPrice', {}]" />
         </a-form-item>
         <a-form-item
+          style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="预估价">
           <a-input-number v-decorator="[ 'budgetPrice', {}]" />
         </a-form-item>
         <a-form-item
+          style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="限高价">
           <a-input-number v-decorator="[ 'evaluatePrice', {}]" />
         </a-form-item>
         <a-form-item
+          style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="限低价">
@@ -49,18 +59,22 @@
           <a-input-number v-decorator="[ 'maxPrice', validatorRules.maxPrice ]" />
         </a-form-item>-->
         <a-form-item
+          style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="顶一手价格">
           <a-input-number v-decorator="[ 'addPrice', validatorRules.addPrice ]" />
         </a-form-item>
         <a-form-item
+          style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="佣金">
           <a-input-number v-decorator="[ 'commissionPrice', validatorRules.commissionPrice ]" />
         </a-form-item>
         <a-form-item
+          style="display: inline-block;width: 400px;"
+
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="请选择分类">
@@ -78,15 +92,39 @@
         </a-form-item>
 
         <a-form-item
+          style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
           label="积分返还比例">
           <a-input-number v-decorator="[ 'returnRatio', validatorRules.returnRatio ]"  />
         </a-form-item>
-
         <a-form-item
+          style="display: inline-block;width: 400px;"
+
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          @ok="getDateTime"
+          label="开拍时间">
+          <a-date-picker :showTime="{ format: 'HH:mm:00' }" format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'startTime', validatorRules.startTime ]" @change="onChange1"/>
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="结束时间">
+          <a-date-picker :showTime="{ format: 'HH:mm:00' }"  format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'endTime', validatorRules.endTime ]" />
+        </a-form-item>
+        <a-form-item
+          :labelCol="{
+          xs: { span: 24 },
+          sm: { span: 3 },
+        }"
+          :wrapperCol="{
+          xs: { span: 24 },
+          sm: { span: 21 },
+        }"
           label="商品主图">
 
           <a-upload
@@ -107,7 +145,14 @@
         </a-form-item>
 
         <!-- 轮播图mainImages -->
-        <a-form-item label="轮播图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="轮播图" :labelCol="{
+          xs: { span: 24 },
+          sm: { span: 3 },
+        }"
+                     :wrapperCol="{
+          xs: { span: 24 },
+          sm: { span: 21 },
+        }">
           <a-upload
             listType="picture-card"
             class="avatar-uploader"
@@ -130,26 +175,19 @@
         </a-form-item>
 
         <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
+          :labelCol="{
+          xs: { span: 24 },
+          sm: { span: 3 },
+        }"
+          :wrapperCol="{
+          xs: { span: 24 },
+          sm: { span: 21 },
+        }"
           label="商品详情">
           <j-editor v-model="jeditor.goodsDesc"/>
         </a-form-item>
 
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          @ok="getDateTime"
-          label="开拍时间">
-          <a-date-picker :showTime="{ format: 'HH:mm:00' }" format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'startTime', validatorRules.startTime ]" @change="onChange1"/>
-        </a-form-item>
 
-        <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="结束时间">
-          <a-date-picker :showTime="{ format: 'HH:mm:00' }"  format="YYYY-MM-DD HH:mm:00" v-decorator="[ 'endTime', validatorRules.endTime ]" />
-        </a-form-item>
 
        <!-- <a-form-item
           :labelCol="labelCol"
@@ -191,7 +229,7 @@
         model: {},
         labelCol: {
           xs: { span: 24 },
-          sm: { span: 5 },
+          sm: { span: 6 },
         },
         wrapperCol: {
           xs: { span: 24 },

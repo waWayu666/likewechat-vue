@@ -37,10 +37,11 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="10">
-            <a-form-item label="注册时间">
+            <a-form-item label="竞拍时间">
               <a-range-picker
-                style="width: 210px"
-                format="YYYY-MM-DD"
+                :showTime="{ format: 'HH:mm:00' }"
+                style="width: 320px"
+                format="YYYY-MM-DD HH:mm:00"
                 :placeholder="['开始时间', '结束时间']"
                 @change="onDateChange"
               />
@@ -91,8 +92,11 @@
         :pagination="ipagination"
         :loading="loading"
         @change="handleTableChange">
-
-
+        <template slot="goodsIdSolt" slot-scope="text, record, index">
+          <div style="width:130px;word-break:break-all;">
+            {{record.id}}
+          </div>
+        </template>
         <template slot="imgurllot" slot-scope="text, record, index">
           <div class="anty-img-wrap">
             <img :src="record.mainImage"/>
@@ -100,16 +104,17 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
+          <a @click="handleEdit(record)">编辑</a><br/>
 
-          <a-divider type="vertical"/>
+<!--          <a-divider type="vertical"/>-->
 
           <a-popconfirm title="确定上下架吗?" @confirm="() => upOrDownGoods(record.id)">
             <a v-if="record.status == 0">上架</a>
             <a v-else-if="record.status == 1">下架</a>
           </a-popconfirm>
 
-          <a-divider type="vertical"/>
+<!--          <a-divider type="vertical"/>-->
+          <br/>
 <!--           <a-button type="primary" @click="showDrawer">竞拍记</a-button>-->
            <a @click="showDrawer(record)">竞拍记录</a>
         </span>
@@ -158,15 +163,22 @@
                 // 表头
                 columns: [
                     {
-                        title: '#',
-                        dataIndex: '',
-                        key: 'rowIndex',
+                        title: '商品id',
                         width: 60,
                         align: "center",
-                        customRender: function (t, r, index) {
-                            return parseInt(index) + 1;
-                        }
+                        dataIndex: 'id',
+                        scopedSlots: {customRender: 'goodsIdSolt'}
                     },
+                    // {
+                    //     title: '#',
+                    //     dataIndex: '',
+                    //     key: 'rowIndex',
+                    //     width: 60,
+                    //     align: "center",
+                    //     customRender: function (t, r, index) {
+                    //         return parseInt(index) + 1;
+                    //     }
+                    // },
                     {
                         title: '竞价状态',
                         align: "center",
@@ -184,13 +196,14 @@
                     {
                         title: '商品名称',
                         align: "center",
+                        width: 150,
                         dataIndex: 'goodsName'
                     },
-                    {
-                        title: '商品编号',
-                        align: "center",
-                        dataIndex: 'goodsNum'
-                    },
+                    // {
+                    //     title: '商品编号',
+                    //     align: "center",
+                    //     dataIndex: 'goodsNum'
+                    // },
 
                   {
                     title: '寄拍人',
@@ -286,6 +299,7 @@
                         title: '操作',
                         dataIndex: 'action',
                         align: "center",
+                        width: 80,
                         scopedSlots: {customRender: 'action'},
                     }
                 ],
