@@ -4,6 +4,7 @@
     :width="800"
     :visible="visible"
     :confirmLoading="confirmLoading"
+    :maskClosable="false"
     @ok="handleOk"
     @cancel="handleCancel"
     cancelText="关闭">

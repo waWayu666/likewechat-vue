@@ -4,6 +4,7 @@
     :width="1000"
     :visible="visible"
     :confirmLoading="confirmLoading"
+    :maskClosable="false"
     @ok="handleOk"
     @cancel="handleCancel"
     cancelText="关闭">
@@ -390,8 +391,8 @@
               if(res.success){
                 that.$message.success(res.message);
                 that.$emit('ok');
-                that.confirmLoading = false;
-                that.close();
+                // that.confirmLoading = false;
+                // that.close();
               }else{
                 that.$message.warning(res.message);
               }
