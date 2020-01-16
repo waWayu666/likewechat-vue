@@ -196,7 +196,8 @@
           {
             title: '余额',
             align:"center",
-            dataIndex: 'money'
+            dataIndex: 'money',
+            sorter: (a, b) => a.money - b.money,
           },
           {
             title: '积分',
@@ -206,7 +207,8 @@
           {
             title: '佣金',
             align:"center",
-            dataIndex: 'commissionMoney'
+            dataIndex: 'commissionMoney',
+            sorter: (a, b) => a.commissionMoney - b.commissionMoney,
           },
 
           /*{

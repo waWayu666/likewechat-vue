@@ -8,7 +8,7 @@
       <a-divider style="margin-bottom: 32px"/>
 
 <!--  <div class="title">余额明细</div>-->
-      <a-table :columns="balanceColumns" :dataSource="billData" bordered :pagination="{ pageSize: 5 }">
+      <a-table :columns="balanceColumns" :dataSource="billData" @change="handleTableChange1" bordered :pagination="billpagination">
         <template slot="name" slot-scope="text">
           <a href="javascript:;">发发发</a>
         </template>
@@ -20,7 +20,7 @@
         </template>
       </a-table>
 
-      <a-table :columns="brokerageColumns" :dataSource="brokerageData" bordered :pagination="{ pageSize: 5 }">
+      <a-table :columns="brokerageColumns" :dataSource="brokerageData" bordered @change="handleTableChange2" :pagination="commissionpagination">
         <template slot="name" slot-scope="text">
           <a href="javascript:;">发发发</a>
         </template>
@@ -32,7 +32,7 @@
         </template>
       </a-table>
 
-      <a-table :columns="scoreColumns" :dataSource="scoreData" bordered :pagination="{ pageSize: 5 }">
+      <a-table :columns="scoreColumns" :dataSource="scoreData" bordered @change="handleTableChange3" :pagination="scorepagination">
         <template slot="name" slot-scope="text">
           <a href="javascript:;">发发发</a>
         </template>
@@ -44,7 +44,7 @@
         </template>
       </a-table>
 
-      <a-table :columns="fansColumns" :dataSource="fansData" bordered :pagination="{ pageSize: 5 }">
+      <a-table :columns="fansColumns" :dataSource="fansData" bordered @change="handleTableChange4" :pagination="fanspagination">
         <template slot="name" slot-scope="text">
           <a href="javascript:;">发发发</a>
         </template>
@@ -82,10 +82,33 @@
     data () {
       return {
         userInfoDetail:{},
+        // 余额明细
         billData:[],
+        // 余额分页
+        billpagination:{
+          pageSize:5,
+          current:1,
+          total:0
+        },
+        // 佣金明细
         brokerageData:[],
+        commissionpagination:{
+          pageSize:5,
+          current:1,
+          total:0
+        },
         scoreData:[],
+        scorepagination:{
+          pageSize:5,
+          current:1,
+          total:0
+        },
         fansData:[],
+        fanspagination:{
+          pageSize:5,
+          current:1,
+          total:0
+        },
         auctionrecodData:[],
         url: {
             imgerver: window._CONFIG['imgDomainURL'],
@@ -282,38 +305,65 @@
         },
         //余额明细
         queryBill(id){
-            let str=[id,1,10];
+            let str=[id,this.billpagination.current,5];
             getBill(str.toString(),null).then((res)=>{
-                console.log(res.result);
                 // this.billData = res.result;
                 this.billData = res.result.records
+                this.billpagination.current=res.result.current,
+                this.billpagination.total=res.result.total
             });
+        },
+        // 切换余额明细分页  	(分页、排序、筛选变化时触发)
+        handleTableChange1(pagination, filters, sorter){
+          this.billpagination =pagination
+          this.queryBill(this.$route.query.userId)
+        },
+        // 佣金分页
+        handleTableChange2(pagination, filters, sorter){
+          this.commissionpagination =pagination
+          this.queryBrokerage(this.$route.query.userId)
+        },
+        // 积分分页
+        handleTableChange3(pagination, filters, sorter){
+          this.scorepagination =pagination
+          this.queryScore(this.$route.query.userId)
+        },
+        // 粉丝分页
+        handleTableChange4(pagination, filters, sorter){
+          this.fanspagination =pagination
+          this.queryFans(this.$route.query.userId)
         },
         //佣金明细
         queryBrokerage(id){
-            let str=[id,1,10];
+            let str=[id,this.commissionpagination.current,5];
             getBrokeragePage(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.brokerageData = res.result.records
+                this.commissionpagination.current=res.result.current,
+                this.commissionpagination.total=res.result.total
             });
         },
         //积分明细
         queryScore(id){
-            let str=[id,1,10];
+            let str=[id,this.scorepagination.current,5];
             getScore(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.scoreData = res.result.records
+                this.scorepagination.current=res.result.current,
+                this.scorepagination.total=res.result.total
             });
         },
         //粉丝明细
         queryFans(id){
-            let str=[id,1,10];
+            let str=[id,this.fanspagination.current,5];
             getFans(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.fansData = res.result.records
+                this.fanspagination.current=res.result.current,
+                this.fanspagination.total=res.result.total
             });
         },
     }
