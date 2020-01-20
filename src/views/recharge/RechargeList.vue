@@ -28,10 +28,11 @@
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="10">
-              <a-form-item label="注册时间">
+              <a-form-item label="下单时间">
                 <a-range-picker
-                  style="width: 210px"
-                  format="YYYY-MM-DD"
+                  :showTime="{ format: 'HH:mm:00' }"
+                  style="width: 320px"
+                  format="YYYY-MM-DD HH:mm:00"
                   :placeholder="['开始时间', '结束时间']"
                   @change="onDateChange"
                 />
@@ -181,6 +182,11 @@
                         title: '第三方订单号',
                         align: "center",
                         dataIndex: 'orderNo'
+                    },
+                    {
+                        title: '充值时间',
+                        align:"center",
+                        dataIndex: 'createTime'
                     },
                     // {
                     //     title: '操作',

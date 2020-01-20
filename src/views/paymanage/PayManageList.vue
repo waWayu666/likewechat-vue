@@ -17,19 +17,30 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="商品类型">
+            <a-form-item label="订单类型">
               <a-select v-model="queryParam.orderType" placeholder="请选择商品状态">
                 <a-select-option value="1">竞拍商品</a-select-option>
                 <a-select-option value="2">积分商品</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="订单状态">
-              <a-select v-model="queryParam.orderType" placeholder="请选择订单状态">
-                <a-select-option value="1">已支付</a-select-option>
-                <a-select-option value="2">已退款</a-select-option>
-              </a-select>
+<!--          <a-col :md="6" :sm="8">-->
+<!--            <a-form-item label="订单状态">-->
+<!--              <a-select v-model="queryParam.orderType" placeholder="请选择订单状态">-->
+<!--                <a-select-option value="1">已支付</a-select-option>-->
+<!--                <a-select-option value="2">已退款</a-select-option>-->
+<!--              </a-select>-->
+<!--            </a-form-item>-->
+<!--          </a-col>-->
+          <a-col :md="6" :sm="10">
+            <a-form-item label="支付时间">
+              <a-range-picker
+                :showTime="{ format: 'HH:mm:00' }"
+                style="width: 320px"
+                format="YYYY-MM-DD HH:mm:00"
+                :placeholder="['开始时间', '结束时间']"
+                @change="onDateChange"
+              />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -154,7 +165,7 @@
                         dataIndex: 'nickname'
                     },
                     {
-                        title: '商品类型',
+                        title: '订单类型',
                         align: "center",
                         dataIndex: 'orderType',
                         customRender: function (value) {
@@ -178,7 +189,7 @@
                         dataIndex: 'userMoney'
                     },
                     {
-                        title: '订单付款时间',
+                        title: '支付时间',
                         align: "center",
                         dataIndex: 'payTime'
                     },
@@ -203,7 +214,12 @@
                 return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
             }
         },
-        methods: {}
+        methods: {
+            onDateChange: function (dateString) {
+                this.queryParam.startTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
+                this.queryParam.endTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
+            },
+        }
     }
 </script>
 <style scoped>
