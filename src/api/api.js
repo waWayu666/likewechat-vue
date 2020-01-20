@@ -15,6 +15,7 @@ const getExpressCompanyList = (params)=>getAction("/express/expressCompany/expre
 //提现
 const remittance=(params)=>postAction("/withdraw/withdraw/remittance",params);
 const refuse=(params)=>postAction("/withdraw/withdraw/refuse",params);
+const queryWithdrawByStatus=(params)=>getAction("/withdraw/withdraw/queryWithdrawByStatus",params);
 const refund=(params)=>postAction("/order/order/refund",params);
 
 //角色管理
@@ -144,6 +145,7 @@ export {
   getExpressCompanyList,
   remittance,
   refuse,
+  queryWithdrawByStatus,
   addRole,
   editRole,
   checkRoleCode,

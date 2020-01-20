@@ -44,6 +44,10 @@
               <!--              </a>-->
             </span>
           </a-col>
+          <a-col :md="8" :sm="12" style="line-height: 32px;">
+            <span style="margin-right: 100px;">提现申请总金额:{{this.withdrawMoney.noToTheAccount}}</span>
+            <span>提现到账金额:{{this.withdrawMoney.toTheAccount}}</span>
+          </a-col>
 
         </a-row>
       </a-form>
@@ -118,6 +122,7 @@
 <script>
     import WithdrawModal from './modules/WithdrawModal'
     import {JeecgListMixin} from '@/mixins/JeecgListMixin'
+    import { queryWithdrawByStatus } from '@/api/api'
 
     export default {
         name: "WithdrawList",
@@ -128,6 +133,7 @@
         data() {
             return {
                 description: '提现记录管理页面',
+                withdrawMoney:{},
                 // 表头
                 columns: [
                     {
@@ -201,10 +207,22 @@
                 return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
             }
         },
+        mounted() {
+            this.getWithdrawByStatus();
+        },
         methods: {
             onDateChange: function (dateString) {
                 this.queryParam.startTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
                 this.queryParam.endTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
+            },
+            getWithdrawByStatus() {
+                queryWithdrawByStatus(null).then(res => {
+                    if(res.success){
+                        this.withdrawMoney = res.result;
+                    }else{
+                        that.$message.warning(res.message);
+                    }
+                })
             },
         }
     }
