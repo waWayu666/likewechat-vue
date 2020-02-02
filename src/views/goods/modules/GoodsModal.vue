@@ -8,7 +8,7 @@
     @ok="handleOk"
     @cancel="handleCancel"
     cancelText="关闭">
-    
+
     <a-spin :spinning="confirmLoading">
       <a-form :form="form" layout="horizontal">
 
@@ -32,6 +32,46 @@
           label="起拍价">
           <a-input-number v-decorator="[ 'startPrice', {}]" />
         </a-form-item>
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="限价线">
+          <a-input-number v-decorator="[ 'fixedPrice', {}]" />
+        </a-form-item>
+
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="阀值">
+          <a-input-number v-decorator="[ 'threshold', {}]" />
+        </a-form-item>
+
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="速率（毫秒）">
+          <a-input-number v-decorator="[ 'speed', {}]" />
+        </a-form-item>
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="机器人ids">
+          <a-input placeholder="请输入机器人ids" v-decorator="['robotIds', {} ]" />
+        </a-form-item>
+
+
         <a-form-item
           style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
@@ -190,15 +230,15 @@
 
 
 
-       <!-- <a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="商品状态">
-          <a-select v-decorator="[ 'status', validatorRules.status]" placeholder="请选择商品状态">
-            <a-select-option value="1">上架</a-select-option>
-            <a-select-option value="0">下架</a-select-option>
-          </a-select>
-        </a-form-item>-->
+        <!-- <a-form-item
+           :labelCol="labelCol"
+           :wrapperCol="wrapperCol"
+           label="商品状态">
+           <a-select v-decorator="[ 'status', validatorRules.status]" placeholder="请选择商品状态">
+             <a-select-option value="1">上架</a-select-option>
+             <a-select-option value="0">下架</a-select-option>
+           </a-select>
+         </a-form-item>-->
 
       </a-form>
     </a-spin>
@@ -217,7 +257,7 @@
   export default {
     name: "GoodsModal",
     components: {
-        JEditor
+      JEditor
     },
     data () {
       return {
@@ -237,7 +277,7 @@
           sm: { span: 16 },
         },
         jeditor: {
-            goodsDesc:''
+          goodsDesc:''
         },
         picUrlPic: "",
         headers: {},
@@ -246,17 +286,17 @@
         confirmLoading: false,
         form: this.$form.createForm(this),
         validatorRules:{
-        finishFlag:{rules: [{ required: true, message: '请输入0竞拍未开始  1进行中  2竞拍已完成!' }]},
-        goodsName:{rules: [{ required: true, message: '请输入商品名称!' }]},
-        goodsNum:{rules: [{ required: true, message: '请输入商品编号!' }]},
-        maxPrice:{rules: [{ required: true, message: '请输入最高价!' }]},
-        addPrice:{rules: [{ required: true, message: '请输入顶一手价格!' }]},
-        commissionPrice:{rules: [{ required: true, message: '请输入佣金!' }]},
-        mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
+          finishFlag:{rules: [{ required: true, message: '请输入0竞拍未开始  1进行中  2竞拍已完成!' }]},
+          goodsName:{rules: [{ required: true, message: '请输入商品名称!' }]},
+          goodsNum:{rules: [{ required: true, message: '请输入商品编号!' }]},
+          maxPrice:{rules: [{ required: true, message: '请输入最高价!' }]},
+          addPrice:{rules: [{ required: true, message: '请输入顶一手价格!' }]},
+          commissionPrice:{rules: [{ required: true, message: '请输入佣金!' }]},
+          mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
           returnRatio:{rules: [{ required: true, message: '请输入返还积分比例!' }]},
-        status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
-        startTime:{rules: [{ required: true, message: '请输入开拍时间!' }]},
-        endTime:{rules: [{ required: true, message: '请输入结束时间!' }]},
+          status:{rules: [{ required: true, message: '请输入0：下架   1：上架中!' }]},
+          startTime:{rules: [{ required: true, message: '请输入开拍时间!' }]},
+          endTime:{rules: [{ required: true, message: '请输入结束时间!' }]},
         },
         url: {
           add: "/goods/goods/add",
@@ -267,14 +307,14 @@
       }
     },
     created () {
-        const token = Vue.ls.get(ACCESS_TOKEN);
-        this.headers = {"TOKEN": token};
-        this.getGoodsCategoryValue();//初始化商品分类
+      const token = Vue.ls.get(ACCESS_TOKEN);
+      this.headers = {"TOKEN": token};
+      this.getGoodsCategoryValue();//初始化商品分类
     },
     computed: {
-        uploadAction: function () {
-            return this.url.fileUpload;
-        }
+      uploadAction: function () {
+        return this.url.fileUpload;
+      }
     },
     methods: {
       moment,
@@ -346,7 +386,7 @@
         this.fileListLb = ss;
 
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'finishFlag', 'goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'budgetPrice','returnRatio','minPrice','maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'returnScore','introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
+          this.form.setFieldsValue(pick(this.model, 'finishFlag','robotIds', 'speed','threshold','fixedPrice','goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'budgetPrice','returnRatio','minPrice','maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'returnScore','introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
           //时间格式化
           this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null})
           this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
@@ -379,13 +419,13 @@
               method = 'post';
             }else{
               httpurl+=this.url.edit;
-               method = 'put';
+              method = 'put';
             }
             let formData = Object.assign(this.model, values);
             //时间格式化
             formData.startTime = formData.startTime?formData.startTime.format('YYYY-MM-DD HH:mm:00'):null;
             formData.endTime = formData.endTime?formData.endTime.format('YYYY-MM-DD HH:mm:ss'):null;
-            
+
             console.log(formData)
             httpAction(httpurl,formData,method).then((res)=>{
               if(res.success){
@@ -397,8 +437,8 @@
                 that.$message.warning(res.message);
               }
             }).finally(() => {
-                // that.confirmLoading = false;
-                // that.close();
+              // that.confirmLoading = false;
+              // that.close();
             })
 
 
@@ -411,122 +451,122 @@
       },
       //初始化商品分类数据
       getGoodsCategoryValue() {
-          selectCategoryList().then((res)=>{
-              console.log(res);
-              if(res.code == 0){
-                  this.goodsCategoryList = res.result;
-                  console.log(res.result)
-              }else{
-                  console.log("23333");
-              }
-          })
+        selectCategoryList().then((res)=>{
+          console.log(res);
+          if(res.code == 0){
+            this.goodsCategoryList = res.result;
+            console.log(res.result)
+          }else{
+            console.log("23333");
+          }
+        })
       },
       beforeUpload: function (file) {
-          var fileType = file.type;
-          if (fileType.indexOf('image') < 0) {
-              this.$message.warning('请上传图片');
-              return false;
-          }
-          //TODO 验证文件大小
+        var fileType = file.type;
+        if (fileType.indexOf('image') < 0) {
+          this.$message.warning('请上传图片');
+          return false;
+        }
+        //TODO 验证文件大小
       },
       handleChange(info) { //上传主图(一张图)
-          console.log(info);
-          this.picUrlPic = "";
-          if (info.file.status === 'uploading') {
-              this.uploadLoading = true;
-              return
+        console.log(info);
+        this.picUrlPic = "";
+        if (info.file.status === 'uploading') {
+          this.uploadLoading = true;
+          return
+        }
+        if (info.file.status === 'done') {
+          let response = info.file.response;
+          this.uploadLoading = false;
+          console.log(response);
+          if (response.success) {
+            this.model.mainImage = response.message;
+            console.log(this.model.mainImage);
+            this.picUrlPic = "Has no pic url yet";
+          } else {
+            this.$message.warning(response.message);
           }
-          if (info.file.status === 'done') {
-              let response = info.file.response;
-              this.uploadLoading = false;
-              console.log(response);
-              if (response.success) {
-                  this.model.mainImage = response.message;
-                  console.log(this.model.mainImage);
-                  this.picUrlPic = "Has no pic url yet";
-              } else {
-                  this.$message.warning(response.message);
-              }
-          }
+        }
       },
       getAvatarView() {
-          return this.url.imgerver + "/" + this.model.mainImage;
+        return this.url.imgerver + "/" + this.model.mainImage;
       },
       handleSwitch(info) {
         console.log(info);
         if (info) {
-            this.model.status == "1";
+          this.model.status == "1";
         } else {
-            this.model.status == "0";
+          this.model.status == "0";
         }
       },
       handleCancelImg() {
-          this.previewVisible = false
+        this.previewVisible = false
       },
       handlePreview(file) {
-          this.mainImages = file.url || file.thumbUrl;
-          this.previewVisible = true
+        this.mainImages = file.url || file.thumbUrl;
+        this.previewVisible = true
       },
       handleChangeLb({file, fileList}) {
-          /*debugger;*/
-          if (file.status == "removed") {
-              this.fileListLb.map((item, index) => {
-                  if (item.uid == file.uid) {
-                      this.fileListLb.splice(index, 1);
-                      this.fileTempLb.splice(index, 1);
-                  }
-              });
-              if (file.name) {
-                  this.fileTempLb.map((item, index) => {
-                      if (item == file.response.message) {
-                          this.fileTempLb.splice(index, 1);
-                      }
-                  })
-              } else {
-                  let removeFileImgUrl = file.url.split('view/')[1];
-                  this.fileTempLb.map((item, index) => {
-                      if (item == removeFileImgUrl) {
-                          this.fileTempLb.splice(index, 1);
-                      }
-                  })
+        /*debugger;*/
+        if (file.status == "removed") {
+          this.fileListLb.map((item, index) => {
+            if (item.uid == file.uid) {
+              this.fileListLb.splice(index, 1);
+              this.fileTempLb.splice(index, 1);
+            }
+          });
+          if (file.name) {
+            this.fileTempLb.map((item, index) => {
+              if (item == file.response.message) {
+                this.fileTempLb.splice(index, 1);
               }
+            })
           } else {
-              this.fileListLb = fileList;
-              this.fileTempLb.push(file.response.message);
+            let removeFileImgUrl = file.url.split('view/')[1];
+            this.fileTempLb.map((item, index) => {
+              if (item == removeFileImgUrl) {
+                this.fileTempLb.splice(index, 1);
+              }
+            })
           }
+        } else {
+          this.fileListLb = fileList;
+          this.fileTempLb.push(file.response.message);
+        }
       },
 
       disabledDate(current) {
-          // Can not select days before today and today
-          return current && current < moment().endOf('day');
+        // Can not select days before today and today
+        return current && current < moment().endOf('day');
       },
 
       disabledRangeTime(_, type) {
-          if (type === 'start') {
-              return {
-                  disabledHours: () => this.range(0, 60).splice(4, 20),
-                  disabledMinutes: () => this.range(30, 60),
-                  disabledSeconds: () => [55, 56],
-              };
-          }
+        if (type === 'start') {
           return {
-              disabledHours: () => this.range(0, 60).splice(20, 4),
-              disabledMinutes: () => this.range(0, 31),
-              disabledSeconds: () => [55, 56],
+            disabledHours: () => this.range(0, 60).splice(4, 20),
+            disabledMinutes: () => this.range(30, 60),
+            disabledSeconds: () => [55, 56],
           };
+        }
+        return {
+          disabledHours: () => this.range(0, 60).splice(20, 4),
+          disabledMinutes: () => this.range(0, 31),
+          disabledSeconds: () => [55, 56],
+        };
       },
       getDateTime(date) {
-          console.log(date)
+        console.log(date)
 
       },
-        onChange1(value, dateString) {
-            this.model.endTime = moment(
-                moment(dateString).add(5, "minutes"),
-                "YYYY-MM-DD HH:mm:00"
-            );
-            this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
+      onChange1(value, dateString) {
+        this.model.endTime = moment(
+          moment(dateString).add(5, "minutes"),
+          "YYYY-MM-DD HH:mm:00"
+        );
+        this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})
 
-        },
+      },
     }
   }
 </script>
