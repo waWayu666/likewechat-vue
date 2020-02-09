@@ -18,6 +18,7 @@
                 <a-select-option value="2">冻结</a-select-option>
               </a-select>
             </a-form-item>
+
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="推广人ID">
@@ -28,6 +29,22 @@
             <a-form-item label="手机号">
               <a-input placeholder="手机号" v-model="queryParam.mobile"></a-input>
             </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="机器人">
+              <a-select placeholder="请选择" v-model="queryParam.isRobot">
+                <a-select-option value="1">机器人</a-select-option>
+                <a-select-option value="0">用户</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
+          <a-form-item label="后台账号">
+            <a-select placeholder="请选择状态" v-model="queryParam.isTuanzhang">
+              <a-select-option value="0">未开通</a-select-option>
+              <a-select-option value="1">已开通</a-select-option>
+            </a-select>
+          </a-form-item>
           </a-col>
           <a-col :md="6" :sm="10">
             <a-form-item label="注册时间">
@@ -97,9 +114,20 @@
 
         <span slot="action" slot-scope="text, record">
           <a-popconfirm title="确定冻结吗?" @confirm="() => frostUser(record.id)">
-            <a>冻结</a>
+             <a v-if="record.status == 0">恢复</a>
+            <a v-else-if="record.status == 1">冻结</a>
           </a-popconfirm>
-<!--          <a @click="handleEdit(record)">编辑</a>-->
+          <a-divider type="vertical"/>
+          <a-popconfirm title="确定开通账号吗?" @confirm="() => openAccount(record.id)">
+            <a v-if="record.isTuanzhang == 0">开通账号</a>
+            <a v-else-if="record.isTuanzhang == 1">关闭账号</a>
+          </a-popconfirm>
+          <a-divider type="vertical"/>
+          <a-popconfirm title="确定重置密码吗?" @confirm="() => repetPassword(record.id)">
+            <a>重置密码</a>
+          </a-popconfirm>
+
+          <!--          <a @click="handleEdit(record)">编辑</a>-->
 
 <!--          <a-divider type="vertical" />-->
 <!--          <a-dropdown>-->
@@ -128,6 +156,8 @@
   import moment from "moment"
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import { frost } from '@/api/api'
+  import { open } from '@/api/api'
+  import { repet } from '@/api/api'
 
   export default {
     name: "UserList",
@@ -275,6 +305,35 @@
                 this.loadData()
             });
         },
+
+      openAccount(id){
+        console.log(id)
+        open(id,null).then((res)=>{
+          console.log(res.result);
+          if(res.success){
+            this.$message.success(res.message);
+          }else {
+            this.$message.warning(res.message);
+          }
+          this.loadData()
+        });
+      },
+
+      repetPassword(id){
+        console.log(id)
+        repet(id,null).then((res)=>{
+          console.log(res.result);
+          if(res.success){
+            this.$message.success(res.message);
+          }else {
+            this.$message.warning(res.message);
+          }
+          this.loadData()
+        });
+      },
+
+
+
         onDateChange: function (dateString) {
             this.queryParam.startTime=dateString[0].format('YYYY-MM-DD HH:mm:ss');
             this.queryParam.endTime=dateString[1].format('YYYY-MM-DD HH:mm:ss');
