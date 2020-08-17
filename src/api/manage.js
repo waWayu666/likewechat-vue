@@ -1,4 +1,5 @@
 import { axios } from '@/utils/request'
+import Vue from 'vue'
 
 const api = {
   user: '/api/user',
@@ -16,6 +17,15 @@ export function postAction(url,parameter) {
     url: url,
     method:'post' ,
     data: parameter
+  })
+}
+
+//post
+export function postAction2(url, parameter) {
+  return axios({
+    url: url,
+    method: 'post',
+    params: addShopParams(parameter)
   })
 }
 
@@ -110,5 +120,17 @@ export function downFile(url,parameter){
     method:'get' ,
     responseType: 'blob'
   })
+}
+
+
+function addShopParams(parameter) {
+  if (!parameter) {
+    parameter = {}
+  }
+  var currentShopId = Vue.ls.get("currentShopId");
+  if (currentShopId&&!parameter['shopId']) {
+    parameter['shopId'] = currentShopId;
+  }
+  return parameter;
 }
 

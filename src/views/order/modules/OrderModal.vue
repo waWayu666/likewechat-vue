@@ -31,7 +31,7 @@
             :labelCol="labelCol"
             :wrapperCol="wrapperCol"
             label="地址">
-            {{this.model.address.detailAddress}}
+            {{this.model.address.areap}}{{this.model.address.areac}}{{this.model.address.areax}}{{this.model.address.detailAddress}}
           </a-form-item>
         </div>
 

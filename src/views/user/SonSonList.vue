@@ -33,7 +33,6 @@
       </a-form>
     </div>
 
-
     <!-- table区域-begin -->
     <div>
       <a-table
@@ -77,7 +76,7 @@
   import { sonson } from '@/api/api'
 
   export default {
-    name: "SonList",
+    name: "SonSonList",
     mixins:[JeecgListMixin],
     components: {
 
@@ -114,7 +113,7 @@
             title: '手机号',
             align:"center",
             dataIndex: 'mobile',
-            scopedSlots: {customRender: 'mobile'}
+            scopedSlots: {customRender: 'nickname'}
           },
           {
             title: '注册时间',
@@ -129,7 +128,7 @@
           }
         ],
         url: {
-          list: "/user/user/sonList",
+          list: "/user/user/sonSonList?userId="+this.$route.query.userId,
           delete: "/user/user/delete",
           deleteBatch: "/user/user/deleteBatch",
           exportXlsUrl: "user/user/exportXls",

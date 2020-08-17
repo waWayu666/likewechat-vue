@@ -1,63 +1,9 @@
 <template>
     <a-card :bordered="false">
-      <detail-list title="用户信息">
-        <detail-list-item term="用户昵称">{{userInfoDetail.nickname}}</detail-list-item>
-        <detail-list-item term="用户手机号码">{{userInfoDetail.mobile}}</detail-list-item>
-        <detail-list-item term="推广人">{{userInfoDetail.extendName}}</detail-list-item>
-      </detail-list>
-      <a-divider style="margin-bottom: 32px"/>
 
-<!--  <div class="title">余额明细</div>-->
-      <a-table :columns="balanceColumns" :dataSource="billData" @change="handleTableChange1" bordered :pagination="billpagination">
+      <a-table :columns="aucColumns" :dataSource="aucData" bordered @change="handleTableChange5" :pagination="aucpagination">
         <template slot="name" slot-scope="text">
           <a href="javascript:;">发发发</a>
-        </template>
-        <template slot="title" slot-scope="currentPageData">
-          <div style="display: flex;justify-content: space-between;align-items: center;">
-            <div>余额明细</div>
-            <div>剩余余额：{{userInfoDetail.money}}</div>
-          </div>
-        </template>
-      </a-table>
-
-      <a-table :columns="brokerageColumns" :dataSource="brokerageData" bordered @change="handleTableChange2" :pagination="commissionpagination">
-        <template slot="name" slot-scope="text">
-          <a href="javascript:;">发发发</a>
-        </template>
-        <template slot="title" slot-scope="currentPageData">
-          <div style="display: flex;justify-content: space-between;align-items: center;">
-            <div>佣金明细</div>
-            <div>佣金余额：{{userInfoDetail.commissionMoney}}</div>
-          </div>
-        </template>
-      </a-table>
-
-      <a-table :columns="scoreColumns" :dataSource="scoreData" bordered @change="handleTableChange3" :pagination="scorepagination">
-        <template slot="name" slot-scope="text">
-          <a href="javascript:;">发发发</a>
-        </template>
-        <template slot="title" slot-scope="currentPageData">
-          <div style="display: flex;justify-content: space-between;align-items: center;">
-            <div>积分明细</div>
-            <div>积分余额：{{userInfoDetail.score}}</div>
-          </div>
-        </template>
-      </a-table>
-
-      <a-table :columns="fansColumns" :dataSource="fansData" bordered @change="handleTableChange4" :pagination="fanspagination">
-        <template slot="name" slot-scope="text">
-          <a href="javascript:;">发发发</a>
-        </template>
-        <template slot="title" slot-scope="currentPageData">
-          <div style="display: flex;justify-content: space-between;align-items: center;">
-            <div>团队列表</div>
-            <div>团队个数：{{userInfoDetail.fansNumber}}</div>
-          </div>
-        </template>
-        <template slot="imgurllot" slot-scope="text, record, index">
-          <div class="anty-img-wrap">
-            <img :src="record.fansAvatar"/>
-          </div>
         </template>
       </a-table>
 
@@ -68,7 +14,7 @@
   import PageLayout from '@/components/page/PageLayout'
   import DetailList from '@/components/tools/DetailList'
   import ABadge from "ant-design-vue/es/badge/Badge"
-  import {queryUserDetail,getBill,getBrokeragePage,getScore,getFans} from '@/api/api'
+  import {queryUserDetail,getSonPage,getBill,getBrokeragePage,getScore,getFans} from '@/api/api'
 
   const DetailListItem = DetailList.Item
 
@@ -93,6 +39,13 @@
         // 佣金明细
         brokerageData:[],
         commissionpagination:{
+          pageSize:5,
+          current:1,
+          total:0
+        },
+        //粉丝竞拍记录
+        aucData:[],
+        aucpagination:{
           pageSize:5,
           current:1,
           total:0
@@ -129,7 +82,7 @@
               if(value == 0){
                 return "佣金增加";
               }else if(value == 1){
-                return "充值余额";
+                return "充值";
               }else if(value == 2){
                 return "保证金解冻";
               } else if(value == 3){
@@ -144,6 +97,14 @@
                 return "订单过期扣除保证金";
               }else if(value == 8){
                 return "寄卖所得";
+              }else if(value == 9){
+                return "新人2元礼";
+              }else if(value == 10){
+                return "粉丝返佣";
+              }else if(value == 11){
+                return "团队返佣";
+              }else if(value == 12){
+                return "平台回购";
               }
             }
           },
@@ -208,6 +169,50 @@
                   align: 'right'
               }
           ],
+
+
+  //竞拍记录数据
+        aucColumns: [
+          {
+            title: '编号',
+            width:60,
+            align:"center",
+            dataIndex: 'orderNum',
+            key: 'orderNum',
+            align: 'right'
+          },
+          {
+            title: '顶一手金额',
+            align:"center",
+            dataIndex: 'orderMoney',
+            key: 'changeMoney',
+            align: 'right'
+          },
+          {
+            title: '支付时间',
+            align:"center",
+            dataIndex: 'payTime',
+            key: 'payTime',
+            align: 'right'
+          },
+          {
+            title: '对应拍品',
+            align:"center",
+            dataIndex: 'goodsId_dictText',
+            key: 'goodsId',
+            align: 'right'
+          },
+          {
+            title: '拍品id',
+            align:"center",
+            dataIndex: 'goodsId',
+            key: 'goodsId',
+            align: 'right'
+          }
+        ],
+
+
+
           //    积分数据
           scoreColumns: [
               {
@@ -279,6 +284,7 @@
           this.queryUserInfo(this.$route.query.userId);
           this.queryBill(this.$route.query.userId);
           this.queryBrokerage(this.$route.query.userId);
+          this.queryAuc(this.$route.query.userId);
           this.queryScore(this.$route.query.userId);
           this.queryFans(this.$route.query.userId);
       },
@@ -323,6 +329,11 @@
           this.commissionpagination =pagination
           this.queryBrokerage(this.$route.query.userId)
         },
+      // 竞拍记录分页
+      handleTableChange5(pagination, filters, sorter){
+        this.aucpagination =pagination
+        this.queryAuc(this.$route.query.userId)
+      },
         // 积分分页
         handleTableChange3(pagination, filters, sorter){
           this.scorepagination =pagination
@@ -336,7 +347,7 @@
         //佣金明细
         queryBrokerage(id){
             let str=[id,this.commissionpagination.current,5];
-            getBrokeragePage(str.toString(),null).then((res)=>{
+          getSonPage(str.toString(),null).then((res)=>{
                 console.log(res.result);
                 // this.billData = res.result;
                 this.brokerageData = res.result.records
@@ -344,6 +355,19 @@
                 this.commissionpagination.total=res.result.total
             });
         },
+      //竞拍记录明细
+      queryAuc(id){
+        let str=[id,this.aucpagination.current,5];
+        getSonPage(str.toString(),null).then((res)=>{
+          console.log(res.result);
+          // this.billData = res.result;
+          this.aucData = res.result.records
+          this.aucpagination.current=res.result.current,
+            this.aucpagination.total=res.result.total
+        });
+      },
+
+
         //积分明细
         queryScore(id){
             let str=[id,this.scorepagination.current,5];

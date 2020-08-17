@@ -121,6 +121,12 @@ const getCouponNumber = (params) => getAction("/coupon/couponType/getCouponNumbe
 const getUList = (params) => getAction("/user/user/getUList", params);
 // 小程序用户管理
 const frost=(id,params)=> postAction(`/user/user/frost/${id}`,params);
+//重置密码
+const repet=(id,params)=> postAction(`/user/user/repet/${id}`,params);
+//重置密码
+const sonson=(id,params)=> postAction(`/user/user/sonson/${id}/${nickname}`,params);
+//开通账号
+const open=(id,params)=> postAction(`/user/user/open/${id}`,params);
 //获取用户信息
 const queryUserDetail=(id,params)=> getAction(`/user/user/queryUserDetail/${id}`,params);
 // 商品管理
@@ -131,6 +137,10 @@ const upOrDownScoreGoods=(id,params)=> postAction(`/goods/scoreGoods/upOrDownSco
 const getBill = (str,params) => getAction(`/bill/bill/queryPageList/${str}`, params);
 // 佣金
 const getBrokeragePage = (str,params) => getAction(`/usercommission/userCommission/brokeragePageList/${str}`, params);
+
+// 粉丝竞拍记录
+const getSonPage = (str,params) => getAction(`/order/order/sonPageList/${str}`, params);
+
 // 积分
 const getScore = (str,params) => getAction(`/userscore/userScore/scorePageList/${str}`, params);
 // 粉丝
@@ -200,11 +210,15 @@ export {
   getCouponNumber,
   getUList,
   frost,
+  open,
+  repet,
+  sonson,
   queryUserDetail,
   upOrDown,
   upOrDownScoreGoods,
   getBill,
   getBrokeragePage,
+  getSonPage,
   getScore,
   getFans,
   getAuctionrecod

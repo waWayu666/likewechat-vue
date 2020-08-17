@@ -66,8 +66,8 @@ module.exports = {
           '/jeecg-boot': ''  //默认所有请求都加了jeecg-boot前缀，需要去掉
         }
       },*/
-      '/auction-boot': {
-        target: 'http://127.0.0.1:8082', //请求本地 需要jeecg-boot后台项目
+        '/likewechat': {
+        target: 'http://127.0.0.1:8088', //请求本地 需要后台项目
         ws: false,
         changeOrigin: true
       },

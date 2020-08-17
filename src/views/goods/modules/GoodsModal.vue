@@ -25,100 +25,18 @@
           <a-input placeholder="请输入商品名称" v-decorator="['goodsName', validatorRules.goodsName ]" />
         </a-form-item>
 
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="起拍价">
-          <a-input-number v-decorator="[ 'startPrice', {}]" />
-        </a-form-item>
 
 
         <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="限价线">
-          <a-input-number v-decorator="[ 'fixedPrice', {}]" />
-        </a-form-item>
-
-
-
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="阀值">
-          <a-input-number v-decorator="[ 'threshold', {}]" />
-        </a-form-item>
-
-
-
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="速率（毫秒）">
-          <a-input-number v-decorator="[ 'speed', {}]" />
-        </a-form-item>
-
-
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="机器人ids">
-          <a-input placeholder="请输入机器人ids" v-decorator="['robotIds', {} ]" />
-        </a-form-item>
-
-
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="预估价">
-          <a-input-number v-decorator="[ 'budgetPrice', {}]" />
-        </a-form-item>
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="限高价">
-          <a-input-number v-decorator="[ 'evaluatePrice', {}]" />
-        </a-form-item>
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="限低价">
-          <a-input-number v-decorator="[ 'minPrice', {}]" />
-        </a-form-item>
-        <!--<a-form-item
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="最高价">
-          <a-input-number v-decorator="[ 'maxPrice', validatorRules.maxPrice ]" />
-        </a-form-item>-->
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="顶一手价格">
-          <a-input-number v-decorator="[ 'addPrice', validatorRules.addPrice ]" />
-        </a-form-item>
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="佣金">
-          <a-input-number v-decorator="[ 'commissionPrice', validatorRules.commissionPrice ]" />
-        </a-form-item>
-        <a-form-item
-          style="display: inline-block;width: 400px;"
-
-          :labelCol="labelCol"
-          :wrapperCol="wrapperCol"
-          label="请选择分类">
+          :labelCol="{
+          xs: { span: 24 },
+          sm: { span: 2 },
+        }"
+          :wrapperCol="{
+          xs: { span: 24 },
+          sm: { span: 21 },
+        }"
+          label="分类">
           <a-select
             showSearch
             style="width: 100%"
@@ -136,9 +54,107 @@
           style="display: inline-block;width: 400px;"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
+          label="起拍价">
+          <a-input-number v-decorator="[ 'startPrice', validatorRules.startPrice]" />
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="顶一手">
+          <a-input-number v-decorator="[ 'addPrice', validatorRules.addPrice ]" />
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="限低价">
+          <a-input-number v-decorator="[ 'minPrice', validatorRules.minPrice]" />
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="限高价">
+          <a-input-number v-decorator="[ 'evaluatePrice', validatorRules.evaluatePrice]" />
+        </a-form-item>
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="佣金">
+          <a-input-number v-decorator="[ 'commissionPrice', validatorRules.commissionPrice ]" />
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="预估价">
+          <a-input-number v-decorator="[ 'budgetPrice', validatorRules.budgetPrice]" />
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="限价">
+          <a-input-number v-decorator="[ 'fixedPrice', validatorRules.fixedPrice]" />
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="阀值">
+          <a-input-number v-decorator="[ 'threshold', validatorRules.threshold]" />
+        </a-form-item>
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="空值数量">
+          <a-input-number placeholder="" v-decorator="['kongzhiCount', {} ]" />
+        </a-form-item>
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="机器人ids">
+          <a-input placeholder="请输入机器人ids" v-decorator="['robotIds', {} ]" />
+        </a-form-item>
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="速率（毫秒）">
+          <a-input-number v-decorator="[ 'speed', validatorRules.speed]" />
+        </a-form-item>
+
+
+
+
+        <a-form-item
+          style="display: inline-block;width: 400px;"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
           label="积分返还比例">
           <a-input-number v-decorator="[ 'returnRatio', validatorRules.returnRatio ]"  />
         </a-form-item>
+
+
+
+
         <a-form-item
           style="display: inline-block;width: 400px;"
 
@@ -288,8 +304,16 @@
         validatorRules:{
           finishFlag:{rules: [{ required: true, message: '请输入0竞拍未开始  1进行中  2竞拍已完成!' }]},
           goodsName:{rules: [{ required: true, message: '请输入商品名称!' }]},
+          categoryId:{rules: [{ required: true, message: '请选择类别!' }]},
           goodsNum:{rules: [{ required: true, message: '请输入商品编号!' }]},
           maxPrice:{rules: [{ required: true, message: '请输入最高价!' }]},
+          startPrice:{rules: [{ required: true, message: '请输入起拍价!' }]},
+          fixedPrice:{rules: [{ required: true, message: '请输入限价!' }]},
+          threshold:{rules: [{ required: true, message: '请输入阀值!' }]},
+          speed:{rules: [{ required: true, message: '请输入速率!' }]},
+          budgetPrice:{rules: [{ required: true, message: '请输入预估价!' }]},
+          evaluatePrice:{rules: [{ required: true, message: '请输入限高价!' }]},
+          minPrice:{rules: [{ required: true, message: '请输入最低价!' }]},
           addPrice:{rules: [{ required: true, message: '请输入顶一手价格!' }]},
           commissionPrice:{rules: [{ required: true, message: '请输入佣金!' }]},
           mainImage:{rules: [{ required: true, message: '请输入商品主图!' }]},
@@ -386,7 +410,7 @@
         this.fileListLb = ss;
 
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model, 'finishFlag','robotIds', 'speed','threshold','fixedPrice','goodsName', 'goodsNum', 'startPrice', 'evaluatePrice', 'budgetPrice','returnRatio','minPrice','maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'returnScore','introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
+          this.form.setFieldsValue(pick(this.model, 'finishFlag','userId','returnMoney','robotIds', 'speed','threshold','fixedPrice','goodsName', 'kongzhiCount','robotIds','goodsNum', 'startPrice', 'evaluatePrice', 'budgetPrice','returnRatio','minPrice','maxPrice', 'addPrice', 'commissionPrice', 'price', 'moneyRatio', 'score', 'categoryId', 'returnScore','introduction', 'sort', 'mainImage', 'goodsDesc', 'status', 'goodsType', 'dealPrice', 'auctionCount', 'mainImages'))
           //时间格式化
           this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null})
           this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null})

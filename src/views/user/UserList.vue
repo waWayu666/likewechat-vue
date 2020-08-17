@@ -21,30 +21,11 @@
 
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="推广人ID">
-              <a-input placeholder="推广人ID" v-model="queryParam.extendId"></a-input>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
             <a-form-item label="手机号">
               <a-input placeholder="手机号" v-model="queryParam.mobile"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="机器人">
-              <a-select placeholder="请选择" v-model="queryParam.isRobot">
-                <a-select-option value="1">机器人</a-select-option>
-                <a-select-option value="0">用户</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
-          <a-form-item label="后台账号">
-            <a-select placeholder="请选择状态" v-model="queryParam.isTuanzhang">
-              <a-select-option value="0">未开通</a-select-option>
-              <a-select-option value="1">已开通</a-select-option>
-            </a-select>
-          </a-form-item>
           </a-col>
           <a-col :md="6" :sm="10">
             <a-form-item label="注册时间">
@@ -102,13 +83,13 @@
         @change="handleTableChange"
       >
 
-        <template slot="nickname" slot-scope="text, record, index">
-          <router-link :to="'/user/modules/UserDetail?userId=' + record.id "> {{record.nickname}}</router-link>
+        <template slot="mobile" slot-scope="text, record, index">
+          <router-link :to="'/user/modules/UserDetail?userId=' + record.id "> {{record.mobile}}</router-link>
         </template>
 
         <template slot="imgurllot" slot-scope="text, record, index">
           <div class="anty-img-wrap">
-            <img :src="record.avatar"/>
+            <img :src="record.photo"/>
           </div>
         </template>
 
@@ -116,15 +97,6 @@
           <a-popconfirm title="确定冻结吗?" @confirm="() => frostUser(record.id)">
              <a v-if="record.status == 0">恢复</a>
             <a v-else-if="record.status == 1">冻结</a>
-          </a-popconfirm>
-          <a-divider type="vertical"/>
-          <a-popconfirm title="确定开通账号吗?" @confirm="() => openAccount(record.id)">
-            <a v-if="record.isTuanzhang == 0">开通账号</a>
-            <a v-else-if="record.isTuanzhang == 1">关闭账号</a>
-          </a-popconfirm>
-          <a-divider type="vertical"/>
-          <a-popconfirm title="确定重置密码吗?" @confirm="() => repetPassword(record.id)">
-            <a>重置密码</a>
           </a-popconfirm>
 
           <!--          <a @click="handleEdit(record)">编辑</a>-->
@@ -184,8 +156,14 @@
           {
             title: '昵称',
             align:"center",
-            dataIndex: 'nickname',
-            scopedSlots: {customRender: 'nickname'}
+            dataIndex: 'nickname'
+
+          },
+          {
+            title: '账号',
+            align:"center",
+            dataIndex: 'wechatId'
+
           },
          /* {
             title: '年龄',
@@ -195,50 +173,30 @@
           {
             title: '头像',
             align:"center",
-            dataIndex: 'avatar',
+            dataIndex: 'photo',
             scopedSlots: {customRender: 'imgurllot'}
           },
           {
             title: '手机号',
             align:"center",
-            dataIndex: 'mobile'
+            dataIndex: 'mobile',
+            scopedSlots: {customRender: 'mobile'}
           },
           {
             title: '注册时间',
             align:"center",
             dataIndex: 'createTime'
           },
-          {
-            title: '推广人',
-            align:"center",
-            dataIndex: 'extendName'
-          },
-          {
-            title: '冻结金额',
-            align:"center",
-            dataIndex: 'freezeMoney'
-          },
-         /* {
-            title: '性别',
-            align:"center",
-            dataIndex: 'sex_dictText'
-          },*/
+          // {
+          //   title: '性别',
+          //   align:"center",
+          //   dataIndex: 'sex_dictText'
+          // },
           {
             title: '余额',
             align:"center",
             dataIndex: 'money',
             sorter: (a, b) => a.money - b.money,
-          },
-          {
-            title: '积分',
-            align:"center",
-            dataIndex: 'score'
-          },
-          {
-            title: '佣金',
-            align:"center",
-            dataIndex: 'commissionMoney',
-            sorter: (a, b) => a.commissionMoney - b.commissionMoney,
           },
 
           /*{
